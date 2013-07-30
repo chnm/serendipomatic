@@ -1,3 +1,4 @@
 # list all python requirements here for installation with pip
 Django
--e git+https://github.com/reklaklislaw/bibs.git#egg=bibs
+git+https://github.com/reklaklislaw/bibs.git#egg=bibs
+
