@@ -21,3 +21,7 @@ lib64
 
 # Installer logs
 pip-log.txt
+
+
+# project-specific stuff
+localsettings.py
