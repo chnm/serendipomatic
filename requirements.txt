@@ -2,3 +2,9 @@
 Django
 git+https://github.com/reklaklislaw/bibs.git#egg=bibs
 
+# should be installed as dependencies of bibs but don't seem to be
+PyYAML
+dicttoxml
+xmltodict
+lxml
+
