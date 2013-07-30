@@ -5,7 +5,7 @@ import string
 #TODO: find a list of stopwords, don't count them
 #nltk?
 
-def common_words_from_file(textString, n, stopWordsList = stopWordsList):
+def common_words_from_file(textString, n):
     wordList = textString.split()
     sanitizedWordList = map(lambda word: ''.join([c for c in word if c not in string.punctuation or c == "\'"]), wordList)
     wordCounts = {}
