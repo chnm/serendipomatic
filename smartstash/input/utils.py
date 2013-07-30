@@ -1,4 +1,3 @@
-#readInTest.py
 import string
 #We want to eliminate all punctuation except single quotes.
 #This isn't the only case (sometimes you have single quotes around a word, which we do want to get rid of)
