@@ -99,7 +99,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'smartstash.input',
-    'smartstash.query',
+    'smartstash.find',
     'smartstash.display'
 )
 
