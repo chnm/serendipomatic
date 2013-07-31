@@ -18,9 +18,9 @@ def common_words(text, max_items=15):
     tokens = nltk.word_tokenize(text)
 
     words = [w.lower() for w in tokens
-             if w.isalpha() and w.lower() not in stopwords]
-     # NOTE: isalpha drops numeric content like dates or date ranges
-     # as well as contractions or quoted terms
+             if w.isalnum() and w.lower() not in stop_words]
+    # NOTE: isalnum will restrict to alpha and numeric content (i.e., words & dates);
+    # will probalby drop date ranges as well as contractions or quoted terms
 
     freqdist = nltk.FreqDist()
     for word in words:
@@ -32,10 +32,10 @@ def common_words(text, max_items=15):
 
 """
 Returns JSON response from dbpedia spotlight annotate (or other source)
-"""	
-def query( query ) : 
+"""
+def query( query ) :
 	r = requests.get(query['url'], params=query['params'], headers = {'accept': 'application/json'})
-	
+
 	return r.text
 
 """
@@ -46,9 +46,9 @@ def getEntityNameFromSpot( doc ) :
 	name_set = set()
 	for item in json_data['annotation']['surfaceForm'] :
 		name_set.add( item['@name'] )
-	
+
 	return name_set
-	
+
 """
 """
 def getEntityNameFromAnnotate( doc ) :
@@ -57,10 +57,10 @@ def getEntityNameFromAnnotate( doc ) :
 
 	for item in json_data['Resources'] :
 		name_set.add( item['@surfaceForm'] )
-		
+
 	return name_set
 
-# Returns a dictionary of search terms ** KEYWORD ONLY ** 
+# Returns a dictionary of search terms ** KEYWORD ONLY **
 def getTerms( text ) :
 	spot = {
 		'url':'http://spotlight.dbpedia.org/rest/spot',
@@ -78,14 +78,14 @@ def getTerms( text ) :
 		}
 	}
 
-	terms = { }	
+	terms = { }
 
 	spot_set = set()
 	annotate_set = set()
-	
+
 	resp_s = query( spot )
 	spot_set = getEntityNameFromSpot(resp_s)
-	
+
 	resp_a = query( annotate )
 	annotate_set = getEntityNameFromAnnotate(resp_a)
 	# get list of people
@@ -94,7 +94,7 @@ def getTerms( text ) :
 	terms['keywords'] = spot_set.union(annotate_set)
 	terms['people'] = people_set
 	return terms
-		 
+
 
 
 """
