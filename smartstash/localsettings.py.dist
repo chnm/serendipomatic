@@ -1,5 +1,9 @@
 # local Django settings that should not be checked into git
 
+import os.path
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -23,6 +27,10 @@ MANAGERS = ADMINS
 # URL prefix for static files.
 # override default in settings.py when deployed under a subdirectory
 #STATIC_URL = '/smartstash/static/'
+
+# NOTE: for development, may want to use something like this:
+#   'ENGINE': 'django.db.backends.sqlite3',
+#   'NAME': os.path.join(BASE_DIR, 'stash.db'),
 
 DATABASES = {
     'default': {
