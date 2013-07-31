@@ -90,10 +90,11 @@ def getTerms( text ) :
 	annotate_set = getEntityNameFromAnnotate(resp_a)
 	# get list of people
 	people_set = getPeople( resp_a )
+    place_set = getPlaces( resp_a )
 
 	terms['keywords'] = spot_set.union(annotate_set)
 	terms['people'] = people_set
-	term['places'] = place_set
+	terms['places'] = place_set
 	return terms
 
 
@@ -110,3 +111,14 @@ def getPeople( entities ) :
 			name_set.add( item['@surfaceForm'] )
 	return name_set
 
+"""
+Returns the list of DBpedia:Place records
+"""
+def getPlaces (entities ) :
+	json_data = simplejson.loads( entities )
+	place_set = set()
+	for item in json_data['Resources'] :
+		type = str(item['@types'])
+		if('DBpedia:Place' in type) :
+			place_set.add( item['@surfaceForm'] )
+	return place_set
