@@ -6,5 +6,21 @@
 {% block content %}
 <img src="{% static 'img/stache.jpg' %}" />
 
+<form method="post" action="{% url 'site-index' %}">{% csrf_token %}
+    {% if input_form.errors %}
+      {{ input_form.errors }}
+    {% endif %}
+
+    {% for field in input_form %}
+      <p>{{ form.errors }}</p>
+      <label for="{{ field.id }}">{{ field.label }}</label>
+      {{ field }}
+      <p class="help-text">{{ field.help_text }}</p>
+    {% endfor %}
+
+    <input type="submit" value="Go!"/>
+</form>
+
+
 <p><a href="{% url 'display:items' %}">test item display</a></p>
 {% endblock %}

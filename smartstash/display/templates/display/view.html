@@ -6,15 +6,15 @@
 {% block content %}
 <h3>Sorry, css is just copied from the Isotope demo.<h3>
 
-<p><b>Query Terms:</b> {{ query_terms }}</p>
+<p><b>Query Terms:</b> {{ query_terms.keywords|join:', ' }}</p>
 <div id="container">
 {% for item in items %}
 
 	<div class="element transition metal">
-		<p><a href="http://www.mrmoneymustache.com/" target="_blank">
+		<p><a href="{{ item.url }}" target="_blank">
             <img src="{{ item.thumbnail }}" alt="{{ item.title }}" />
         </a><br />
-		<a href="http://www.mrmoneymustache.com/" target="_blank">{{ item.title }}</a><br />
+		<a href="{{ item.url }}" target="_blank">{{ item.title }}</a><br />
 		Name<br />
 		Date<br />
 		Source repository</p>
