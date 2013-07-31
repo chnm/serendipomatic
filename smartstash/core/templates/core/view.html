@@ -4,24 +4,30 @@
 {% block title %}MagicStash Items Display{% endblock %}
 
 {% block content %}
-<h3>Sorry, css is just copied from the Isotope demo.<h3>
 
 <p><b>Query Terms:</b> {{ query_terms.keywords|join:', ' }}</p>
+<p style="float:right;">
+    <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Start Over</button></a>
+</p>
 <div id="container">
 {% for item in items %}
 
-	<div class="element transition metal">
+     <!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
+	<div class="element transition metal" tabindex="{{ forloop.counter|add:5 }}">
 		<p><a href="{{ item.url }}" target="_blank">
             <img src="{{ item.thumbnail }}" alt="{{ item.title }}" />
         </a><br />
 		<a href="{{ item.url }}" target="_blank">{{ item.title }}</a><br />
 		Name<br />
-		Date<br />
+		Date: {{ item.idate }}<br />
 		Source repository</p>
 	</div>
 {% endfor %}
 </div>
 
+<hr />
+
+<a href="#top"><button tabindex="1000">Return to Top</button></a>
 {% comment %}
 {{ item.title|default:'(no source)' }}
 {% endcomment %}
