@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from smartstash.core.forms import InputForm
 from smartstash.core.utils import common_words
-from smartstash.core.api import DPLA
+from smartstash.core.api import DPLA, Europeana
 
 
 def site_index(request):
@@ -37,6 +37,11 @@ def site_index(request):
 # into a single app
 
 def view_items(request, search_terms):
-    items = DPLA.find_items(**search_terms)
+    dpla_items = DPLA.find_items(**search_terms)
+    euro_items = Europeana.find_items(**search_terms)
+    # quick way to shuffle the two lists together based on
+    # http://stackoverflow.com/questions/11125212/interleaving-lists-in-python
+    items = [x for t in zip(dpla_items, euro_items) for x in t]
+
     return render(request, 'core/view.html',
                   {'items': items, 'query_terms': search_terms})
