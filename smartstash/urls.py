@@ -10,7 +10,7 @@ from smartstash.core import views
 urlpatterns = patterns(
     '',
     url(r'^$', views.site_index, name='site-index'),
-    url(r'^$', views.view_items, name='view-stash'),
+    url(r'^stash/$', views.view_items, name='view-stash'),
 
     # examples
     # url(r'^input/', include('smartstash.input.urls',
