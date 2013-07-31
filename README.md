@@ -9,8 +9,10 @@ easy_install pip (or sudo easy_install pip)
 
 open question: do we want to use virtualenv?
 
-Copy smartstash/localsettings.py.dist to smartstash/localsettings.py
-and fill in any required settings (SECRET_KEY, API_KEY).
+Make a copy of smartstash/localsettings.py.dist named smartstash/localsettings.py
+and fill in any required settings:
+SECRET_KEY: generate one at http://www.miniwebtool.com/django-secret-key-generator/
+API_KEY: use 880a57b8031d34448691aafe881cfd2f
 
 Add new python dependencies to requirements.txt as needed.
 
