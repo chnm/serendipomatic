@@ -54,6 +54,7 @@ def getEntityNameFromSpot( doc ) :
 def getEntityNameFromAnnotate( doc ) :
 	json_data = simplejson.loads ( doc )
 	name_set = set()
+
 	for item in json_data['Resources'] :
 		name_set.add( item['@surfaceForm'] )
 		
@@ -79,12 +80,29 @@ def getTerms( text ) :
 
 	terms = { }	
 
+	spot_set = set()
 	resp_s = query( spot )
 	spot_set = getEntityNameFromSpot(resp_s)
-	
+#	
 	resp_a = query( annotate )
 	annotate_set = getEntityNameFromAnnotate(resp_a)
-	
+
+	party_set = getPeople( resp_a )
+
 	terms['keywords'] = spot_set.union(annotate_set)
 	
 	return terms
+		 
+
+
+"""
+Returns the list of DBpedia:Person records
+"""
+def getPeople( entities ) :
+	json_data = simplejson.loads ( entities )
+	name_set = set()
+	for item in json_data['Resources'] :
+		type = str(item['@types'])
+		if( 'DBpedia:Person' in type) :
+			name_set.add( item['@surfaceForm'] )
+	print name_set
