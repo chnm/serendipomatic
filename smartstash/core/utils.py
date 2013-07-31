@@ -33,70 +33,70 @@ def common_words(text, max_items=15):
 """
 Returns JSON response from dbpedia spotlight annotate (or other source)
 """
-def query( query ) :
-	r = requests.get(query['url'], params=query['params'], headers = {'accept': 'application/json'})
+def query(query) :
+    r = requests.get(query['url'], params=query['params'], headers = {'accept': 'application/json'})
 
-	return r.text
+    return r.text
 
 """
 Return a set named entities from a Spotting query
 """
-def get_names_from_spotting( doc ) :
+def get_names_from_spotting(doc) :
     json_data = simplejson.loads(doc)
     name_set = set()
     for item in json_data['annotation']['surfaceForm'] :
         name = str(item['@name'])
-        name = name.translate(None, string.punctuation ).strip()
-        name_set.add( name )
+        name = name.translate(None, string.punctuation).strip()
+        name_set.add(name)
     return name_set
 
 """
 """
-def get_names_from_annotate( doc ) :
-	json_data = simplejson.loads ( doc )
-	name_set = set()
+def get_names_from_annotate(doc) :
+    json_data = simplejson.loads(doc)
+    name_set = set()
 
-	for item in json_data['Resources'] :
-		name_set.add( item['@surfaceForm'] )
+    for item in json_data['Resources'] :
+        name_set.add(item['@surfaceForm'])
 
-	return name_set
+    return name_set
 
 # Returns a dictionary of search terms ** KEYWORD ONLY **
-def get_search_terms( text ) :
-	spot = {
-		'url':'http://spotlight.dbpedia.org/rest/spot',
-		'params': {
-			'text':text,
-		}
-	}
+def get_search_terms(text) :
+    spot = {
+        'url':'http://spotlight.dbpedia.org/rest/spot',
+        'params': {
+            'text':text,
+        }
+    }
 
-	annotate = {
-		'url': 'http://spotlight.dbpedia.org/rest/annotate',
-		'params': {
-			'text':sampletext,
-			'confidence':0.3,
-			'support':60,
-		}
-	}
+    annotate = {
+        'url': 'http://spotlight.dbpedia.org/rest/annotate',
+        'params': {
+            'text':sampletext,
+            'confidence':0.3,
+            'support':60,
+        }
+    }
 
-	terms = { }
+    terms = { }
 
-	spot_set = set()
-	annotate_set = set()
+    spot_set = set()
+    annotate_set = set()
 
-	resp_s = query( spot )
-	spot_set = get_names_from_spotting(resp_s)
+    resp_s = query(spot)
+    spot_set = get_names_from_spotting(resp_s)
 
-	resp_a = query( annotate )
-	annotate_set = get_names_from_annotate(resp_a)
-	# get list of people
-	people_set = get_people( resp_a )
+    resp_a = query(annotate)
+    annotate_set = get_names_from_annotate(resp_a)
+    # get list of people
+    people_set = get_people(resp_a)
     place_set = get_places( resp_a )
 
-	terms['keywords'] = spot_set.union(annotate_set)
-	terms['people'] = people_set
-	terms['places'] = place_set
-	return terms
+    terms['keywords'] = spot_set.union(annotate_set)
+    terms['people'] = people_set
+    terms['places'] = place_set
+    return terms
 
 
 
@@ -104,22 +104,22 @@ def get_search_terms( text ) :
 Returns the list of DBpedia:Person records
 """
 def get_people( entities ) :
-	json_data = simplejson.loads ( entities )
-	name_set = set()
-	for item in json_data['Resources'] :
-		type = str(item['@types'])
-		if( 'DBpedia:Person' in type) :
-			name_set.add( item['@surfaceForm'] )
-	return name_set
+    json_data = simplejson.loads ( entities )
+    name_set = set()
+    for item in json_data['Resources'] :
+        type = str(item['@types'])
+        if( 'DBpedia:Person' in type) :
+            name_set.add( item['@surfaceForm'] )
+    return name_set
 
 """
 Returns the list of DBpedia:Place records
 """
 def get_places (entities ) :
-	json_data = simplejson.loads( entities )
-	place_set = set()
-	for item in json_data['Resources'] :
-		type = str(item['@types'])
-		if('DBpedia:Place' in type) :
-			place_set.add( item['@surfaceForm'] )
-	return place_set
+    json_data = simplejson.loads( entities )
+    place_set = set()
+    for item in json_data['Resources'] :
+        type = str(item['@types'])
+        if('DBpedia:Place' in type) :
+            place_set.add( item['@surfaceForm'] )
+    return place_set
