@@ -1,4 +1,5 @@
 import string
+import json
 import requests
 import nltk
 from nltk.corpus import stopwords
@@ -8,15 +9,6 @@ from nltk.corpus import stopwords
 #TODO: a regex that will do this better than the current method (python's string.punctuation without the single quote)
 #TODO: find a list of stopwords, don't count them
 #nltk?
-
-"""
-Returns JSON response from dbpedia spotlight 
-"""	
-def query( url, p ) : 
-    r = requests.get(url, params=p, headers = {'accept': 'application/json'})
-    return r.text
-
-
 
 
 def common_words(text, max_items=15):
@@ -36,3 +28,63 @@ def common_words(text, max_items=15):
     return {'keywords': freqdist.keys()[:max_items]}
 
     # TODO: also look at using nltk to generate collocations
+
+
+"""
+Returns JSON response from dbpedia spotlight annotate (or other source)
+"""	
+def query( query ) : 
+	r = requests.get(query['url'], params=query['params'], headers = {'accept': 'application/json'})
+	
+	return r.text
+
+"""
+Return a set named entities from a Spotting query
+"""
+def getEntityNameFromSpot( doc ) :
+	json_data = simplejson.loads(doc)
+	name_set = set()
+	for item in json_data['annotation']['surfaceForm'] :
+		name_set.add( item['@name'] )
+	
+	return name_set
+	
+"""
+"""
+def getEntityNameFromAnnotate( doc ) :
+	json_data = simplejson.loads ( doc )
+	name_set = set()
+	for item in json_data['Resources'] :
+		name_set.add( item['@surfaceForm'] )
+		
+	return name_set
+
+# Returns a dictionary of search terms ** KEYWORD ONLY ** 
+def getTerms( text ) :
+	spot = {
+		'url':'http://spotlight.dbpedia.org/rest/spot',
+		'params': {
+			'text':sampletext,
+		}
+	}
+
+	annotate = {
+		'url': 'http://spotlight.dbpedia.org/rest/annotate',
+		'params': {
+			'text':sampletext,
+			'confidence':0.3,
+			'support':60,
+		}
+	}
+
+	terms = { }	
+
+	resp_s = query( spot )
+	spot_set = getEntityNameFromSpot(resp_s)
+	
+	resp_a = query( annotate )
+	annotate_set = getEntityNameFromAnnotate(resp_a)
+	
+	terms['keywords'] = spot_set.union(annotate_set)
+	
+	return terms
