@@ -595,6 +595,11 @@ code .nd {
 
 }
 
+.photo img {
+     height: 100%;
+     width: 100%;
+}
+
 .iso_date {
 
 }
@@ -622,179 +627,47 @@ code .nd {
 .panel {
      float: left;
      font-size: 0.8em;
-     height: 220px;
-     width: 330px;
-     margin: 20px;
-     perspective: 600px;
+     perspective: 6000px;
      position: relative;
 }
 
 .panel .front {
      backface-visibility: hidden;
-     background: white;
      float: none;
-     height: inherit;
-     left: 0px;
-     position: absolute;
-     text-align: center;
-     top: 0px;
+     position: relative;
      transform-style: preserve-3d;
      transform: rotateX(0deg) rotateY(0deg);
      transition: all 0.4s ease-in-out 0s;
-     width: inherit;
      z-index: 900;
 }
 
 .panel.flip .front {
-     background: none repeat scroll 0% 0% #333333;
      transform: rotateY(180deg);
      z-index: 900;
 }
 
 .panel .back {
      backface-visibility: hidden;
-     background: none repeat scroll 0% 0% #333333;
      float: none;
-     height: inherit;
-     left: 0px;
-     position: absolute;
-     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
-     top: 0px;
+     height: 209px;
+     width: 320px;
+     position: relative;
      transform-style: preserve-3d;
      transform: rotateY(-180deg);
      transition: all 0.4s ease-in-out 0s;
-     width: inherit;
      z-index: 800;
 }
 
 .panel.flip .back {
      background: none repeat scroll 0% 0% #80868D;
-     box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.2);
      transform: rotateX(0deg) rotateY(0deg);
      z-index: 1000;
 }
 
-.click .front {
-     cursor: pointer;
-     transform: rotateX(0deg);
-}
-
-.click.flip .front {
-     transform: rotateX(180deg);
-}
-
-.click .back {
-     cursor: pointer;
-     transform: rotateX(-180deg);
-}
-
-.click.flip .back {
-     transform: rotateX(0deg);
-}
-
-.contact {
-     height: 240px;
-     width: 290px;
-}
-
-.diagonal .front {
-     transform: rotate3d(45, 45, 0, 0deg);
-}
-
-.diagonal .front:hover {
-     transform: rotate3d(45, 45, 0, -36deg);
-     transition-delay: 0s;
-     transition-duration: 10s;
-}
-
-.diagonal.flip .front, .diagonal.flip .front:hover {
-     transform: rotate3d(-45, -45, 0, 150deg);
-     transition: all 0.4s ease-in-out 0s;
-}
-
-.diagonal .front .message {
-     font-size: 1.4em;
-     opacity: 0;
-}
-
-.diagonal .front:hover .message {
-     opacity: 0.4;
-     transform: translateX(-30px) translateZ(40px) scale(1.4);
-     transition-delay: 4s;
-     transition-duration: 12s;
-}
-
-.diagonal.flip .front .message {
-
-}
-
-.diagonal .back {
-     transform: rotate3d(45, 45, 0, -180deg);
-}
-
-.diagonal.flip .back {
-     transform: rotate3d(45, 45, 0, -30deg);
-}
-
-.swing .front, .swing .back {
-     backface-visibility: visible;
-     transform-origin: 170px 0px 0px;
-     transition-duration: 1s;
-     width: 140px;
-}
-
-.swing .front {
-     transform: rotateY(0deg);
-}
-
-.swing .back {
-     background-color: #555555;
-     transform: rotateY(-180deg) translateX(198px) translateZ(2px);
-}
-
-.swing.flip .front {
-     background-color: #222222;
-     transform: rotateY(180deg);
-}
-
-.swing.flip .back {
-     background-color: #80888F;
-     transform: rotateY(0deg) translateX(198px) translateZ(2px);
-}
-
 .panel .pad {
-     padding: 0px 15px;
+
 }
 
 .panel.flip .action {
      display: none;
-}
-
-.block ol li {
-     margin: 0px 0px 0px 28px;
-     text-align: left;
-}
-
-.block .action {
-     background: none repeat scroll 0% 0% #333333;
-     cursor: pointer;
-     display: block;
-     font-size: 0.8em;
-     opacity: 0;
-     padding: 3px;
-     position: absolute;
-     text-align: right;
-}
-
-.block:hover .action {
-     opacity: 0.7;
-}
-
-.circle div {
-     border-radius: 100px 100px 100px 100px;
-}
-
-.circle div h2 {
-     padding-top: 3em;
-     text-align: center;
 }
