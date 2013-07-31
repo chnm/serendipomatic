@@ -41,7 +41,7 @@ def query( query ) :
 """
 Return a set named entities from a Spotting query
 """
-def getEntityNameFromSpot( doc ) :
+def get_names_from_spotting( doc ) :
     json_data = simplejson.loads(doc)
     name_set = set()
     for item in json_data['annotation']['surfaceForm'] :
@@ -52,7 +52,7 @@ def getEntityNameFromSpot( doc ) :
 
 """
 """
-def getEntityNameFromAnnotate( doc ) :
+def get_names_from_annotate( doc ) :
 	json_data = simplejson.loads ( doc )
 	name_set = set()
 
@@ -62,7 +62,7 @@ def getEntityNameFromAnnotate( doc ) :
 	return name_set
 
 # Returns a dictionary of search terms ** KEYWORD ONLY **
-def getTerms( text ) :
+def get_search_terms( text ) :
 	spot = {
 		'url':'http://spotlight.dbpedia.org/rest/spot',
 		'params': {
@@ -85,13 +85,13 @@ def getTerms( text ) :
 	annotate_set = set()
 
 	resp_s = query( spot )
-	spot_set = getEntityNameFromSpot(resp_s)
+	spot_set = get_names_from_spotting(resp_s)
 
 	resp_a = query( annotate )
-	annotate_set = getEntityNameFromAnnotate(resp_a)
+	annotate_set = get_names_from_annotate(resp_a)
 	# get list of people
-	people_set = getPeople( resp_a )
-    place_set = getPlaces( resp_a )
+	people_set = get_people( resp_a )
+    place_set = get_places( resp_a )
 
 	terms['keywords'] = spot_set.union(annotate_set)
 	terms['people'] = people_set
@@ -103,7 +103,7 @@ def getTerms( text ) :
 """
 Returns the list of DBpedia:Person records
 """
-def getPeople( entities ) :
+def get_people( entities ) :
 	json_data = simplejson.loads ( entities )
 	name_set = set()
 	for item in json_data['Resources'] :
@@ -115,7 +115,7 @@ def getPeople( entities ) :
 """
 Returns the list of DBpedia:Place records
 """
-def getPlaces (entities ) :
+def get_places (entities ) :
 	json_data = simplejson.loads( entities )
 	place_set = set()
 	for item in json_data['Resources'] :
