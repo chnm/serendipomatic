@@ -1,9 +1,50 @@
-<p><b>Query Terms:</b> dog, cat</p>
+{% extends 'site_base.html' %}
+{% load static %}
 
+{% block title %}MagicStash Items Display{% endblock %}
+
+{% block content %}
+<h3>Sorry, css is just copied from the Isotope demo.<h3>
+
+<p><b>Query Terms:</b> {{ query_terms }}</p>
+<div id="container">
 {% for item in items %}
-	<p><b>Title: {{ item.title }}</b><br /><img src="{{ item.thumbnail }}" alt="{{ item.title }}" /></p>
+
+	<div class="element transition metal">
+		<p><a href="http://www.mrmoneymustache.com/" target="_blank">
+            <img src="{{ item.thumbnail }}" alt="{{ item.title }}" />
+        </a><br />
+		<a href="http://www.mrmoneymustache.com/" target="_blank">{{ item.title }}</a><br />
+		Name<br />
+		Date<br />
+		Source repository</p>
+	</div>
 {% endfor %}
+</div>
 
 {% comment %}
 {{ item.title|default:'(no source)' }}
 {% endcomment %}
+
+  <script src="http://isotope.metafizzy.co/js/jquery-1.7.1.min.js"></script>
+  <script src="http://isotope.metafizzy.co/jquery.isotope.min.js"></script>
+  <script>
+var $container = $('#container')
+// initialize Isotope
+$container.isotope({
+  // options...
+  resizable: false, // disable normal resizing
+  // set columnWidth to a percentage of container width
+  masonry: { columnWidth: $container.width() / 5 }
+});
+
+// update columnWidth on window resize
+$(window).smartresize(function(){
+  $container.isotope({
+    // update columnWidth to a percentage of container width
+    masonry: { columnWidth: $container.width() / 5 }
+  });
+});
+</script>
+
+{% endblock %}

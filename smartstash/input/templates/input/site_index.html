@@ -1,11 +1,10 @@
+{% extends 'site_base.html' %}
 {% load static %}
 
-<html>
-<head><title>site index</title></head>
-<body>
+{% block title %}MagicStash{% endblock %}
+
+{% block content %}
 <img src="{% static 'img/stache.jpg' %}" />
 
-
 <p><a href="{% url 'display:items' %}">test item display</a></p>
-</body>
-</html>
+{% endblock %}
