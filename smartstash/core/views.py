@@ -27,6 +27,9 @@ def site_index(request):
             # store search terms in the session so we can redirect
             request.session['search_terms'] = search_terms
 
+            # insert logic for processing zotero username here
+            # zotero_user = form.cleaned_data['zotero_user']
+
             # redirect
             # NOTE: should probably be http code 303, see other
             return HttpResponseRedirect(reverse('view-stash'))
