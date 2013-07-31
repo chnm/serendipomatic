@@ -25,3 +25,5 @@ pip-log.txt
 
 # project-specific stuff
 localsettings.py
+
+*.DS_Store
