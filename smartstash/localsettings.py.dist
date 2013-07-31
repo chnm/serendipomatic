@@ -3,6 +3,17 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+# Configure api keys here for services that require them
+API_KEYS = {
+    'DPLA': '',
+
+}
+
+# Make this unique, and don't share it with anybody.
+# Generate one a random key here:
+#   http://www.miniwebtool.com/django-secret-key-generator/
+SECRET_KEY = ''
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -35,11 +46,6 @@ ALLOWED_HOSTS = []
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'America/Chicago'
 
-# Make this unique, and don't share it with anybody.
-# Generate one a random key here:
-#   http://www.miniwebtool.com/django-secret-key-generator/
-SECRET_KEY = ''
-
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -70,9 +76,4 @@ LOGGING = {
 }
 
 
-# Configure api keys here for services that require them
-API_KEYS = {
-    'DPLA': '',
-
-}
 
