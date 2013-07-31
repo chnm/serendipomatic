@@ -22,7 +22,7 @@
 <hr/>
 <div class="main" tabindex="8">
 <h3>Let&rsquo;s Get Started.</h3>
-<form method="post" action="{% url 'site-index' %}">{% csrf_token %}>
+<form method="post" action="{% url 'site-index' %}">{% csrf_token %}
 <div class="two-thirds column">
     {% if input_form.errors %}
       {{ input_form.errors }}
