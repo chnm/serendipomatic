@@ -168,6 +168,7 @@ body {
   margin-bottom: 20px;
 }
 
+
 .element {
   width: 110px;
   height: 110px;
@@ -181,7 +182,7 @@ body {
 }
 
 
-
+/*
 
 .element * {
   position: absolute;
@@ -223,6 +224,7 @@ body {
   top: 0.5em;
 }
 
+
 .variable-sizes .element.width2 { width: 230px; }
 
 .variable-sizes .element.height2 { height: 230px; }
@@ -239,7 +241,7 @@ body {
   height: 350px;
   z-index: 100;
 }
-
+*/
 
 
 
