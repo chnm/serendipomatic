@@ -5,11 +5,13 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 from smartstash.input import views as input_views
+from smartstash.display import views as display_views
 
 urlpatterns = patterns('',
     # Examples:
 
     url(r'^$', input_views.site_index, name='site-index'),
+    url(r'^items/', display_views.view_results, name='items'),
     # url(r'^input/', include('smartstash.input.urls',
     #     namespace='input')
     # url(r'^$', 'smartstash.views.home', name='home'),

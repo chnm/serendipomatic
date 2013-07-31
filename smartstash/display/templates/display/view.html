@@ -1,0 +1,9 @@
+<p><b>Query Terms:</b> dog, cat</p>
+
+{% for item in items %}
+	<p><b>Title: {{ item.title }}</b><br /><img src="{{ item.thumbnail }}" alt="{{ item.title }}" /></p>
+{% endfor %}
+
+{% comment %}
+{{ item.title|default:'(no source)' }}
+{% endcomment %}
