@@ -1,8 +1,8 @@
-<<<<<<< HEAD
 import string
 import requests
 import nltk
 from nltk.corpus import stopwords
+
 #We want to eliminate all punctuation except single quotes.
 #This isn't the only case (sometimes you have single quotes around a word, which we do want to get rid of)
 #TODO: a regex that will do this better than the current method (python's string.punctuation without the single quote)
@@ -16,11 +16,7 @@ def query( url, p ) :
     r = requests.get(url, params=p, headers = {'accept': 'application/json'})
     return r.text
 
-=======
 
-import nltk
-from nltk.corpus import stopwords
->>>>>>> c9054d50e6215b3ec0c9d4d20288204696a97f3a
 
 
 def common_words(text, max_items=15):
