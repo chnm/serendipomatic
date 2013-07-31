@@ -11,4 +11,4 @@ def common_words(textString, n):
     wordCounts = {}
     for word in wordList:
         wordCounts[word] = wordCounts.get(word, 0) + 1
-    return sorted(wordCounts, key = wordCounts.get, reverse = True)[0:n]
+    return {"keywords": sorted(wordCounts, key = wordCounts.get, reverse = True)[0:n]}
