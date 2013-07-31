@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>SmartStash3</title>
+
+<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<link rel="stylesheet" href="../css/style.css" />
+<!-- scripts at bottom of page -->
+</head>
+
+<body class="demos ">
+<section id="content">
+<div id="container" class="photos clearfix">
+
+<!-- One of the ten images displayed -->
+<div class="hover panel">
+	<div class="front">
+		<div class="pad">
+		<div class="photo">
+	<div class="iso_image"><img src="../testimages/finger.jpg" alt="" /></div>
+		</div>
+		</div>
+	</div>
+	<div class="back">
+		<div class="pad">
+			<div class="iso_date">Date</div>
+			<div class="iso_title"><a href="http://www.linktoURI.com">Title</a></div>
+			<div class="iso_author">Name</div>
+			<div class="iso_source"><a href="http://www.linktoURI.com/">Linked source repository/URI</a></div>
+		</div>
+	</div>
+</div>
+
+<!-- One of the ten images displayed -->
+<div class="hover panel">
+	<div class="front">
+		<div class="pad">
+		<div class="photo">
+	<div class="iso_image"><img src="../testimages/finger.jpg" alt="" /></div>
+		</div>
+		</div>
+	</div>
+	<div class="back">
+		<div class="pad">
+			<div class="iso_date">Date</div>
+			<div class="iso_title"><a href="http://www.linktoURI.com">Title</a></div>
+			<div class="iso_author">Name</div>
+			<div class="iso_source"><a href="http://www.linktoURI.com/">Linked source repository/URI</a></div>
+		</div>
+	</div>
+</div>
+
+<!-- One of the ten images displayed -->
+<div class="hover panel">
+	<div class="front">
+		<div class="pad">
+		<div class="photo">
+	<div class="iso_image"><img src="../testimages/finger.jpg" alt="" /></div>
+		</div>
+		</div>
+	</div>
+	<div class="back">
+		<div class="pad">
+			<div class="iso_date">Date</div>
+			<div class="iso_title"><a href="http://www.linktoURI.com">Title</a></div>
+			<div class="iso_author">Name</div>
+			<div class="iso_source"><a href="http://www.linktoURI.com/">Linked source repository/URI</a></div>
+		</div>
+	</div>
+</div>
+
+<!-- One of the ten images displayed -->
+<div class="hover panel">
+	<div class="front">
+		<div class="pad">
+		<div class="photo">
+	<div class="iso_image"><img src="../testimages/finger.jpg" alt="" /></div>
+		</div>
+		</div>
+	</div>
+	<div class="back">
+		<div class="pad">
+			<div class="iso_date">Date</div>
+			<div class="iso_title"><a href="http://www.linktoURI.com">Title</a></div>
+			<div class="iso_author">Name</div>
+			<div class="iso_source"><a href="http://www.linktoURI.com/">Linked source repository/URI</a></div>
+		</div>
+	</div>
+</div>
+
+<!-- One of the ten images displayed -->
+<div class="hover panel">
+	<div class="front">
+		<div class="pad">
+		<div class="photo">
+	<div class="iso_image"><img src="../testimages/finger.jpg" alt="" /></div>
+		</div>
+		</div>
+	</div>
+	<div class="back">
+		<div class="pad">
+			<div class="iso_date">Date</div>
+			<div class="iso_title"><a href="http://www.linktoURI.com">Title</a></div>
+			<div class="iso_author">Name</div>
+			<div class="iso_source"><a href="http://www.linktoURI.com/">Linked source repository/URI</a></div>
+		</div>
+	</div>
+</div>
+
+
+
+</div> <!-- closing container div -->
+
+<script src="../js/jquery-1.7.1.min.js"></script>
+<script src="../jquery.isotope.min.js"></script>
+<script>
+    $(function(){
+
+      var $container = $('#container');
+
+      $container.imagesLoaded( function(){
+        $container.isotope({
+          itemSelector : '.photo'
+        });
+      });
+
+
+    });
+    $(document).ready(function(){
+// set up hover panels
+// although this can be done without JavaScript, we've attached these events
+// because it causes the hover to be triggered when the element is tapped on a touch device
+$('.hover').hover(function(){
+$(this).addClass('flip');
+},function(){
+$(this).removeClass('flip');
+});
+// set up click/tap panels
+$('.click').toggle(function(){
+$(this).addClass('flip');
+},function(){
+$(this).removeClass('flip');
+});
+// set up block configuration
+$('.block .action').click(function(){
+$('.block').addClass('flip');
+});
+$('.block .edit-submit').click(function(e){
+$('.block').removeClass('flip');
+// why not update that list for fun?
+$('#list-title').text($('#form_title').val());
+$('#list-items').empty();
+for (var num = 1; num <= $('#form_items').val(); num++) {
+$('#list-items').append('<li>Name '+num+'</li>');
+}
+e.preventDefault();
+});
+// set up contact form link
+$('.contact .action').click(function(e){
+$('.contact').addClass('flip');
+e.preventDefault();
+});
+$('.contact .edit-submit').click(function(e){
+$('.contact').removeClass('flip');
+// just for effect we'll update the content
+e.preventDefault();
+});
+});
+</script>
+
+</section> <!-- #content -->
+</body>
+</html>
