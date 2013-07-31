@@ -6,7 +6,7 @@ TEMPLATE_DEBUG = DEBUG
 # Configure api keys here for services that require them
 API_KEYS = {
     'DPLA': '',
-
+    'Europeana': ''
 }
 
 # Make this unique, and don't share it with anybody.

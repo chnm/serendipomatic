@@ -56,3 +56,56 @@ class DPLA(object):
             items.append(i)
 
         return items
+
+
+class Europeana(object):
+
+    API_KEY = settings.API_KEYS['Europeana']
+
+    # NOTE: currently using the bibs library for europeana,
+    # but there is a europeana-search module on pypi we could also use
+
+    @staticmethod
+    def find_items(keywords):
+        qry = 'wskey->%s:query->%s' % (
+            Europeana.API_KEY,
+            ' OR '.join(keywords)
+        )
+
+        b = Bibs()
+        results = b.search(qry, 'europeanav2', 'search')
+
+        items = []
+        for doc in results['items']:
+            # NOTE: result includes a 'completeness' score
+            # which we could use for a first-pass filter to weed out junk records
+
+            i = DisplayItem(
+
+                format=doc.get('type', None),
+                source=doc.get('provider'),
+                # FIXME: do we want provider or dataprovider here?
+
+                # url on provider's website with context
+                url=doc.get('guid', None),
+                date=doc.get('edmTimespanLabel', None)
+            )
+
+            # NOTE: doc['link'] provides json with full record data
+            # if we want more item details
+            # should NOT be displayed to users (includes api key)
+
+            # preview and title are both lists; for now, in both cases,
+            # just grab the first one
+            if 'title' in doc:
+                i.title = doc['title'][0]
+            if 'edmPreview' in doc:
+                i.thumbnail = doc['edmPreview'][0]
+
+            # NOTE: spatial/location information doesn't seem to be included
+            # in this item result
+            items.append(i)
+
+        return items
+
+
