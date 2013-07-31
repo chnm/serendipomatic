@@ -13,7 +13,7 @@ from nltk.corpus import stopwords
 
 def common_words(text, max_items=15):
     # TODO: make stopword language configurable?
-    stopwords = nltk.corpus.stopwords.words('english')
+    stop_words = nltk.corpus.stopwords.words('english')
 
     tokens = nltk.word_tokenize(text)
 
