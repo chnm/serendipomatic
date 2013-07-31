@@ -22,8 +22,8 @@
 <hr/>
 <div class="main" tabindex="8">
 <h3>Let&rsquo;s Get Started.</h3>
+<form method="post" action="{% url 'site-index' %}">{% csrf_token %}>
 <div class="two-thirds column">
-<form method="post" action="{% url 'site-index' %}">{% csrf_token %}
     {% if input_form.errors %}
       {{ input_form.errors }}
     {% endif %}
@@ -35,13 +35,10 @@
       <p class="help-text">{{ field.help_text }}</p>
     {% endfor %}
 
-    <input class="magic" type="submit" value="Make the Magic!"  tabindex="9"/>
+    <input class="magic" type="submit" value="Make the Magic!" tabindex="9"/>
+</div>
 </form>
-</div>
-<div class="two-thirds column">
 
-<h5>Got Zotero? Enter your information here.</h5> 
-</div>
 </div>
 
 </div><!-- container -->
