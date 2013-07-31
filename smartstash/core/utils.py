@@ -41,17 +41,18 @@ def query( query ) :
 """
 Return a set named entities from a Spotting query
 """
-def getEntityNameFromSpot( doc ) :
-	json_data = simplejson.loads(doc)
-	name_set = set()
-	for item in json_data['annotation']['surfaceForm'] :
-		name_set.add( item['@name'] )
-
-	return name_set
+def get_names_from_spotting( doc ) :
+    json_data = simplejson.loads(doc)
+    name_set = set()
+    for item in json_data['annotation']['surfaceForm'] :
+        name = str(item['@name'])
+        name = name.translate(None, string.punctuation ).strip()
+        name_set.add( name )
+    return name_set
 
 """
 """
-def getEntityNameFromAnnotate( doc ) :
+def get_names_from_annotate( doc ) :
 	json_data = simplejson.loads ( doc )
 	name_set = set()
 
@@ -61,7 +62,7 @@ def getEntityNameFromAnnotate( doc ) :
 	return name_set
 
 # Returns a dictionary of search terms ** KEYWORD ONLY **
-def getTerms( text ) :
+def get_search_terms( text ) :
 	spot = {
 		'url':'http://spotlight.dbpedia.org/rest/spot',
 		'params': {
@@ -84,15 +85,17 @@ def getTerms( text ) :
 	annotate_set = set()
 
 	resp_s = query( spot )
-	spot_set = getEntityNameFromSpot(resp_s)
+	spot_set = get_names_from_spotting(resp_s)
 
 	resp_a = query( annotate )
-	annotate_set = getEntityNameFromAnnotate(resp_a)
+	annotate_set = get_names_from_annotate(resp_a)
 	# get list of people
-	people_set = getPeople( resp_a )
+	people_set = get_people( resp_a )
+    place_set = get_places( resp_a )
 
 	terms['keywords'] = spot_set.union(annotate_set)
 	terms['people'] = people_set
+	terms['places'] = place_set
 	return terms
 
 
@@ -100,7 +103,7 @@ def getTerms( text ) :
 """
 Returns the list of DBpedia:Person records
 """
-def getPeople( entities ) :
+def get_people( entities ) :
 	json_data = simplejson.loads ( entities )
 	name_set = set()
 	for item in json_data['Resources'] :
@@ -108,3 +111,15 @@ def getPeople( entities ) :
 		if( 'DBpedia:Person' in type) :
 			name_set.add( item['@surfaceForm'] )
 	return name_set
+
+"""
+Returns the list of DBpedia:Place records
+"""
+def get_places (entities ) :
+	json_data = simplejson.loads( entities )
+	place_set = set()
+	for item in json_data['Resources'] :
+		type = str(item['@types'])
+		if('DBpedia:Place' in type) :
+			place_set.add( item['@surfaceForm'] )
+	return place_set
