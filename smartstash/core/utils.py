@@ -93,6 +93,7 @@ def getTerms( text ) :
 
 	terms['keywords'] = spot_set.union(annotate_set)
 	terms['people'] = people_set
+	term['places'] = place_set
 	return terms
 
 
@@ -108,3 +109,4 @@ def getPeople( entities ) :
 		if( 'DBpedia:Person' in type) :
 			name_set.add( item['@surfaceForm'] )
 	return name_set
+
