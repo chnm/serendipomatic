@@ -591,48 +591,47 @@ code .nd {
      padding: 5px 0px;
 }
 
-/* New styles added Wednesday morning */
 .photo {
-background: white;
+
 }
+
 .iso_date {
+
 }
+
 .iso_image {
 
 }
+
 .iso_image img {
 
 }
+
 .iso_title {
 
 }
+
 .iso_author {
 
 }
+
 .iso_source {
 
-}
-
-/* CSS card flipping attributes! */
-body {
-     width: 720px;
 }
 
 .panel {
      float: left;
      font-size: 0.8em;
-     height: 200px;
+     height: 220px;
+     width: 330px;
      margin: 20px;
      perspective: 600px;
      position: relative;
-     width: 200px;
 }
 
 .panel .front {
      backface-visibility: hidden;
-     background: none repeat scroll 0% 0% #6B7077;
-     border: 1px solid #CCCCCC;
-     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.9);
+     background: white;
      float: none;
      height: inherit;
      left: 0px;
@@ -648,8 +647,6 @@ body {
 
 .panel.flip .front {
      background: none repeat scroll 0% 0% #333333;
-     border-color: #EEEEEE;
-     box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.2);
      transform: rotateY(180deg);
      z-index: 900;
 }
@@ -657,7 +654,6 @@ body {
 .panel .back {
      backface-visibility: hidden;
      background: none repeat scroll 0% 0% #333333;
-     border: 1px solid #CCCCCC;
      float: none;
      height: inherit;
      left: 0px;
@@ -694,6 +690,50 @@ body {
 
 .click.flip .back {
      transform: rotateX(0deg);
+}
+
+.contact {
+     height: 240px;
+     width: 290px;
+}
+
+.diagonal .front {
+     transform: rotate3d(45, 45, 0, 0deg);
+}
+
+.diagonal .front:hover {
+     transform: rotate3d(45, 45, 0, -36deg);
+     transition-delay: 0s;
+     transition-duration: 10s;
+}
+
+.diagonal.flip .front, .diagonal.flip .front:hover {
+     transform: rotate3d(-45, -45, 0, 150deg);
+     transition: all 0.4s ease-in-out 0s;
+}
+
+.diagonal .front .message {
+     font-size: 1.4em;
+     opacity: 0;
+}
+
+.diagonal .front:hover .message {
+     opacity: 0.4;
+     transform: translateX(-30px) translateZ(40px) scale(1.4);
+     transition-delay: 4s;
+     transition-duration: 12s;
+}
+
+.diagonal.flip .front .message {
+
+}
+
+.diagonal .back {
+     transform: rotate3d(45, 45, 0, -180deg);
+}
+
+.diagonal.flip .back {
+     transform: rotate3d(45, 45, 0, -30deg);
 }
 
 .swing .front, .swing .back {
@@ -748,4 +788,13 @@ body {
 
 .block:hover .action {
      opacity: 0.7;
+}
+
+.circle div {
+     border-radius: 100px 100px 100px 100px;
+}
+
+.circle div h2 {
+     padding-top: 3em;
+     text-align: center;
 }
