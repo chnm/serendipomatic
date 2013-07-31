@@ -5,10 +5,12 @@
 
 {% block content %}
 
-<p><b>Query Terms:</b> {{ query_terms.keywords|join:', ' }}</p>
-<p style="float:right;">
-    <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Start Over</button></a>
+<p>
+<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Start Over</button></a>
+<br />
+<b>Query Terms:</b> {{ query_terms.keywords|join:', ' }}
 </p>
+
 <div id="container">
 {% for item in items %}
 

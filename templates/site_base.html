@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <!-- CSS
   ================================================== -->
-  <!--<link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen" />-->
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen" />
   <link href="{% static 'css/base.css' %}" rel="stylesheet" media="screen" />
   <link href="{% static 'css/skeleton.css' %}" rel="stylesheet" media="screen" />
   <link href="{% static 'css/layout.css' %}" rel="stylesheet" media="screen" />
@@ -50,7 +50,7 @@
 <menu class="bar">
 <ul>
 <li><a href="#content" tabindex="1">Skip to Content</a></li>
-<li><a href="#" tabindex="2">home</a></li>
+<li><a href="{% url 'site-index' %}" tabindex="2">home</a></li>
 <li><a href="#" tabindex="3">about</a></li>
 <li><a href="#" tabindex="4">contact</a></li>
 </ul>
