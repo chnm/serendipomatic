@@ -1,11 +1,28 @@
 {% extends 'site_base.html' %}
 {% load static %}
 
-{% block title %}MagicStash{% endblock %}
-
 {% block content %}
-<img src="{% static 'img/stache.jpg' %}" />
 
+<div class="one-third column" class="intro" tabindex="5">
+<img class="icons">
+<h4>Grab Your Stash.</h4>
+<p>Copy and Paste some text from your favorite Wikipedia page, bladdy blah blah, etc. </p>
+</div>
+<div class="one-third column" class="intro" tabindex="6">
+<img class="icons">
+<h4>Give it a Twirl.</h4>
+<p>Once you've selected your content, click on the magic button for some thrilling results.</p>
+
+</div>
+<div class="one-third column" class="intro" tabindex="7">
+<img class="icons">
+<h4>Behold!</h4>
+<p>Review the results of the Magic Moustache Machine!</p>
+</div>
+<hr/>
+<div class="main" tabindex="8">
+<h3>Let&rsquo;s Get Started.</h3>
+<div class="two-thirds column">
 <form method="post" action="{% url 'site-index' %}">{% csrf_token %}
     {% if input_form.errors %}
       {{ input_form.errors }}
@@ -18,7 +35,22 @@
       <p class="help-text">{{ field.help_text }}</p>
     {% endfor %}
 
-    <input type="submit" value="Go!"/>
+    <input class="magic" type="submit" value="Make the Magic!"  tabindex="9"/>
 </form>
+</div>
+<div class="two-thirds column">
+
+<h5>Got Zotero? Enter your information here.</h5> 
+</div>
+</div>
+
+</div><!-- container -->
+
+<footer>
+<hr/>
+<h6>This project was made possible with support from a whole lotta peeps.</h6>
+</footer>
+<!-- End Document
+================================================== -->
 
 {% endblock %}

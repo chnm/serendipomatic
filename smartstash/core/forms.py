@@ -4,8 +4,8 @@ from django import forms
 class InputForm(forms.Form):
 
     text = forms.CharField(
-        label='Text Input',
-        help_text='cut and paste a block of text',
+        label='Copy and paste some text from an article.',
+        help_text='Cut and paste a block of text. [Is this something that should go in a tooltip?]',
         widget=forms.Textarea,
         required=True)
 

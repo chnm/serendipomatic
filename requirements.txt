@@ -1,6 +1,7 @@
 # list all python requirements here for installation with pip
 Django
 git+https://github.com/reklaklislaw/bibs.git#egg=bibs
+nltk
 
 # should be installed as dependencies of bibs but don't seem to be
 PyYAML

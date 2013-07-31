@@ -16,6 +16,9 @@ API_KEY: api keys will be listed in our dev/design google document
 
 Add new python dependencies to requirements.txt as needed.
 
+Installing the nltk stopwords corpus requires an additional step:
+
+python -m nltk.downloader stopwords
 
 To start the local dev server:
 

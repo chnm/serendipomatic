@@ -23,7 +23,8 @@ def site_index(request):
             # actual logic here - infer search terms, query apis, display stuff
             text = form.cleaned_data['text']
             search_terms = common_words(text, 15)
-            # FIXME: redirect to new page? how to pass search terms
+            # FIXME: redirect to new page? how to pass search terms?
+            # post? or store in session?
             return view_items(request, search_terms)
 
         # if not valid: pass through and redisplay errors
