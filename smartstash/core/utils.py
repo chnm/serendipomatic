@@ -65,7 +65,7 @@ def getTerms( text ) :
 	spot = {
 		'url':'http://spotlight.dbpedia.org/rest/spot',
 		'params': {
-			'text':sampletext,
+			'text':text,
 		}
 	}
 
@@ -81,16 +81,18 @@ def getTerms( text ) :
 	terms = { }	
 
 	spot_set = set()
+	annotate_set = set()
+	
 	resp_s = query( spot )
 	spot_set = getEntityNameFromSpot(resp_s)
-#	
+	
 	resp_a = query( annotate )
 	annotate_set = getEntityNameFromAnnotate(resp_a)
-
-	party_set = getPeople( resp_a )
+	# get list of people
+	people_set = getPeople( resp_a )
 
 	terms['keywords'] = spot_set.union(annotate_set)
-	
+	terms['people'] = people_set
 	return terms
 		 
 
@@ -105,4 +107,4 @@ def getPeople( entities ) :
 		type = str(item['@types'])
 		if( 'DBpedia:Person' in type) :
 			name_set.add( item['@surfaceForm'] )
-	print name_set
+	return name_set
