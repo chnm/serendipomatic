@@ -8,7 +8,9 @@
 <p>
 <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Start Over</button></a>
 <br />
-<b>Query Terms:</b> {{ query_terms.keywords|join:', ' }}
+<strong>Query Terms:</strong> {{ query_terms.keywords|join:', ' }}
+<br />
+<strong>Sources Used:</strong>  {% autoescape off %}{{ sources|join:', ' }}{% endautoescape %}
 </p>
 
 <div id="container" class="photos clearfix">
@@ -20,7 +22,7 @@
 		<div class="pad">
 		<div class="photo">
 	<div class="iso_image"><a href="{{ item.url }}" target="_blank">
-            <img src="{{ item.thumbnail }}" alt="{{ item.title }}" height="item1h" width="item1w">
+            <img class="imgLiquidFill" src="{{ item.thumbnail }}" alt="{{ item.title }}" style="width:150px; height:150px;">
         </a></div>
 		</div>
 		</div>
@@ -48,112 +50,11 @@
 <!--  <script src="http://isotope.metafizzy.co/jquery.isotope.min.js"></script> -->
 <script src="{% static 'js/isotope-1.5.25.js' %}"></script>
 <script src="{% static 'js/scripts_view.js' %}"></script>
-
+<!-- Image resizing: https://github.com/karacas/imgLiquid -->
+<script src="https://dl.dropboxusercontent.com/u/6983010/wserv/imgLiquid/js/imgLiquid-min.js"></script>
 <script>
-    $(function(){
-
-      var $container = $('#container');
-
-      $container.imagesLoaded( function(){
-        $container.isotope({
-          itemSelector : '.pad .photo'
-        });
-      });
-
-
-    });
-    $(document).ready(function(){
-// set up hover panels
-// although this can be done without JavaScript, we've attached these events
-// because it causes the hover to be triggered when the element is tapped on a touch device
-$('.hover').hover(function(){
-$(this).addClass('flip');
-},function(){
-$(this).removeClass('flip');
+$(document).ready(function() {
+    $(".imgLiquidFill").imgLiquid();
 });
-// set up click/tap panels
-$('.click').toggle(function(){
-$(this).addClass('flip');
-},function(){
-$(this).removeClass('flip');
-});
-// set up block configuration
-$('.block .action').click(function(){
-$('.block').addClass('flip');
-});
-$('.block .edit-submit').click(function(e){
-$('.block').removeClass('flip');
-// why not update that list for fun?
-$('#list-title').text($('#form_title').val());
-$('#list-items').empty();
-for (var num = 1; num <= $('#form_items').val(); num++) {
-$('#list-items').append('<li>Name '+num+'</li>');
-}
-e.preventDefault();
-});
-// set up contact form link
-$('.contact .action').click(function(e){
-$('.contact').addClass('flip');
-e.preventDefault();
-});
-$('.contact .edit-submit').click(function(e){
-$('.contact').removeClass('flip');
-// just for effect we'll update the content
-e.preventDefault();
-});
-});
-
-/* Pull dimensions of each of the ten images and assign them to variables for us in the <img> calls above. I'm sure there's a nice way to collapse this into fewer lines of code... */
-var img = document.getElementById('item1_img');
-//or however you get a handle to the IMG
-var item1w = img.clientWidth;
-var item1h = img.clientHeight;
-
-var img = document.getElementById('item2_img');
-//or however you get a handle to the IMG
-var item2w = img.clientWidth;
-var item2h = img.clientHeight;
-
-var img = document.getElementById('item3_img');
-//or however you get a handle to the IMG
-var item3w = img.clientWidth;
-var item3h = img.clientHeight;
-
-var img = document.getElementById('item4_img');
-//or however you get a handle to the IMG
-var item4w = img.clientWidth;
-var item4h = img.clientHeight;
-
-var img = document.getElementById('item5_img');
-//or however you get a handle to the IMG
-var item5w = img.clientWidth;
-var item5h = img.clientHeight;
-
-var img = document.getElementById('item6_img');
-//or however you get a handle to the IMG
-var item6w = img.clientWidth;
-var item6h = img.clientHeight;
-
-var img = document.getElementById('item7_img');
-//or however you get a handle to the IMG
-var item7w = img.clientWidth;
-var item7h = img.clientHeight;
-
-var img = document.getElementById('item8_img');
-//or however you get a handle to the IMG
-var item8w = img.clientWidth;
-var item8h = img.clientHeight;
-
-var img = document.getElementById('item9_img');
-//or however you get a handle to the IMG
-var item9w = img.clientWidth;
-var item9h = img.clientHeight;
-
-var img = document.getElementById('item10_img');
-//or however you get a handle to the IMG
-var item10w = img.clientWidth;
-var item10h = img.clientHeight;
-
 </script>
-
 {% endblock %}

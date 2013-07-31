@@ -48,6 +48,11 @@ def view_items(request):
     search_terms = request.session['search_terms']  # TODO: error handling if not set
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
+    sourceDict = {'DPLA': 'http://dp.la/', 'Europeana': 'http://www.europeana.eu/'}
+    sources = []
+    for k, v in sourceDict.iteritems():
+        item = '<a href="'+v+'" target="_blank">'+k+'</a>'
+        sources.append(item)
     # quick way to shuffle the two lists together based on
     # http://stackoverflow.com/questions/11125212/interleaving-lists-in-python
     items = [x for t in zip(dpla_items, euro_items) for x in t]
@@ -55,4 +60,4 @@ def view_items(request):
     # NOTE: we may need to clear the cache when we do a 'start over'....
 
     return render(request, 'core/view.html',
-                  {'items': items, 'query_terms': search_terms})
+                  {'items': items, 'query_terms': search_terms, 'sources': sources})
