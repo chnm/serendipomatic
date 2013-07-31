@@ -1,14 +1,22 @@
-import string
-#We want to eliminate all punctuation except single quotes.
-#This isn't the only case (sometimes you have single quotes around a word, which we do want to get rid of)
-#TODO: a regex that will do this better than the current method (python's string.punctuation without the single quote)
-#TODO: find a list of stopwords, don't count them
-#nltk?
 
-def common_words(textString, n):
-    wordList = textString.split()
-    sanitizedWordList = map(lambda word: ''.join([c for c in word if c not in string.punctuation or c == "\'"]), wordList)
-    wordCounts = {}
-    for word in wordList:
-        wordCounts[word] = wordCounts.get(word, 0) + 1
-    return {"keywords": sorted(wordCounts, key = wordCounts.get, reverse = True)[0:n]}
+import nltk
+from nltk.corpus import stopwords
+
+
+def common_words(text, max_items=15):
+    # TODO: make stopword language configurable?
+    stopwords = nltk.corpus.stopwords.words('english')
+
+    tokens = nltk.word_tokenize(text)
+
+    words = [w.lower() for w in tokens
+             if w.isalpha() and w.lower() not in stopwords]
+     # NOTE: isalpha drops numeric content like dates or date ranges
+     # as well as contractions or quoted terms
+
+    freqdist = nltk.FreqDist()
+    for word in words:
+        freqdist.inc(word)
+    return {'keywords': freqdist.keys()[:max_items]}
+
+    # TODO: also look at using nltk to generate collocations
