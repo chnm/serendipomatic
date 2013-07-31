@@ -4,13 +4,13 @@ from django.conf.urls import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 
-from smartstash.input import views as input_views
-from smartstash.display import views as display_views
+from smartstash.core import views
 
-urlpatterns = patterns('',
-    url(r'^$', input_views.site_index, name='site-index'),
-    url(r'^items/', include('smartstash.display.urls',
-        namespace='display')),
+
+urlpatterns = patterns(
+    '',
+    url(r'^$', views.site_index, name='site-index'),
+    url(r'^$', views.view_items, name='view-stash'),
 
     # examples
     # url(r'^input/', include('smartstash.input.urls',
