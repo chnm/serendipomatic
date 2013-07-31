@@ -42,12 +42,13 @@ def query( query ) :
 Return a set named entities from a Spotting query
 """
 def getEntityNameFromSpot( doc ) :
-	json_data = simplejson.loads(doc)
-	name_set = set()
-	for item in json_data['annotation']['surfaceForm'] :
-		name_set.add( item['@name'] )
-
-	return name_set
+    json_data = simplejson.loads(doc)
+    name_set = set()
+    for item in json_data['annotation']['surfaceForm'] :
+        name = str(item['@name'])
+        name = name.translate(None, string.punctuation ).strip()
+        name_set.add( name )
+    return name_set
 
 """
 """
