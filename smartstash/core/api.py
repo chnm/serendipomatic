@@ -137,7 +137,7 @@ class Flickr(object):
     @staticmethod
     def find_items(keywords):
 
-        flickr = flickrapi.FlickAPI(API_KEY) 
+        flickr = flickrapi.FlickrAPI(API_KEY) 
 
         # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
         results = flickr.photos_search(text=' OR '.join(set(terms['keywords'])), format='json', is_commons='true')
@@ -162,8 +162,11 @@ class Flickr(object):
                 # FIXME: do we want provider or dataprovider here?
 
                 # url on provider's website with context
-                url=doc.get('guid', None),
-                date=doc.get('edmTimespanLabel', None)
+                # http://www.flickr.com/photos/{user-id}/{photo-id}
+                url = 'http://www.flickr.com/photos/'+doc['user-id']+'/'+doc['id']
+                
+                # TODO get date data 
+                # date=doc.get('edmTimespanLabel', None)
             )
 
             # NOTE: doc['link'] provides json with full record data
@@ -175,7 +178,9 @@ class Flickr(object):
             if 'title' in doc:
                 i.title = doc['title'][0]
             if 'edmPreview' in doc:
-                i.thumbnail = doc['edmPreview'][0]
+                # build the url back to the image
+                # http://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
+                i.thumbnail = 'http://farm'+str(doc['farm'])+'.staticflickr.com/'+str(doc['server'])+'/'+str(doc['id'])+'_'+str(doc['secret'])+'.jpg'
 
             # NOTE: spatial/location information doesn't seem to be included
             # in this item result
