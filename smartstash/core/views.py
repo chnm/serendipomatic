@@ -90,7 +90,7 @@ def view_items(request):
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
     # added Flickr
-    # flkr_items = Flickr.find_items(**search_terms)
+    flkr_items = Flickr.find_items(**search_terms)
 
     sources = [DPLA, Europeana, Flickr]
     # sources = []
