@@ -43,10 +43,10 @@ def site_index(request):
 
                 # within dbpedia_terms there are now lists for
                 # people
-                # places 
+                # places
                 # dates {'early': ,'late': }
-                # people and places were reconciled against DBpedia. Dates contains 
-                # only four digit values and could be passed to 
+                # people and places were reconciled against DBpedia. Dates contains
+                # only four digit values and could be passed to
 
 
 
@@ -86,7 +86,7 @@ def view_items(request):
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
     # added Flickr
-    flkr_items = Flickr.find_items(**search_terms)
+    # flkr_items = Flickr.find_items(**search_terms)
 
     sources = [DPLA, Europeana, Flickr]
     # sources = []
@@ -95,8 +95,8 @@ def view_items(request):
     #     sources.append(item)
     # quick way to shuffle the two lists together based on
     # http://stackoverflow.com/questions/11125212/interleaving-lists-in-python
-    items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
-
+    items = [x for t in zip(dpla_items, euro_items) for x in t]
+	# items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
     # NOTE: we may need to clear the cache when we do a 'start over'....
 
     return render(request, 'core/view.html',
@@ -116,7 +116,7 @@ def dummy3(request):
     output = 'Lorem ipsum &c. &c. &c.'
     return render(request, 'dummy3.html',
                   {'output': output})
-                  
+
 def saveme(request):
 
     search_terms = request.session['search_terms']  # TODO: error handling if not set

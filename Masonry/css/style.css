@@ -192,27 +192,15 @@ body {
 	width:300px;
 	margin:0px auto;
 	height:190px;
-backface-visibility: hidden !important;
-  -webkit-backface-visibility: hidden !important;
-  -moz-backface-visibility:    hidden !important;
-  -ms-backface-visibility:     hidden !important;
 	}
 #image1a, #image2a, #image3a, #image4a, #image5a, #image6a, #image7a, #image8a, #image9a, #image10a{
 	position:absolute;
 	cursor:pointer;
 	width:300px;
 	height:190px;
-backface-visibility: hidden !important;
-  -webkit-backface-visibility: hidden !important;
-  -moz-backface-visibility:    hidden !important;
-  -ms-backface-visibility:     hidden !important;
 }
 
 #image1b, #image2b, #image3b, #image4b, #image5b, #image6b, #image7b, #image8b, #image9b, #image10b{
 width: 300px;
 height: 190px;
-backface-visibility: hidden !important;
-  -webkit-backface-visibility: hidden !important;
-  -moz-backface-visibility:    hidden !important;
-  -ms-backface-visibility:     hidden !important;
 }

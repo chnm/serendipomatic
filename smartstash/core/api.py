@@ -145,7 +145,7 @@ class Flickr(object):
     @staticmethod
     def find_items(keywords):
 
-        flickr = flickrapi.FlickrAPI(API_KEY)
+        flickr = flickrapi.FlickrAPI('3e7efed359049142ee20c8bd06e1b255')
 
         # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
         results = flickr.photos_search(text=' OR '.join(set(terms['keywords'])), format='json', is_commons='true')
