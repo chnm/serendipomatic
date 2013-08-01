@@ -1,6 +1,8 @@
 # Django settings for smartstash project.
 
+import os
 import os.path
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -26,6 +28,14 @@ ALLOWED_HOSTS = ['*']
 
 # get 'local' settings via heroku env
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+print 'secret key =', SECRET_KEY
+
+API_KEYS = {
+    'DPLA': os.environ.get('DPLA_API_KEY')
+    'Europeana': os.environ.get('EUROPEANA_API_KEY')
+    'Flickr': os.environ.get('FLICKR_API_KEY')
+}
+
 
 
 # Language code for this installation. All choices can be found here:
@@ -139,11 +149,11 @@ INSTALLED_APPS = (
 
 
 
-try:
-    from localsettings import *
-except ImportError:
-    import sys
-    print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
-        'stuff blows up, try copying localsettings.py.dist to ' + \
-        'localsettings.py and setting appropriately for your environment.'
-    pass
+# try:
+#     from localsettings import *
+# except ImportError:
+#     import sys
+#     print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
+#         'stuff blows up, try copying localsettings.py.dist to ' + \
+#         'localsettings.py and setting appropriately for your environment.'
+#     pass
