@@ -101,3 +101,28 @@ def view_items(request):
 
     return render(request, 'core/view.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
+
+def dummy1(request):
+    output = 'Lorem ipsum &c.'
+    return render(request, 'dummy1.html',
+                  {'output': output})
+
+def dummy2(request):
+    output = 'Lorem ipsum &c. &c.'
+    return render(request, 'dummy2.html',
+                  {'output': output})
+
+def dummy3(request):
+    output = 'Lorem ipsum &c. &c. &c.'
+    return render(request, 'dummy3.html',
+                  {'output': output})
+                  
+def saveme(request):
+
+    search_terms = request.session['search_terms']  # TODO: error handling if not set
+    dpla_items = DPLA.find_items(**search_terms)
+    euro_items = Europeana.find_items(**search_terms)
+    sources = [DPLA, Europeana]
+    items = [x for t in zip(dpla_items, euro_items) for x in t]
+    return render(request, 'core/saveme.html',
+                  {'items': items, 'query_terms': search_terms, 'sources': sources})
