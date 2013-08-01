@@ -59,8 +59,8 @@ def get_user_items(userID, public = True, startIndex = 0, numItems = 99):
 
                 try:
                     metadata = metadata.encode("ascii", "ignore")
-                    if metadataType == "date":
-                        metadata = parse(metadata)
+                    # if metadataType == "date":
+                    #     metadata = parse(metadata)
 
                 except ValueError:
                     print "ValueError at {0}".format(metadata)
