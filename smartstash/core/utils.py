@@ -1,5 +1,6 @@
 import string
 import simplejson
+import re
 import requests
 import nltk
 import random
@@ -56,8 +57,13 @@ def get_names_from_spotting(doc) :
     stopwords = nltk.corpus.stopwords.words('english')
 
     name_set = set()
-    for item in json_data['annotation']['surfaceForm'] :
-        name = str(item['@name'])
+    # if only a single item is recognized, we don't get a list back
+    annotations = json_data['annotation']['surfaceForm']
+    # make it a list so we can treat it the same
+    if not isinstance(annotations, list):
+        annotations = [annotations]
+    for item in annotations:
+        name = str(item['@name']) or ''
         name = name.translate(None, string.punctuation).strip()
         if(name not in stopwords) :
             name_set.add(name.lower())
@@ -69,7 +75,8 @@ def get_names_from_annotate(doc) :
     json_data = simplejson.loads(doc)
     name_set = set()
 
-    for item in json_data['Resources'] :
+    print json_data
+    for item in json_data.get('Resources', []):
         name_set.add(item['@surfaceForm'].lower())
 
     return name_set
@@ -129,7 +136,7 @@ def _get_types(entities) :
         'people': [],
         'places': [],
     }
-    for item in json_data['Resources'] :
+    for item in json_data.get('Resources', []):
         str_types = str(item['@types'])
         if('DBpedia:Person' in str_types) :
             types['people'].append(item['@surfaceForm'])

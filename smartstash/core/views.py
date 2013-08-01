@@ -29,13 +29,18 @@ def site_index(request):
 
             search_terms = {}
             if text:
-                search_terms = common_words(text, 15)
+                common_terms = common_words(text, 15)
                 dbpedia_terms = get_search_terms(text)
 
                 # too many terms? phrase? didn't get results when combining
                 # TODO: combine dbpedia + common terms; randomize from dbpedia results
                 #search_terms['keywords'].extend(dbpedia_terms['keywords'])
                 search_terms['keywords'] = list(dbpedia_terms['keywords'])[:10]
+                # if no terms found in dbpedia, use common terms instead
+                # (todo: should be some kind of combination)
+                if not search_terms['keywords']:
+                    search_terms['keywords'] = common_terms['keywords']
+
 
             elif zotero_user:
                 userid = zotero.get_userID(zotero_user)
@@ -69,6 +74,7 @@ def site_index(request):
 def view_items(request):
 
     search_terms = request.session['search_terms']  # TODO: error handling if not set
+    # TODO: debug logging?
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
 

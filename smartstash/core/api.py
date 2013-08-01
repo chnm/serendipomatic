@@ -23,6 +23,9 @@ class DPLA(object):
             DPLA.API_KEY,
             ' OR '.join(keywords)
         )
+        print qry
+        # TODO: debug logging for generated query
+
         # TODO: restrict to image only, or at least things with preview image
         results = api.search(qry, 'dplav2', 'items')
         # TODO: error handling...
@@ -72,13 +75,15 @@ class Europeana(object):
     # but there is a europeana-search module on pypi we could also use
 
     @staticmethod
-    def find_items(keywords):
+    def find_items(keywords=[]):
         qry = 'wskey->%s:query->%s' % (
             Europeana.API_KEY,
             # ' OR '.join(['%s' % kw for kw in keywords])
             ' OR '.join(keywords)
         )
 
+        print qry
+        # TODO: debug logging for generated query
         b = Bibs()
         results = b.search(qry, 'europeanav2', 'search')
 
