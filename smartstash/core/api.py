@@ -152,7 +152,9 @@ class Flickr(object):
         flickr = flickrapi.FlickrAPI(Flickr.API_KEY)
 
         # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
+        start = time.time()
         results = flickr.photos_search(text=' OR '.join(set(keywords)), format='json', is_commons='true')
+        logger.info('flickr query completed in %.2f sec' % (time.time() - start))
 
         # this is really stupid and should be uncessary but the 'jsonFlickrApi( )' needs to be stripped for the json to parse properly
         results = results.lstrip('jsonFlickrApi(')
@@ -162,6 +164,10 @@ class Flickr(object):
 
         items = []
         # no results! log this error?
+
+        # NOTE: could be bad api key; check code/stat in response
+        if not 'photos' in results:
+            return items
 
         if 'photo' not in results['photos']:
             return items
@@ -188,14 +194,13 @@ class Flickr(object):
             # if we want more item details
             # should NOT be displayed to users (includes api key)
 
-            # preview and title are both lists; for now, in both cases,
-            # just grab the first one
+            # flickr title not a list
             if 'title' in doc:
-                i.title = doc['title'][0]
-            if 'edmPreview' in doc:
-                # build the url back to the image
-                # http://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
-                i.thumbnail = 'http://farm'+str(doc['farm'])+'.staticflickr.com/'+str(doc['server'])+'/'+str(doc['id'])+'_'+str(doc['secret'])+'.jpg'
+                i.title = doc['title']
+            # build the url back to the image
+            # http://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
+            i.thumbnail = 'http://farm%(farm)s.staticflickr.com/%(server)s/%(id)s_%(secret)s.jpg' % doc
+            # i.thumbnail = 'http://farm'+str(doc['farm'])+'.staticflickr.com/'+str(doc['server'])+'/'+str(doc['id'])+'_'+str(doc['secret'])+'.jpg'
 
             # NOTE: spatial/location information doesn't seem to be included
             # in this item result
