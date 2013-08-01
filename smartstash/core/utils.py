@@ -107,7 +107,9 @@ def get_search_terms(text) :
     terms = _get_types(resp_a)
     # get a random set of keywords from the union of spot and annotate
     terms['keywords'] = _get_random(spot_set.union(annotate_set))
-    # todo -- Randomize or mix up the set of keywords being passed
+    # gets early and late dates if not present these are enpty strings
+    terms['dates'] = _get_dates(text)
+
     return terms
 
 # Gets a random set of (at most 15) keywords
@@ -129,4 +131,21 @@ def _get_types(entities) :
             types['people'].append(item['@surfaceForm'])
         if('DBpedia:Place' in str_types) :
             types['places'].append(item['@surfaceForm'])
+
+     # make the lists distinct get_search_terms
+    types['[places'] = list(set(types['places']))
+    types['[people'] = list(set(types['people']))
+
     return types
+
+def _get_dates(text) :
+    dates = {
+        'early':'',
+        'late':''
+    }
+    regex = re.compile('\d{4}')
+    all_dates = regex.findall(text)
+    if(all_dates and len(all_dates) >2) :
+        dates['early'] = all_dates[0]
+        dates['late'] = all_dates[1]
+    return dates
