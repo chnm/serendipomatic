@@ -4,11 +4,20 @@
 {% block title %}MagicStash Items Display{% endblock %}
 
 {% block content %}
+<ul id="sort-by">
+  <li><a href="#iso_title">Item Type</a></li>
+  <li><a href="#iso_date">Date</a></li>
+  <li><a href="#iso_region">Region</a></li>
+</ul>
 
 <p>
 <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Start Over</button></a>
-<a href="{% url 'view-stash' %}" target="_blank"><button class="magic" tabindex="6">Save Results</button></a>
-<br />
+<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Save Results</button></a>
+<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a>
+<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a>
+</p>
+
+<p>
 <strong>Query Terms:</strong> {{ query_terms.keywords|join:', ' }}
 <br />
 <strong>Sources Used:</strong>
@@ -31,11 +40,13 @@
 	</div>
 	<div class="back">
 		<div class="pad">
-			<div class="iso_date">Date: {{ item.idate }}</div>
-			<div class="iso_title"><a href="{{ item.url }}">Title</a></div>
+			<div class="iso_date">Date: {{ item.date }}</div>
+			<div class="iso_title">Title: <a href="{{ item.url }}">{{ item.title }}</a></div>
+			<div class="iso_title">Location: <a href="{{ item.location }}">{{ item.location }}</a></div>
 		</div>
 	</div>
 </div>
+<input type="hidden" value="{{ item.location }}"/>
 {% endfor %}
 </div>
 
@@ -74,3 +85,14 @@ $(document).ready(function() {
 }); 
 </script>
 {% endblock %}
+<script>
+// For sorting
+$(document).ready(function() { 
+    $('#sort-by a').click(function(){
+      // get href attribute, minus the '#'
+      var sortName = $(this).attr('href').slice(1);
+      $('#container').isotope({ sortBy : sortName });
+      return false;
+    });
+});
+</script>
