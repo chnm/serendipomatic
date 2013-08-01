@@ -7,6 +7,7 @@
 
 <p>
 <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Start Over</button></a>
+<a href="{% url 'view-stash' %}"><button class="magic" tabindex="6" target="_blank">Save Results</button></a>
 <br />
 <strong>Query Terms:</strong> {{ query_terms.keywords|join:', ' }}
 <br />
@@ -18,7 +19,7 @@
 {% for item in items %}
 
      <!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
-<div class="hover panel" tabindex="{{ forloop.counter|add:5 }}">
+<div class="hover panel" tabindex="{{ forloop.counter|add:6 }}">
 	<div class="front">
 		<div class="pad">
 		<div class="photo">
