@@ -8,6 +8,7 @@ beautifulsoup4
 libZotero
 simplejson
 python-dateutil
+flickrapi
 
 # should be installed as dependencies of bibs but don't seem to be
 PyYAML
