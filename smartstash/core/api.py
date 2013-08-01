@@ -76,6 +76,10 @@ class Europeana(object):
         results = b.search(qry, 'europeanav2', 'search')
 
         items = []
+        # no results! log this error?
+        if 'items' not in results:
+            return items
+
         for doc in results['items']:
             # NOTE: result includes a 'completeness' score
             # which we could use for a first-pass filter to weed out junk records
