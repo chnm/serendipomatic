@@ -2,10 +2,14 @@
 Django
 git+https://github.com/reklaklislaw/bibs.git#egg=bibs
 nltk
+oauth2
+requests
+beautifulsoup
+libZotero
+dateutil
 
 # should be installed as dependencies of bibs but don't seem to be
 PyYAML
 dicttoxml
 xmltodict
 lxml
-
