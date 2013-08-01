@@ -1,27 +1,29 @@
-import requests, oauth2, urlparse
+import requests, oauth2, urlparse, urllib
 from dateutil.parser import parse
 from libZotero import zotero
 from bs4 import BeautifulSoup
 
 from smartstash.core.utils import tokenize
 
+consumerKey = "e61504b6e21a1df7d146"
+consumerSecret = "294d72ffd8dce053aadb"
+requestTokenURL = "https://www.zotero.org/oauth/request"
+authorizeURL = "https://www.zotero.org/oauth/authorize"
+accessTokenURL = "https://www.zotero.org/oauth/access"
+callbackURL = 'http://www.google.com'
+
 def get_oauth_access_token():
-    consumerKey = "e61504b6e21a1df7d146"
-    consumerSecret = "294d72ffd8dce053aadb"
 
     consumer = oauth2.Consumer(consumerKey, consumerSecret)
     client = oauth2.Client(consumer)
 
-    requestTokenURL = "https://www.zotero.org/oauth/request"
-    response, content = client.request(requestTokenURL, "POST")
+    response, content = client.request(requestTokenURL, "POST",
+                                       body = urllib.urlencode({'oauth_callback' : callbackURL}))
     requestToken = dict(urlparse.parse_qsl(content))
 
-    authorizeURL = "https://www.zotero.org/oauth/authorize"
     print "Visit this URL: {0}?oauth_token={1}".format(authorizeURL, requestToken['oauth_token'])
-
     PIN = raw_input("Enter the PIN: ")
 
-    accessTokenURL = "https://www.zotero.org/oauth/access"
     token = oauth2.Token(requestToken['oauth_token'], requestToken['oauth_token_secret'])
     token.set_verifier(PIN)
     client = oauth2.Client(consumer, token)
@@ -36,6 +38,7 @@ def get_userID(username):
     feedLink = BeautifulSoup(r.text).find_all('a', attrs = {"class" : "feed-link"}).pop()
     #Finds the RSS feed link on the page (first with these properties)
     #An okay place to get the userID from, could be better.
+    #When Zotero people add an API call to do this, this function should die.
 
     feedUrl = feedLink.attrs['href']
     userID = feedUrl[feedUrl.find("users/") + len("users/") : feedUrl.find("/collections")]
@@ -45,7 +48,7 @@ def get_user_items(userID, public = True, numItems = None):
     if public: zlib = zotero.Library("user", userID, '', '')
     else: zlib = zotero.Library("user", userID, '', get_oauth_access_token())
 
-    items = zlib.fetchItems({'limit': numItems, 'order': 'dateAdded'})
+    items = zlib.fetchItems({'limit': numItems})
 
     metadataTypes = ["date", "title", "creatorSummary", "keywords", 'abstractNote']
     results = {m : [] for m in metadataTypes}
@@ -55,8 +58,8 @@ def get_user_items(userID, public = True, numItems = None):
             metadata = item.get(metadataType)
 
             if not metadata: continue
-            metadata = metadata.encode("ascii", "ignore")
 
+            metadata = metadata.encode("ascii", "ignore")
             if metadataType == "date":
                 metadata = parse(metadata)
 
