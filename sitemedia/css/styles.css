@@ -101,7 +101,7 @@ h1, h2, h3, p, ul, ol, pre, dl {
   margin-bottom: 1.0em;
 }
 
-h1, h2, #super-list, .element, .tagline, #index-list, 
+h1, h2, #super-list, .element, .tagline, #index-list,
 .super-list .link {
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
@@ -129,8 +129,8 @@ a code {
 }
 
 a:hover,
-a:hover code { 
-  color: #4BF; 
+a:hover code {
+  color: #4BF;
 }
 
 a:active,
@@ -266,3 +266,25 @@ body {
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
+
+/* Results image overlay styles */
+.imageframe{
+position:relative;
+}
+.overlay{
+background-color:#000;
+top:0;
+color:#fff;
+opacity:0;
+filter: alpha(opacity = 0);
+position:absolute;
+padding: 10px;
+z-index:1000;
+}
+.imageframe:hover .overlay{
+opacity:0.75;
+filter: alpha(opacity = 75);
+transition:opacity 0.25s;
+-moz-transition:opacity 0.25s;
+-webkit-transition:opacity 0.25s;
+}

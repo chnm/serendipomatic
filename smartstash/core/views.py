@@ -90,16 +90,22 @@ def view_items(request):
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
     # added Flickr
-    # flkr_items = Flickr.find_items(**search_terms)
+    flkr_items = Flickr.find_items(**search_terms)
 
     sources = [DPLA, Europeana, Flickr]
-    # sources = []
-    # for k, v in sourceDict.iteritems():
-    #     item = '<a href="'+v+'" target="_blank">'+k+'</a>'
-    #     sources.append(item)
+
+    items = []
+    for i in range(15):
+        # hacky way to alternate content
+        for src in [dpla_items, euro_items, flkr_items]:
+            try:
+                items.append(src[i])
+            except IndexError:
+                pass
+
     # quick way to shuffle the two lists together based on
     # http://stackoverflow.com/questions/11125212/interleaving-lists-in-python
-    items = [x for t in zip(dpla_items, euro_items) for x in t]
+    # items = [x for t in zip(dpla_items, euro_items) for x in t]
 	# items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
     # NOTE: we may need to clear the cache when we do a 'start over'....
 
