@@ -44,11 +44,7 @@ def get_user_items(userID, public = True, numItems = None):
     else:
         zlib = zotero.Library("user", userID, '', get_oauth_access_token())
 
-
-    if numItems: #if a limit is specified
-        items = zlib.fetchItems({'limit': numItems, 'order': 'dateAdded'})
-    else:
-        items = zlib.fetchItems({'order': 'dateAdded'})
+    items = zlib.fetchItems({'limit': numItems, 'order': 'dateAdded'})
 
     metadataTypes = ["abstractNote", "date", "title", "creatorSummary"]
     results = {m : [] for m in metadataTypes}
@@ -58,7 +54,8 @@ def get_user_items(userID, public = True, numItems = None):
             metadata = item.get(metadataType)
             if metadata: results[metadataType].append(metadata.encode("ascii", "ignore"))
 
+    results["keywords"] = sum(map(lambda s : s.split(), results["abstractNote"]), [])
     return results
 
 if __name__ == "__main__":
-    print get_user_items(get_userID("erose1"), public = False)
+    print get_user_items(get_userID("briancroxall"), public = True)
