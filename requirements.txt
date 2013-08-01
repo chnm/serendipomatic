@@ -1,5 +1,5 @@
 # list all python requirements here for installation with pip
-Django
+Django>=1.5
 git+https://github.com/reklaklislaw/bibs.git#egg=bibs
 nltk
 oauth2
