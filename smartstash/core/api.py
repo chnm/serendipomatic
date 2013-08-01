@@ -48,9 +48,9 @@ class DPLA(object):
                 # url on provider's website with context
                 url=doc.get('isShownAt', None)
             )
-
             if 'date' in src_res:
-                idate = src_res['date'].get('displayDate', None)
+                i.date = src_res['date'].get('displayDate', None)
+
             if 'spatial' in src_res and src_res['spatial']:
                 # sometimes a list but not always
                 if isinstance(src_res['spatial'], list):
@@ -114,6 +114,9 @@ class Europeana(object):
 
             # preview and title are both lists; for now, in both cases,
             # just grab the first one
+
+            if 'edmTimespanLabel' in doc:
+                i.date = doc['edmTimespanLabel'][0]['def']
             if 'title' in doc:
                 i.title = doc['title'][0]
             if 'edmPreview' in doc:
