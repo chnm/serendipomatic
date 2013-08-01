@@ -11,7 +11,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate
 from django.utils import simplejson
 
-from social_auth.backends import BaseAuth, SocialAuthBackend, USERNAME
+from social_auth.backends import BaseAuth, SocialAuthBackend #, USERNAME
 
 
 ZOTERO_API_SERVER = 'https://api.zotero.org'
@@ -146,5 +146,5 @@ class ZoteroAuth(BaseAuth):
 
 # Backend definition
 BACKENDS = {
-    'lastfm': ZoteroAuth,
+    'zotero': ZoteroAuth,
 }

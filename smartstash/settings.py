@@ -106,13 +106,24 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_auth',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'smartstash.core',
+    'smartstash.auth',
 )
 
+
+# configure social-auth backends here
+AUTHENTICATION_BACKENDS = (
+    'smartstash.auth.zotero.ZoteroBackend'
+)
+
+LOGIN_URL          = '/auth/login/'
+LOGIN_REDIRECT_URL = '/auth/logged-in/'
+LOGIN_ERROR_URL    = '/auth/login-error/'
 
 
 try:

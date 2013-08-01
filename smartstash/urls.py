@@ -17,6 +17,7 @@ urlpatterns = patterns(
     url(r'^about/', TemplateView.as_view(template_name='about.html'),
         name='about'),
 
+    url(r'', include('social_auth.urls')),
     # examples
     # url(r'^input/', include('smartstash.input.urls',
     #     namespace='input')

@@ -42,13 +42,15 @@
 <div class="eight columns">
 <div class="zot">
 <h3><img class="zotero" src="{% static 'img/zotero.png' %}" alt="Zotero logo" style="margin:0;padding:0;" />, anyone?</h3>
-<h5 style="height: 85px;">If you are a Zotero user, you can enter your username below to searches your collections. 
+<h5 style="height: 85px;">If you are a Zotero user, you can enter your username below to searches your collections.
 Forgot your Zotero username?</h5>
 <p><label for="zotero_user">Enter your Zotero username.</label></p>
 <p>{{ input_form.zotero_user }}</p>
 </div>
 
-</div> 
+
+<a href="{% url 'socialauth_begin' 'zotero' %}?http://localhost:8000/">login</a>
+</div>
 </div>
 
 <div class="sixteen columns">

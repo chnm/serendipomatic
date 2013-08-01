@@ -9,6 +9,7 @@ libZotero
 simplejson
 python-dateutil
 flickrapi
+django-social-auth
 
 # should be installed as dependencies of bibs but don't seem to be
 PyYAML
