@@ -2,6 +2,8 @@ import requests, oauth2, urlparse
 from libZotero import zotero
 from bs4 import BeautifulSoup
 
+from smartstash.core.utils import common_words
+
 def get_oauth_access_token():
     consumerKey = "e61504b6e21a1df7d146"
     consumerSecret = "294d72ffd8dce053aadb"
@@ -54,7 +56,7 @@ def get_user_items(userID, public = True, numItems = None):
             metadata = item.get(metadataType)
             if metadata: results[metadataType].append(metadata.encode("ascii", "ignore"))
 
-    results["keywords"] = sum(map(lambda s : s.split(), results["abstractNote"]), [])
+    results["keywords"] = common_words(results["abstractNote"][0])['keywords']
     return results
 
 if __name__ == "__main__":
