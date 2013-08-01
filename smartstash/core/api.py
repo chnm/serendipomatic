@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from bibs.bibs import Bibs
 import flickrapi
+import simplejson
 
 from smartstash.core.models import DisplayItem
 
@@ -145,7 +146,7 @@ class Flickr(object):
     @staticmethod
     def find_items(keywords):
 
-        flickr = flickrapi.FlickrAPI('3e7efed359049142ee20c8bd06e1b255')
+        flickr = flickrapi.FlickrAPI(Flickr.API_KEY)
 
         # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
         results = flickr.photos_search(text=' OR '.join(set(keywords)), format='json', is_commons='true')
@@ -154,8 +155,11 @@ class Flickr(object):
         results = results.lstrip('jsonFlickrApi(')
         results = results.rstrip(')')
 
+        results = simplejson.loads(results)
+
         items = []
         # no results! log this error?
+
         if 'photo' not in results['photos']:
             return items
 
