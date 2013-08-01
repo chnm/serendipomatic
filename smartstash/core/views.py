@@ -40,7 +40,17 @@ def site_index(request):
                 # (todo: should be some kind of combination)
                 if not search_terms['keywords']:
                     search_terms['keywords'] = common_terms['keywords']
+                else: 
+                    search_terms['keywords'] = search_terms['keywords'].union(common_terms['keywords'])
 
+
+                # the frist ten people 
+                search_terms['people'] = list(dbpedia_terms['people'])[:10]
+                # the first ten places
+                search_terms['places'] = list(dbpedia_terms['places'][:10])
+                # the dates
+                search_terms['dates'] = dbpedia_terms['dates']
+                
                 # within dbpedia_terms there are now lists for
                 # people
                 # places 

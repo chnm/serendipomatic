@@ -19,6 +19,10 @@ class DPLA(object):
         # keyword should be a list of terms
         # DPLA.find_items(keywords=['term1', 'term2'])
 
+        # keywords['keywords'] 
+        # keywords['people']
+        # keywords['places']
+        # keywords['dates']
         api = Bibs()
         qry = 'api_key->%s:q->%s' % (
             DPLA.API_KEY,
@@ -141,7 +145,9 @@ class Flickr(object):
         flickr = flickrapi.FlickrAPI(API_KEY) 
 
         # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
-        results = flickr.photos_search(text=' OR '.join(set(terms['keywords'])), format='json', is_commons='true')
+        # Flickr doesn't support searching in Creator, Title, Description fields. For our intital purposes they only
+        # support searching in the catch all 'text' field which incldues data from Title, Description, Tag etc.
+        results = flickr.photos_search(text=' OR '.join(set(keywords['keywords'])), format='json', is_commons='true')
 
         # this is really stupid and should be uncessary but the 'jsonFlickrApi( )' needs to be stripped for the json to parse properly
         results = results.lstrip('jsonFlickrApi(')
