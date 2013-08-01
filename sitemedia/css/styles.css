@@ -75,12 +75,6 @@ body {
   margin-bottom: 20px;
 }
 
-/**** Horizontal ****/
-
-.horizontal #container {
-  height: 100%;
-}
-
 /* The Magnificent Clearfix: nicolasgallagher.com/micro-clearfix-hack/ */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
