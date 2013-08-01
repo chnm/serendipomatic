@@ -3,8 +3,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 from smartstash.core.forms import InputForm
-from smartstash.core.utils import common_words
+from smartstash.core.utils import common_words, get_search_terms
 from smartstash.core.api import DPLA, Europeana
+from smartstash.input import zotero
 
 
 def site_index(request):
@@ -22,8 +23,30 @@ def site_index(request):
         if form.is_valid():
 
             # actual logic here - infer search terms, query apis, display stuff
+
             text = form.cleaned_data['text']
-            search_terms = common_words(text, 15)
+            zotero_user = form.cleaned_data['zotero_user']
+
+            search_terms = {}
+            if text:
+                search_terms = common_words(text, 15)
+                dbpedia_terms = get_search_terms(text)
+
+                # too many terms? phrase? didn't get results when combining
+                # TODO: combine dbpedia + common terms; randomize from dbpedia results
+                #search_terms['keywords'].extend(dbpedia_terms['keywords'])
+                search_terms['keywords'] = list(dbpedia_terms['keywords'])[:10]
+
+            elif zotero_user:
+                userid = zotero.get_userID(zotero_user)
+                terms = zotero.get_user_items(userid, numItems=10)
+                print terms
+
+                search_terms['keywords'] = terms['date'] + terms['creatorSummary'] \
+                    + terms['keywords']
+                # TODO: creator summary should go into creator search
+
+            # print search_terms['keywords']
             # store search terms in the session so we can redirect
             request.session['search_terms'] = search_terms
 
