@@ -1,0 +1,20 @@
+{% extends 'site_base.html' %}
+{% load static %}
+
+{# html page subtitle (after site title) #}
+{% block page-subtitle %}| About{% endblock %}
+
+{% block content %}
+<h2>about the project</h2>
+
+<p>blah blah blah</p>
+
+{% comment %}
+to include images - add the image file to sitemedia/img and reference it
+something like this:
+
+<img src="{% static 'img/path-to-image.png' %}"/>
+
+{% endcomment %}
+
+{% endblock %}

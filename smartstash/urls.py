@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -11,6 +12,10 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.site_index, name='site-index'),
     url(r'^stash/$', views.view_items, name='view-stash'),
+
+    # static site content pages
+    url(r'^about/', TemplateView.as_view(template_name='about.html'),
+        name='about'),
 
     # examples
     # url(r'^input/', include('smartstash.input.urls',
