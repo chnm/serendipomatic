@@ -31,8 +31,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 print 'secret key =', SECRET_KEY
 
 API_KEYS = {
-    'DPLA': os.environ.get('DPLA_API_KEY')
-    'Europeana': os.environ.get('EUROPEANA_API_KEY')
+    'DPLA': os.environ.get('DPLA_API_KEY'),
+    'Europeana': os.environ.get('EUROPEANA_API_KEY'),
     'Flickr': os.environ.get('FLICKR_API_KEY')
 }
 
