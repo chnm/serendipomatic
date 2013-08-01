@@ -32,7 +32,7 @@
 <!-- Insert below into results page. Semi-opaque overlay from top of differently sized images. Suck text data into .overlay and image into .imageframe -->
 
 <div class="imageframe">
-        <img class="imgLiquidFill" src="{{ item.thumbnail }}" alt="{{ item.title }}" >
+        <img src="{{ item.thumbnail }}" alt="{{ item.title }}" >
 	<div class="overlay">
 		<div class="iso_title">Title: <a href="{{ item.url }}">{{ item.title }}</a></div>
 		<div class="iso_date">Date: {{ item.date }}</div>
@@ -79,7 +79,7 @@
 
 
 
-<hr />
+
 
 <a href="#top"><button tabindex="1000">Return to Top</button></a>
 {% comment %}
