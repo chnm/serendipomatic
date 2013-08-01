@@ -7,6 +7,9 @@ from smartstash.core.models import DisplayItem
 
 class DPLA(object):
 
+    name = 'DPLA'
+    url = 'http://dp.la/'
+
     API_KEY = settings.API_KEYS['DPLA']
 
     @staticmethod
@@ -60,6 +63,9 @@ class DPLA(object):
 
 class Europeana(object):
 
+    name = 'Europeana'
+    url = 'http://www.europeana.eu/'
+
     API_KEY = settings.API_KEYS['Europeana']
 
     # NOTE: currently using the bibs library for europeana,
@@ -69,6 +75,7 @@ class Europeana(object):
     def find_items(keywords):
         qry = 'wskey->%s:query->%s' % (
             Europeana.API_KEY,
+            # ' OR '.join(['%s' % kw for kw in keywords])
             ' OR '.join(keywords)
         )
 

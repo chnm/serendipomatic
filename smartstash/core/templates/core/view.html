@@ -10,7 +10,8 @@
 <br />
 <strong>Query Terms:</strong> {{ query_terms.keywords|join:', ' }}
 <br />
-<strong>Sources Used:</strong>  {% autoescape off %}{{ sources|join:', ' }}{% endautoescape %}
+<strong>Sources Used:</strong>
+{% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </p>
 
 <div id="container" class="photos clearfix">
