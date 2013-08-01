@@ -14,7 +14,7 @@ from django.utils import simplejson
 from social_auth.backends import BaseAuth, SocialAuthBackend, USERNAME
 
 
-ZOTERO_API_SERVER = 'https://ws.audioscrobbler.com/2.0/'
+ZOTERO_API_SERVER = 'https://api.zotero.org'
 ZOTERO_AUTHORIZATION_URL = "https://www.zotero.org/oauth/authorize"
 
 
@@ -28,7 +28,7 @@ class ZoteroBackend(SocialAuthBackend):
         return response['id']
 
     def get_user_details(self, response):
-        """Return user details from Last.fm account"""
+        """Return user details from zotero account"""
         full_name = response['realname'].strip()
         if len(full_name.split(' ')) > 1:
             last_name = full_name.split(' ')[-1].strip()
@@ -56,8 +56,8 @@ class ZoteroBackend(SocialAuthBackend):
 class ZoteroAuth(BaseAuth):
     """Last.fm authentication mechanism."""
     AUTH_BACKEND = ZoteroBackend
-    SETTINGS_KEY_NAME = 'ZOTERO_API_KEY'
-    SETTINGS_SECRET_NAME = 'ZOTERO_SECRET'
+    SETTINGS_KEY_NAME = 'e61504b6e21a1df7d146'
+    SETTINGS_SECRET_NAME = '294d72ffd8dce053aadb'
 
     def auth_url(self):
         """Return authorization redirect url."""
