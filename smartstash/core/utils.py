@@ -1,8 +1,7 @@
 import string
-import json
+import simplejson
 import requests
 import nltk
-from nltk.corpus import stopwords
 
 #We want to eliminate all punctuation except single quotes.
 #This isn't the only case (sometimes you have single quotes around a word, which we do want to get rid of)
@@ -13,12 +12,12 @@ from nltk.corpus import stopwords
 
 def common_words(text, max_items=15):
     # TODO: make stopword language configurable?
-    stop_words = nltk.corpus.stopwords.words('english')
+    stopwords = nltk.corpus.stopwords.words('english')
 
     tokens = nltk.word_tokenize(text)
 
     words = [w.lower() for w in tokens
-             if w.isalnum() and w.lower() not in stop_words]
+             if w.isalnum() and w.lower() not in stopwords]
     # NOTE: isalnum will restrict to alpha and numeric content (i.e., words & dates);
     # will probalby drop date ranges as well as contractions or quoted terms
 
@@ -73,9 +72,9 @@ def get_search_terms(text) :
     annotate = {
         'url': 'http://spotlight.dbpedia.org/rest/annotate',
         'params': {
-            'text':sampletext,
-            'confidence':0.3,
-            'support':60,
+            'text': text,
+            'confidence': 0.3,
+            'support': 60,
         }
     }
 
