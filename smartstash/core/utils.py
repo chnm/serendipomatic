@@ -12,6 +12,9 @@ import re
 #TODO: find a list of stopwords, don't count them
 #nltk?
 
+# cheat for heroku
+nltk.data.path.append('./smartstash/nltk_data/')
+
 def tokenize(text):
     # TODO: make stopword language configurable?
     stopwords = nltk.corpus.stopwords.words('english')
