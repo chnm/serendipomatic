@@ -141,8 +141,8 @@ def _get_types(entities) :
             types['places'].append(item['@surfaceForm'])
 
      # make the lists distinct get_search_terms
-    types['[places'] = list(set(types['places']))
-    types['[people'] = list(set(types['people']))
+    types['places'] = list(set(types['places']))
+    types['people'] = list(set(types['people']))
 
     return types
 

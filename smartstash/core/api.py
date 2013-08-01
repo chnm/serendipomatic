@@ -127,7 +127,7 @@ class Europeana(object):
 
 
 # Flickr Commons API
-# Only return image from flicker commons 
+# Only return image from the commons 
 class Flickr(object):
     name = 'Flickr Commons'
     url - 'http://www.flickr.com'

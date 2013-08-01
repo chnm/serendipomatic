@@ -41,6 +41,14 @@ def site_index(request):
                 if not search_terms['keywords']:
                     search_terms['keywords'] = common_terms['keywords']
 
+                # within dbpedia_terms there are now lists for
+                # people
+                # places 
+                # dates {'early': ,'late': }
+                # people and places were reconciled against DBpedia. Dates contains 
+                # only four digit values and could be passed to 
+
+
 
             elif zotero_user:
                 userid = zotero.get_userID(zotero_user)
