@@ -148,7 +148,7 @@ class Flickr(object):
         flickr = flickrapi.FlickrAPI('3e7efed359049142ee20c8bd06e1b255')
 
         # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
-        results = flickr.photos_search(text=' OR '.join(set(terms['keywords'])), format='json', is_commons='true')
+        results = flickr.photos_search(text=' OR '.join(set(keywords)), format='json', is_commons='true')
 
         # this is really stupid and should be uncessary but the 'jsonFlickrApi( )' needs to be stripped for the json to parse properly
         results = results.lstrip('jsonFlickrApi(')
