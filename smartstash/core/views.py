@@ -81,7 +81,11 @@ def site_index(request):
 
 def view_items(request):
 
-    search_terms = request.session['search_terms']  # TODO: error handling if not set
+    search_terms = request.session.get('search_terms', None)
+    # if no search terms, return to site index
+    if search_terms is None:
+        return HttpResponseRedirect(reverse('site-index'))
+
     # TODO: debug logging?
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
