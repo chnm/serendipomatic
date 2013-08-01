@@ -168,99 +168,11 @@ body {
   margin-bottom: 20px;
 }
 
-
-.element {
-  width: 110px;
-  height: 110px;
-  margin: 5px;
-  float: left;
-  overflow: hidden;
-  position: relative;
-  background: #fff;
-  color: #222;
-  border:2px solid #000;
-}
-
-
-/*
-
-.element * {
-  position: absolute;
-  margin: 0;
-}
-
-.element .symbol {
-  left: 0.2em;
-  top: 0.4em;
-  font-size: 3.8em;
-  line-height: 1.0em;
-  color: #FFF;
-}
-.element.large .symbol {
-  font-size: 4.5em;
-}
-
-.element.fake .symbol {
-  color: #000;
-}
-
-.element .name {
-  left: 0.5em;
-  bottom: 1.6em;
-  font-size: 1.05em;
-}
-
-.element .weight {
-  font-size: 0.9em;
-  left: 0.5em;
-  bottom: 0.5em;
-}
-
-.element .number {
-  font-size: 1.25em;
-  font-weight: bold;
-  color: hsla(0,0%,0%,.5);
-  right: 0.5em;
-  top: 0.5em;
-}
-
-
-.variable-sizes .element.width2 { width: 230px; }
-
-.variable-sizes .element.height2 { height: 230px; }
-
-.variable-sizes .element.width2.height2 {
-  font-size: 2.0em;
-}
-
-.element.large,
-.variable-sizes .element.large,
-.variable-sizes .element.large.width2.height2 {
-  font-size: 3.0em;
-  width: 350px;
-  height: 350px;
-  z-index: 100;
-}
-*/
-
-
-
-
-
 /**** Horizontal ****/
 
 .horizontal #container {
-  height: 80%;
+  height: 100%;
 }
-
-
-/**** Docs ****/
-
-
-
-
-
-
 
 /* The Magnificent Clearfix: nicolasgallagher.com/micro-clearfix-hack/ */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
