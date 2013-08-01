@@ -101,3 +101,7 @@ transition:opacity 0.25s;
 -moz-transition:opacity 0.25s;
 -webkit-transition:opacity 0.25s;
 }
+.imageframe img {
+padding: 0px;
+border: red;
+}
