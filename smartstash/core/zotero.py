@@ -3,7 +3,7 @@ from dateutil.parser import parse
 from libZotero import zotero
 from bs4 import BeautifulSoup
 
-from smartstash.core.utils import common_words
+from smartstash.core.utils import tokenize
 
 def get_oauth_access_token():
     consumerKey = "e61504b6e21a1df7d146"
@@ -47,7 +47,7 @@ def get_user_items(userID, public = True, numItems = None):
 
     items = zlib.fetchItems({'limit': numItems, 'order': 'dateAdded'})
 
-    metadataTypes = ["date", "title", "creatorSummary", "keywords"]
+    metadataTypes = ["date", "title", "creatorSummary", "keywords", 'abstractNote']
     results = {m : [] for m in metadataTypes}
 
     for item in items:
@@ -62,7 +62,7 @@ def get_user_items(userID, public = True, numItems = None):
 
             results[metadataType].append(metadata)
 
-    for s in results['abstractNote']: results['keywords'] += common_words(s, max_items = None)['keywords']
+    for s in results['abstractNote']: results['keywords'] += tokenize(s)
     return results
 
 if __name__ == "__main__":
