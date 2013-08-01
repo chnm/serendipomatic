@@ -1,9 +1,7 @@
 import requests, oauth2, urlparse, urllib
-from dateutil.parser import parse
 from libZotero import zotero
 from bs4 import BeautifulSoup
-
-from smartstash.core.utils import tokenize
+from smartstash.core.utils import tokenize, parse_date
 
 consumerKey = "e61504b6e21a1df7d146"
 consumerSecret = "294d72ffd8dce053aadb"
@@ -13,7 +11,6 @@ accessTokenURL = "https://www.zotero.org/oauth/access"
 callbackURL = 'http://www.google.com'
 
 def get_oauth_access_token():
-
     consumer = oauth2.Consumer(consumerKey, consumerSecret)
     client = oauth2.Client(consumer)
 
@@ -49,7 +46,7 @@ def get_user_items(userID, public = True, startIndex = 0, numItems = 50):
     else: zlib = zotero.Library("user", userID, '', get_oauth_access_token())
 
     items = zlib.fetchItems({'limit': numItems, 'start': startIndex})
-    metadataTypes = ["date", "title", "creatorSummary", "keywords", 'abstractNote']
+    metadataTypes = ["date", "title", "creatorSummary", "keywords", "abstractNote", "extra", "tags"]
     results = {m : [] for m in metadataTypes}
 
     while len(items) == numItems:
@@ -68,9 +65,7 @@ def get_user_items(userID, public = True, startIndex = 0, numItems = 50):
                     print "ValueError at {0}".format(metadata)
 
                 results[metadataType].append(metadata)
-
-        for s in results['abstractNote']: results['keywords'] += tokenize(s)
-
+        #for s in results['abstractNote']: results['keywords'] += tokenize(s)
         startIndex += numItems
         items = zlib.fetchItems({'limit': numItems, 'start': startIndex})
 
