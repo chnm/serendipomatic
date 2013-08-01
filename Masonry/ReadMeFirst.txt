@@ -1,7 +1,10 @@
-You need to use three files:
+You need to use these files:
 /demos/images.html
 /css/style.css
 /demos/images folder for the example images
+hflip.js
+jquery.isotope/js
+/js folder
 
 To do:
 1. Remove example images, make pull in images/data from black box, uncomment/switch in <img> tags that draw their dimensions (height and width attributes) from the image ID (1-10)
