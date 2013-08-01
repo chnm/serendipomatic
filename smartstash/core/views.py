@@ -44,7 +44,7 @@ def site_index(request):
 
             elif zotero_user:
                 userid = zotero.get_userID(zotero_user)
-                terms = zotero.get_user_items(userid, numItems=10)
+                terms = zotero.get_user_items(userid)
                 print terms
 
                 search_terms['keywords'] = terms['date'] + terms['creatorSummary'] \
