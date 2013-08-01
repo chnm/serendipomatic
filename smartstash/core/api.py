@@ -3,9 +3,13 @@ from django.db import models
 from bibs.bibs import Bibs
 import flickrapi
 import simplejson
+import logging
+import time
 
 from smartstash.core.models import DisplayItem
 
+
+logger = logging.getLogger(__name__)
 
 # TODO: later refactor / cleanup: rename this module to sources,
 # possibly break out into subdirectory
@@ -29,12 +33,13 @@ class DPLA(object):
             DPLA.API_KEY,
             ' OR '.join(keywords)
         )
-        print qry
-        # TODO: debug logging for generated query
+        logger.debug('dpla query: %s' % qry)
 
         # TODO: restrict to image only, or at least things with preview image
+        start = time.time()
         results = api.search(qry, 'dplav2', 'items')
         # TODO: error handling...
+        logger.info('dpla query completed in %.2f sec' % (time.time() - start))
 
         items = []
         for doc in results['docs']:
@@ -87,9 +92,7 @@ class Europeana(object):
             # ' OR '.join(['%s' % kw for kw in keywords])
             ' OR '.join(keywords)
         )
-
-        print qry
-        # TODO: debug logging for generated query
+        logger.debug('europeana query: %s' % qry)
         b = Bibs()
         results = b.search(qry, 'europeanav2', 'search')
 
