@@ -1,5 +1,7 @@
 from urllib2 import Request, urlopen
+from urllib import url2pathname
 from django.utils import simplejson
+from django.conf import settings
 from social_auth.utils import setting
 from social_auth.backends.google import GoogleOAuthBackend, GoogleOAuth, validate_whitelists
 
@@ -41,7 +43,7 @@ class ZoteroOAuth(GoogleOAuth):
 
     def user_data(self, access_token, *args, **kwargs):
         """Return user data from Google API"""
-        request = self.oauth_request(access_token, GOOGLE_APPENGINE_PROFILE)
+        request = self.oauth_request(access_token, ACCESS_TOKEN_URL)
         url, params = request.to_url().split('?', 1)
         return google_appengine_userinfo(url, params)
 
@@ -55,12 +57,11 @@ class ZoteroOAuth(GoogleOAuth):
     def get_key_and_secret(cls):
         """Return key and secret and fix anonymous settings"""
         return (ZoteroOAuth.SETTINGS_KEY_NAME, ZoteroOAuth.SETTINGS_SECRET_NAME)
-        key_and_secret = super(GoogleOAuth, cls).get_key_and_secret()
-        print 'key & secret = ', key_and_secret
-        if key_and_secret == (None, None):
-            return 'anonymous', 'anonymous'
-        return key_and_secret
-
+        # key_and_secret = super(GoogleOAuth, cls).get_key_and_secret()
+        # print 'key & secret = ', key_and_secret
+        # if key_and_secret == (None, None):
+        #     return 'anonymous', 'anonymous'
+        # return key_and_secret
 
 def google_appengine_userinfo(url, params):
     """Loads user data from OAuth Profile Google App Engine App.
@@ -71,6 +72,8 @@ def google_appengine_userinfo(url, params):
     and: http://code.google.com/apis/accounts/docs/OAuth2.html#CallingAnAPI
     """
     request = Request(url + '?' + params, headers={'Authorization': params})
+    print request
+    print "Request = " + url2pathname(url + '?' + params)
     try:
         return simplejson.loads(urlopen(request).read())
     except (ValueError, KeyError, IOError):

@@ -2,6 +2,7 @@ import requests, oauth2, urlparse, urllib
 from libZotero import zotero
 from bs4 import BeautifulSoup
 import smartstash.core.utils
+from dateutil.parser import parse
 from smartstash.core.utils import tokenize
 
 consumerKey = "e61504b6e21a1df7d146"
@@ -29,6 +30,7 @@ def get_oauth_access_token():
     response, content = client.request(accessTokenURL, "POST")
     accessToken = dict(urlparse.parse_qsl(content))
 
+    print accessToken['userID']
     return accessToken['oauth_token']
 
 def get_userID(username):
@@ -59,11 +61,11 @@ def get_user_items(userID, public = True, startIndex = 0, numItems = 99):
 
                 try:
                     metadata = metadata.encode("ascii", "ignore")
-                    # if metadataType == "date":
+                    #if metadataType == "date":
                     #     metadata = parse(metadata)
 
-                except ValueError:
-                    print "ValueError at {0}".format(metadata)
+                except (ValueError, AttributeError):
+                    print "{0} at {1}".format("error", metadata)
 
                 results[metadataType].append(metadata)
         #for s in results['abstractNote']: results['keywords'] += tokenize(s)
