@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from smartstash.core import zotero
 from smartstash.core.forms import InputForm
 from smartstash.core.utils import common_words, get_search_terms
-from smartstash.core.api import DPLA, Europeana
+from smartstash.core.api import DPLA, Europeana, Flickr
 
 
 def site_index(request):
@@ -85,15 +85,17 @@ def view_items(request):
     # TODO: debug logging?
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
+    # added Flickr
+    flkr_items = Flickr.find_items(**search_terms)
 
-    sources = [DPLA, Europeana]
+    sources = [DPLA, Europeana, Flickr]
     # sources = []
     # for k, v in sourceDict.iteritems():
     #     item = '<a href="'+v+'" target="_blank">'+k+'</a>'
     #     sources.append(item)
     # quick way to shuffle the two lists together based on
     # http://stackoverflow.com/questions/11125212/interleaving-lists-in-python
-    items = [x for t in zip(dpla_items, euro_items) for x in t]
+    items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
 
     # NOTE: we may need to clear the cache when we do a 'start over'....
 
