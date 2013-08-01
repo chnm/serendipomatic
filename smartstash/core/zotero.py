@@ -2,7 +2,7 @@ import requests, oauth2, urlparse, urllib
 from libZotero import zotero
 from bs4 import BeautifulSoup
 import smartstash.core.utils
-from smartstash.core.utils import tokenize, parse_date
+from smartstash.core.utils import tokenize
 
 consumerKey = "e61504b6e21a1df7d146"
 consumerSecret = "294d72ffd8dce053aadb"
