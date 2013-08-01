@@ -125,3 +125,61 @@ class Europeana(object):
         return items
 
 
+# Flickr Commons API
+# Only return image from flicker commons 
+class Flickr(object):
+    name = 'Flickr Commons'
+    url - 'http://www.flickr.com'
+
+    API_KEY = settings.API_KEYS['Flickr']
+
+    # TODO rewrite this for Flickr
+    @staticmethod
+    def find_items(keywords):
+
+        flickr = flickrapi.FlickAPI(API_KEY) 
+
+        # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
+        results = flickr.photos_search(text=' OR '.join(set(terms['keywords'])), format='json', is_commons='true')
+
+        # this is really stupid and should be uncessary but the 'jsonFlickrApi( )' needs to be stripped for the json to parse properly
+        results = results.lstrip('jsonFlickrApi(')
+        results = results.rstrip(')')
+
+        items = []
+        # no results! log this error?
+        if 'photo' not in results['photos']:
+            return items
+
+        for doc in results['photos']['photo']:
+            # NOTE: result includes a 'completeness' score
+            # which we could use for a first-pass filter to weed out junk records
+
+            i = DisplayItem(
+
+                format=doc.get('type', None),
+                source=doc.get('provider'),
+                # FIXME: do we want provider or dataprovider here?
+
+                # url on provider's website with context
+                url=doc.get('guid', None),
+                date=doc.get('edmTimespanLabel', None)
+            )
+
+            # NOTE: doc['link'] provides json with full record data
+            # if we want more item details
+            # should NOT be displayed to users (includes api key)
+
+            # preview and title are both lists; for now, in both cases,
+            # just grab the first one
+            if 'title' in doc:
+                i.title = doc['title'][0]
+            if 'edmPreview' in doc:
+                i.thumbnail = doc['edmPreview'][0]
+
+            # NOTE: spatial/location information doesn't seem to be included
+            # in this item result
+            items.append(i)
+
+        return items
+        
