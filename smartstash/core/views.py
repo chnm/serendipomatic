@@ -2,10 +2,10 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
+from smartstash.core import zotero
 from smartstash.core.forms import InputForm
 from smartstash.core.utils import common_words, get_search_terms
 from smartstash.core.api import DPLA, Europeana
-from smartstash.input import zotero
 
 
 def site_index(request):
