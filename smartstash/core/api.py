@@ -6,6 +6,10 @@ import flickrapi
 from smartstash.core.models import DisplayItem
 
 
+# TODO: later refactor / cleanup: rename this module to sources,
+# possibly break out into subdirectory
+# document required parts for adding a new one
+
 class DPLA(object):
 
     name = 'DPLA'
@@ -130,10 +134,10 @@ class Europeana(object):
 
 
 # Flickr Commons API
-# Only return image from the commons 
+# Only return image from flicker commons
 class Flickr(object):
     name = 'Flickr Commons'
-    url - 'http://www.flickr.com'
+    url = 'http://www.flickr.com'  # TODO: use flickr commons url?
 
     API_KEY = settings.API_KEYS['Flickr']
 
@@ -141,7 +145,7 @@ class Flickr(object):
     @staticmethod
     def find_items(keywords):
 
-        flickr = flickrapi.FlickrAPI(API_KEY) 
+        flickr = flickrapi.FlickrAPI(API_KEY)
 
         # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
         results = flickr.photos_search(text=' OR '.join(set(terms['keywords'])), format='json', is_commons='true')
@@ -168,8 +172,8 @@ class Flickr(object):
                 # url on provider's website with context
                 # http://www.flickr.com/photos/{user-id}/{photo-id}
                 url = 'http://www.flickr.com/photos/'+doc['owner']+'/'+doc['id']
-                
-                # TODO get date data 
+
+                # TODO get date data
                 # date=doc.get('edmTimespanLabel', None)
             )
 
@@ -191,4 +195,4 @@ class Flickr(object):
             items.append(i)
 
         return items
-        
+
