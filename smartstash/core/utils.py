@@ -5,6 +5,7 @@ import requests
 import nltk
 import random
 import re
+from dateutil.parser import parse
 
 #We want to eliminate all punctuation except single quotes.
 #This isn't the only case (sometimes you have single quotes around a word, which we do want to get rid of)
@@ -13,7 +14,7 @@ import re
 #nltk?
 
 def parse_date(dateString):
-    pass
+    return parse(dateString)
 
 def tokenize(text):
     # TODO: make stopword language configurable?
@@ -24,7 +25,7 @@ def tokenize(text):
     words = [w.lower() for w in tokens
              if w.isalnum() and w.lower() not in stopwords]
     # NOTE: isalnum will restrict to alpha and numeric content (i.e., words & dates);
-    # will probalby drop date ranges as well as contractions or quoted terms
+    # will probably drop date ranges as well as contractions or quoted terms
     return words
 
 def common_words(text, max_items=15):

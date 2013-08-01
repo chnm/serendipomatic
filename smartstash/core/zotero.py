@@ -1,6 +1,7 @@
 import requests, oauth2, urlparse, urllib
 from libZotero import zotero
 from bs4 import BeautifulSoup
+import smartstash.core.utils
 from smartstash.core.utils import tokenize, parse_date
 
 consumerKey = "e61504b6e21a1df7d146"
@@ -41,7 +42,7 @@ def get_userID(username):
     userID = feedUrl[feedUrl.find("users/") + len("users/") : feedUrl.find("/collections")]
     return userID
 
-def get_user_items(userID, public = True, startIndex = 0, numItems = 50):
+def get_user_items(userID, public = True, startIndex = 0, numItems = 99):
     if public: zlib = zotero.Library("user", userID, '', '')
     else: zlib = zotero.Library("user", userID, '', get_oauth_access_token())
 
@@ -72,4 +73,4 @@ def get_user_items(userID, public = True, startIndex = 0, numItems = 50):
     return results
 
 if __name__ == "__main__":
-    print get_user_items(get_userID("briancroxall"), numItems = 50, public = True)
+    print get_user_items(get_userID("briancroxall"), public = True)
