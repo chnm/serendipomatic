@@ -5,16 +5,12 @@ import requests
 import nltk
 import random
 import re
-from dateutil.parser import parse
 
 #We want to eliminate all punctuation except single quotes.
 #This isn't the only case (sometimes you have single quotes around a word, which we do want to get rid of)
 #TODO: a regex that will do this better than the current method (python's string.punctuation without the single quote)
 #TODO: find a list of stopwords, don't count them
 #nltk?
-
-def parse_date(dateString):
-    return parse(dateString)
 
 def tokenize(text):
     # TODO: make stopword language configurable?
