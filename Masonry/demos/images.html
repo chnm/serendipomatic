@@ -1,41 +1,100 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>SmartStash4</title>
+<meta charset="utf-8" >
+<title></title>
 
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-<link rel="stylesheet" href="../css/style.css" />
+
+<link rel="stylesheet" href="../css/style.css" >
 <!-- scripts at bottom of page -->
 </head>
 
 <body class="demos ">
 <section id="content">
-<div id="container" >
+<div id="container">
 
-<div id="f1_container">
-<div id="f1_card" class="shadow">
-  <div class="front face">
-    <img src="../testimages/finger.jpg">
-  </div>
-  <div class="back face center">
-    <div class="iso_date">Date</div>
+<div class="photo">
+<div class="container">
+    <img id="image1a" src="images/image1.jpg" >
+<!--  Switch above line to <img id="image1a" src="images/image1.jpg" height="item1h" width="item1w" > -->
+    <div id="image1b">
+			<div class="iso_date">Date</div>
 			<div class="iso_title"><a href="http://www.linktoURI.com">Title</a></div>
 			<div class="iso_author">Name</div>
 			<div class="iso_source"><a href="http://www.linktoURI.com/">Linked source repository/URI</a></div>
-  </div>
+    </div>
 </div>
 </div>
 
+<div class="photo">
+<div class="container">
+    <img id="image2a" src="images/image1.jpg" >
+    <img id="image2b" src="images/image2.jpg" >
+</div>
+</div>
 
+<div class="photo">
+<div class="container">
+    <img id="image3a" src="images/image1.jpg" >
+    <img id="image3b" src="images/image2.jpg" >
+</div>
+</div>
 
+<div class="photo">
+<div class="container">
+    <img id="image4a" src="images/image1.jpg" >
+    <img id="image4b" src="images/image2.jpg" >
+</div>
+</div>
 
+<div class="photo">
+<div class="container">
+    <img id="image5a" src="images/image1.jpg" >
+    <img id="image5b" src="images/image2.jpg" >
+</div>
+</div>
 
+<div class="photo">
+<div class="container">
+    <img id="image6a" src="images/image1.jpg" >
+    <img id="image6b" src="images/image2.jpg" >
+</div>
+</div>
 
-</div> <!-- closing container div -->
+<div class="photo">
+<div class="container">
+    <img id="image7a" src="images/image1.jpg" >
+    <img id="image7b" src="images/image2.jpg" >
+</div>
+</div>
+
+<div class="photo">
+<div class="container">
+    <img id="image8a" src="images/image1.jpg" >
+    <img id="image8b" src="images/image2.jpg" >
+</div>
+</div>
+
+<div class="photo">
+<div class="container">
+    <img id="image9a" src="images/image1.jpg" >
+    <img id="image9b" src="images/image2.jpg" >
+</div>
+</div>
+
+<div class="photo">
+<div class="container">
+    <img id="image10a" src="images/image1.jpg" >
+    <img id="image10b" src="images/image2.jpg" >
+</div>
+</div>
+
+</div> <!-- #container -->
 
 <script src="../js/jquery-1.7.1.min.js"></script>
 <script src="../jquery.isotope.min.js"></script>
+<script src="../hflip.js"></script>
 <script>
     $(function(){
 
@@ -43,52 +102,12 @@
 
       $container.imagesLoaded( function(){
         $container.isotope({
-          itemSelector : '.pad .photo'
+          itemSelector : '.photo'
         });
       });
 
 
     });
-    $(document).ready(function(){
-// set up hover panels
-// although this can be done without JavaScript, we've attached these events
-// because it causes the hover to be triggered when the element is tapped on a touch device
-$('.hover').hover(function(){
-$(this).addClass('flip');
-},function(){
-$(this).removeClass('flip');
-});
-// set up click/tap panels
-$('.click').toggle(function(){
-$(this).addClass('flip');
-},function(){
-$(this).removeClass('flip');
-});
-// set up block configuration
-$('.block .action').click(function(){
-$('.block').addClass('flip');
-});
-$('.block .edit-submit').click(function(e){
-$('.block').removeClass('flip');
-// why not update that list for fun?
-$('#list-title').text($('#form_title').val());
-$('#list-items').empty();
-for (var num = 1; num <= $('#form_items').val(); num++) {
-$('#list-items').append('<li>Name '+num+'</li>');
-}
-e.preventDefault();
-});
-// set up contact form link
-$('.contact .action').click(function(e){
-$('.contact').addClass('flip');
-e.preventDefault();
-});
-$('.contact .edit-submit').click(function(e){
-$('.contact').removeClass('flip');
-// just for effect we'll update the content
-e.preventDefault();
-});
-});
 
 /* Pull dimensions of each of the ten images and assign them to variables for us in the <img> calls above. I'm sure there's a nice way to collapse this into fewer lines of code... */
 var img = document.getElementById('item1_img');
@@ -142,7 +161,6 @@ var item10w = img.clientWidth;
 var item10h = img.clientHeight;
 
 </script>
-
 </section> <!-- #content -->
 </body>
 </html>
