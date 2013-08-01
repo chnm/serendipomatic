@@ -33,7 +33,9 @@ def get_oauth_access_token():
 
 def get_userID(username):
     r = requests.get('https://www.zotero.org/{0}/items'.format(username), verify=False)
-    feedLink = BeautifulSoup(r.text).find_all('a', attrs = {"class" : "feed-link"}).pop()
+    feed_links = BeautifulSoup(r.text).find_all('a', attrs = {"class" : "feed-link"})
+    if feed_links:
+        feedLink = feed_links.pop()
     #Finds the RSS feed link on the page (first with these properties)
     #An okay place to get the userID from, could be better.
     #When Zotero people add an API call to do this, this function should die.
