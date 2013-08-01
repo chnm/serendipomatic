@@ -6,6 +6,7 @@ oauth2
 requests
 beautifulsoup
 libZotero
+simplejson
 dateutil
 
 # should be installed as dependencies of bibs but don't seem to be
