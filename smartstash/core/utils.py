@@ -88,7 +88,7 @@ def get_search_terms(text) :
 
     resp_a = query(annotate)
     annotate_set = get_names_from_annotate(resp_a)
-    
+
     terms = _get_types(resp_a)
     terms['keywords'] = spot_set.union(annotate_set)
 
@@ -97,7 +97,10 @@ def get_search_terms(text) :
 
 def _get_types(entities) :
     json_data = simplejson.loads ( entities )
-    types = {}
+    types = {
+        'people': [],
+        'places': [],
+    }
     for item in json_data['Resources'] :
         str_types = str(item['@types'])
         if('DBpedia:Person' in str_types) :
