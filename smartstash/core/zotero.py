@@ -10,7 +10,7 @@ consumerSecret = "294d72ffd8dce053aadb"
 requestTokenURL = "https://www.zotero.org/oauth/request"
 authorizeURL = "https://www.zotero.org/oauth/authorize"
 accessTokenURL = "https://www.zotero.org/oauth/access"
-callbackURL = 'http://www.google.com'
+callbackURL = 'http://127.0.0.1:8000/localauth/zotero/'
 
 def get_oauth_access_token():
     consumer = oauth2.Consumer(consumerKey, consumerSecret)
