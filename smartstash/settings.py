@@ -24,6 +24,9 @@ ALLOWED_HOSTS = ['*']
 #     os.path.join(BASE_DIR, 'static'),
 # )
 
+# get 'local' settings via heroku env
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
