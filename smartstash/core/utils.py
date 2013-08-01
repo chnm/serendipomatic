@@ -24,6 +24,9 @@ def common_words(text, max_items=15):
     freqdist = nltk.FreqDist()
     for word in words:
         freqdist.inc(word)
+
+    if max_items is None:
+        return {'keywords': freqdist.keys()}
     return {'keywords': freqdist.keys()[:max_items]}
 
     # TODO: also look at using nltk to generate collocations
