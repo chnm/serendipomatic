@@ -1,4 +1,5 @@
 import requests, oauth2, urlparse
+from dateutil.parser import parse
 from libZotero import zotero
 from bs4 import BeautifulSoup
 
@@ -41,22 +42,27 @@ def get_userID(username):
     return userID
 
 def get_user_items(userID, public = True, numItems = None):
-    if public:
-        zlib = zotero.Library("user", userID, '', '')
-    else:
-        zlib = zotero.Library("user", userID, '', get_oauth_access_token())
+    if public: zlib = zotero.Library("user", userID, '', '')
+    else: zlib = zotero.Library("user", userID, '', get_oauth_access_token())
 
     items = zlib.fetchItems({'limit': numItems, 'order': 'dateAdded'})
 
-    metadataTypes = ["abstractNote", "date", "title", "creatorSummary"]
+    metadataTypes = ["date", "title", "creatorSummary", "keywords"]
     results = {m : [] for m in metadataTypes}
 
     for item in items:
         for metadataType in metadataTypes:
             metadata = item.get(metadataType)
-            if metadata: results[metadataType].append(metadata.encode("ascii", "ignore"))
 
-    results["keywords"] = common_words(results["abstractNote"][0])['keywords']
+            if not metadata: continue
+            metadata = metadata.encode("ascii", "ignore")
+
+            if metadataType == "date":
+                metadata = parse(metadata)
+
+            results[metadataType].append(metadata)
+
+    for s in results['abstractNote']: results['keywords'] += common_words(s, max_items = None)['keywords']
     return results
 
 if __name__ == "__main__":
