@@ -23,11 +23,18 @@ class DPLA(object):
         # keywords['people']
         # keywords['places']
         # keywords['dates']
+
+        # Don't know if this is exactly how this should be done but who. knows 
         api = Bibs()
-        qry = 'api_key->%s:q->%s' % (
+        qry = 'api_key->%s:q->%s:sourceResource->Creator->%s:sourceResource->spatial->%s:sourceResource->temporal->begin->%s:sourceResource->temporal->end->%s' % (
             DPLA.API_KEY,
-            ' OR '.join(keywords)
+            ' OR '.join(keywords),
+            ' OR '.join(keywords['people']),
+            ' OR '.join(keywords['places']), 
+            keywords['dates']['early'],
+            keywords['dates']['late'],
         )
+
         print qry
         # TODO: debug logging for generated query
 
@@ -134,7 +141,7 @@ class Europeana(object):
 # Only return image from the commons 
 class Flickr(object):
     name = 'Flickr Commons'
-    url - 'http://www.flickr.com'
+    url = 'http://www.flickr.com'
 
     API_KEY = settings.API_KEYS['Flickr']
 
