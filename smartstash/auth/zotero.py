@@ -9,13 +9,13 @@ REQUEST_TOKEN_URL = "https://www.zotero.org/oauth/request"
 ACCESS_TOKEN_URL = "https://www.zotero.org/oauth/access"
 
 # Backends
-class GoogleAppEngineOAuthBackend(GoogleOAuthBackend):
+class ZoteroBackend(GoogleOAuthBackend):
     """Google App Engine OAuth authentication backend"""
     name = 'google-appengine-oauth'
 
     def get_user_id(self, details, response):
         """Use google email or appengine user_id as unique id"""
-        user_id = super(GoogleAppEngineOAuthBackend, self).get_user_id(details, response)
+        user_id = super(ZoteroBackend, self).get_user_id(details, response)
         if setting('GOOGLE_APPENGINE_OAUTH_USE_UNIQUE_USER_ID', False):
             return response['id']
         return user_id
@@ -30,13 +30,12 @@ class GoogleAppEngineOAuthBackend(GoogleOAuthBackend):
                 'last_name': ''}
 
 # Auth classes
-class GoogleAppEngineOAuth(GoogleOAuth):
+class ZoteroOAuth(GoogleOAuth):
     """Google App Engine OAuth authorization mechanism"""
     AUTHORIZATION_URL = AUTHORIZATION_URL
     REQUEST_TOKEN_URL = REQUEST_TOKEN_URL
     ACCESS_TOKEN_URL = ACCESS_TOKEN_URL
-    SERVER_URL = GOOGLE_OAUTH_SERVER
-    AUTH_BACKEND = GoogleAppEngineOAuthBackend
+    AUTH_BACKEND = ZoteroBackend
     SETTINGS_KEY_NAME = "e61504b6e21a1df7d146"
     SETTINGS_SECRET_NAME = "294d72ffd8dce053aadb"
 
@@ -78,5 +77,5 @@ def google_appengine_userinfo(url, params):
 
 # Backend definition
 BACKENDS = {
-    'google-appengine-oauth': GoogleAppEngineOAuth,
+    'zotero': ZoteroOAuth,
 }
