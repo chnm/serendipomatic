@@ -2,6 +2,7 @@ import string
 import simplejson
 import requests
 import nltk
+import random
 
 #We want to eliminate all punctuation except single quotes.
 #This isn't the only case (sometimes you have single quotes around a word, which we do want to get rid of)
@@ -9,7 +10,8 @@ import nltk
 #TODO: find a list of stopwords, don't count them
 #nltk?
 
-def tokenize(text):
+
+def common_words(text, max_items=15):
     # TODO: make stopword language configurable?
     stopwords = nltk.corpus.stopwords.words('english')
 
@@ -20,14 +22,12 @@ def tokenize(text):
     # NOTE: isalnum will restrict to alpha and numeric content (i.e., words & dates);
     # will probalby drop date ranges as well as contractions or quoted terms
 
-    return words
-
-def common_words(text, max_items=15):
-    words = tokenize(text)
-
     freqdist = nltk.FreqDist()
     for word in words:
         freqdist.inc(word)
+
+    if max_items is None:
+        return {'keywords': freqdist.keys()}
     return {'keywords': freqdist.keys()[:max_items]}
 
     # TODO: also look at using nltk to generate collocations
@@ -63,7 +63,7 @@ def get_names_from_annotate(doc) :
     name_set = set()
 
     for item in json_data['Resources'] :
-        name_set.add(item['@surfaceForm'].lower)
+        name_set.add(item['@surfaceForm'].lower())
 
     return name_set
 
@@ -102,9 +102,16 @@ def get_search_terms(text) :
     annotate_set = get_names_from_annotate(resp_a)
 
     terms = _get_types(resp_a)
-    terms['keywords'] = spot_set.union(annotate_set)
-
+    # get a random set of keywords from the union of spot and annotate
+    terms['keywords'] = _get_random(spot_set.union(annotate_set))
+    # todo -- Randomize or mix up the set of keywords being passed
     return terms
+
+# Gets a random set of (at most 15) keywords
+def _get_random(keywords, max_items=15) :
+    if(max_items > len(keywords)) :
+        max_items = len(keywords)/2
+    return random.sample(keywords, max_items)
 
 
 def _get_types(entities) :
