@@ -45,11 +45,14 @@ Return a set named entities from a Spotting query
 """
 def get_names_from_spotting(doc) :
     json_data = simplejson.loads(doc)
+    stopwords = nltk.corpus.stopwords.words('english')
+
     name_set = set()
     for item in json_data['annotation']['surfaceForm'] :
         name = str(item['@name'])
         name = name.translate(None, string.punctuation).strip()
-        name_set.add(name)
+        if(name not in stopwords) :
+            name_set.add(name.lower())
     return name_set
 
 """
@@ -59,7 +62,7 @@ def get_names_from_annotate(doc) :
     name_set = set()
 
     for item in json_data['Resources'] :
-        name_set.add(item['@surfaceForm'])
+        name_set.add(item['@surfaceForm'].lower)
 
     return name_set
 
