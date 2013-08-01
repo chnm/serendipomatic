@@ -138,6 +138,8 @@ def _get_types(entities) :
 
     return types
 
+# Get early and late daetes. Currently only support four digit years
+# TODO should expand support at a later point
 def _get_dates(text) :
     dates = {
         'early':'',
