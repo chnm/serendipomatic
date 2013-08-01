@@ -37,8 +37,9 @@ API_KEYS = {
 }
 
 
-TEMPLATE_DEBUG = DEBUG
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+TEMPLATE_DEBUG = DEBUG
+
 
 
 # Language code for this installation. All choices can be found here:
