@@ -88,37 +88,20 @@ def get_search_terms(text) :
 
     resp_a = query(annotate)
     annotate_set = get_names_from_annotate(resp_a)
-    # get list of people
-    people_set = get_people(resp_a)
-    place_set = get_places( resp_a )
-
+    
+    terms = _get_types(resp_a)
     terms['keywords'] = spot_set.union(annotate_set)
-    terms['people'] = people_set
-    terms['places'] = place_set
+
     return terms
 
 
-
-"""
-Returns the list of DBpedia:Person records
-"""
-def get_people( entities ) :
+def _get_types(entities) :
     json_data = simplejson.loads ( entities )
-    name_set = set()
+    types = {}
     for item in json_data['Resources'] :
-        type = str(item['@types'])
-        if( 'DBpedia:Person' in type) :
-            name_set.add( item['@surfaceForm'] )
-    return name_set
-
-"""
-Returns the list of DBpedia:Place records
-"""
-def get_places (entities ) :
-    json_data = simplejson.loads( entities )
-    place_set = set()
-    for item in json_data['Resources'] :
-        type = str(item['@types'])
-        if('DBpedia:Place' in type) :
-            place_set.add( item['@surfaceForm'] )
-    return place_set
+        str_types = str(item['@types'])
+        if('DBpedia:Person' in str_types) :
+            types['people'].append(item['@surfaceForm'])
+        if('DBpedia:Place' in str_types) :
+            types['places'].append(item['@surfaceForm'])
+    return types
