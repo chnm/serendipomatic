@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from bibs.bibs import Bibs
 
-from smartstash.display.models import DisplayItem
+from smartstash.core.models import DisplayItem
 
 
 class DPLA(object):
