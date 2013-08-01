@@ -11,7 +11,7 @@ ACCESS_TOKEN_URL = "https://www.zotero.org/oauth/access"
 # Backends
 class ZoteroBackend(GoogleOAuthBackend):
     """Google App Engine OAuth authentication backend"""
-    name = 'google-appengine-oauth'
+    name = 'zotero'
 
     def get_user_id(self, details, response):
         """Use google email or appengine user_id as unique id"""
@@ -54,7 +54,9 @@ class ZoteroOAuth(GoogleOAuth):
     @classmethod
     def get_key_and_secret(cls):
         """Return key and secret and fix anonymous settings"""
-        key_and_secret = super(GoogleAppEngineOAuth, cls).get_key_and_secret()
+        return (ZoteroOAuth.SETTINGS_KEY_NAME, ZoteroOAuth.SETTINGS_SECRET_NAME)
+        key_and_secret = super(GoogleOAuth, cls).get_key_and_secret()
+        print 'key & secret = ', key_and_secret
         if key_and_secret == (None, None):
             return 'anonymous', 'anonymous'
         return key_and_secret
