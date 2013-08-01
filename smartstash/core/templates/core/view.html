@@ -27,7 +27,27 @@
 <div id="container" class="photos clearfix">
 {% for item in items %}
 
-     <!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
+
+
+<!-- Insert below into results page. Semi-opaque overlay from top of differently sized images. Suck text data into .overlay and image into .imageframe -->
+
+<div class="imageframe">
+        <img class="imgLiquidFill" src="{{ item.thumbnail }}" alt="{{ item.title }}" style="width:150px; height:150px;">
+	<div class="overlay">
+		<div class="iso_title">Title: <a href="{{ item.url }}">{{ item.title }}</a></div>
+		<div class="iso_date">Date: {{ item.date }}</div>
+	</div>
+</div>
+
+<input type="hidden" value="{{ item.location }}"/>
+{% endfor %}
+
+
+
+
+
+<!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
+<!--
 <div class="hover panel" tabindex="{{ forloop.counter|add:6 }}">
 	<div class="front">
 		<div class="pad">
@@ -49,6 +69,16 @@
 <input type="hidden" value="{{ item.location }}"/>
 {% endfor %}
 </div>
+
+-->
+
+
+
+
+
+
+
+
 
 
 <hr />
@@ -72,22 +102,22 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
    // Populates broken image links with default image
-   $(window).load(function() { 
-      $("img").each(function(){ 
-         var image = $(this);             
+   $(window).load(function() {
+      $("img").each(function(){
+         var image = $(this);
          if(image.context.naturalWidth == 0 ||
-         image.readyState == 'uninitialized'){    
+         image.readyState == 'uninitialized'){
             $(image).unbind("error").attr(
                 "src", "http://news.bbcimg.co.uk/media/images/69039000/jpg/_69039173_jkrowling_pa.jpg"
-            ); 
-         } 
-    }); 
-}); 
+            );
+         }
+    });
+});
 </script>
 {% endblock %}
 <script>
 // For sorting
-$(document).ready(function() { 
+$(document).ready(function() {
     $('#sort-by a').click(function(){
       // get href attribute, minus the '#'
       var sortName = $(this).attr('href').slice(1);
