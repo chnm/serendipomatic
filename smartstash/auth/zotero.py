@@ -1,153 +1,82 @@
-"""
-Zotero support for Django-Social-Auth.
-"""
-
-from hashlib import md5
-from re import sub
-from urllib import urlencode
-from urllib2 import urlopen
-
-from django.conf import settings
-from django.contrib.auth import authenticate
+from urllib2 import Request, urlopen
 from django.utils import simplejson
+from social_auth.utils import setting
+from social_auth.backends.google import GoogleOAuthBackend, GoogleOAuth, validate_whitelists
 
-from social_auth.backends import BaseAuth, SocialAuthBackend #, USERNAME
+# Google OAuth base configuration
+AUTHORIZATION_URL = "https://www.zotero.org/oauth/authorize"
+REQUEST_TOKEN_URL = "https://www.zotero.org/oauth/request"
+ACCESS_TOKEN_URL = "https://www.zotero.org/oauth/access"
 
-
-ZOTERO_API_SERVER = 'https://api.zotero.org'
-ZOTERO_AUTHORIZATION_URL = "https://www.zotero.org/oauth/authorize"
-
-
-class ZoteroBackend(SocialAuthBackend):
-    """Zotero authentication backend."""
-    name = "zotero"
-    EXTRA_DATA = [('id', 'id'), ]
+# Backends
+class GoogleAppEngineOAuthBackend(GoogleOAuthBackend):
+    """Google App Engine OAuth authentication backend"""
+    name = 'google-appengine-oauth'
 
     def get_user_id(self, details, response):
-        """Get unique User id from response"""
-        return response['id']
+        """Use google email or appengine user_id as unique id"""
+        user_id = super(GoogleAppEngineOAuthBackend, self).get_user_id(details, response)
+        if setting('GOOGLE_APPENGINE_OAUTH_USE_UNIQUE_USER_ID', False):
+            return response['id']
+        return user_id
 
     def get_user_details(self, response):
-        """Return user details from zotero account"""
-        full_name = response['realname'].strip()
-        if len(full_name.split(' ')) > 1:
-            last_name = full_name.split(' ')[-1].strip()
-            first_name = full_name.replace(last_name, '').strip()
-        else:
-            first_name = full_name
-            last_name = ''
-        data = {
-            USERNAME: response.get('name', ''),
-            'email': '',
-            'fullname': full_name,
-            'first_name': first_name,
-            'last_name': last_name
-        }
-        return data
+        """Return the information retrieved from the API endpoint"""
+        email = response['email']
+        return {'username': response.get('nickname', email).split('@', 1)[0],
+                'email': email,
+                'fullname': '',
+                'first_name': '',
+                'last_name': ''}
 
-    def extra_data(self, user, uid, response, details):
-        data = {'access_token': response.get('access_token', '')}
-        name = self.name.replace('-', '_').upper()
-        names = (self.EXTRA_DATA or []) + getattr(settings, name + '_EXTRA_DATA', [])
-        data.update((alias, response.get(name)) for name, alias in names)
-        return data
+# Auth classes
+class GoogleAppEngineOAuth(GoogleOAuth):
+    """Google App Engine OAuth authorization mechanism"""
+    AUTHORIZATION_URL = AUTHORIZATION_URL
+    REQUEST_TOKEN_URL = REQUEST_TOKEN_URL
+    ACCESS_TOKEN_URL = ACCESS_TOKEN_URL
+    SERVER_URL = GOOGLE_OAUTH_SERVER
+    AUTH_BACKEND = GoogleAppEngineOAuthBackend
+    SETTINGS_KEY_NAME = "e61504b6e21a1df7d146"
+    SETTINGS_SECRET_NAME = "294d72ffd8dce053aadb"
 
+    def user_data(self, access_token, *args, **kwargs):
+        """Return user data from Google API"""
+        request = self.oauth_request(access_token, GOOGLE_APPENGINE_PROFILE)
+        url, params = request.to_url().split('?', 1)
+        return google_appengine_userinfo(url, params)
 
-class ZoteroAuth(BaseAuth):
-    """Last.fm authentication mechanism."""
-    AUTH_BACKEND = ZoteroBackend
-    AUTHORIZATION_URL = "https://www.zotero.org/oauth/authorize"
-    REQUEST_TOKEN_URL = "https://www.zotero.org/oauth/request"
-    ACCESS_TOKEN_URL ="https://www.zotero.org/oauth/access"
-    SETTINGS_KEY_NAME = 'e61504b6e21a1df7d146'
-    SETTINGS_SECRET_NAME = '294d72ffd8dce053aadb'
-
-    def auth_url(self):
-        """Return authorization redirect url."""
-        key = self.api_key()
-        callback = self.request.build_absolute_uri(self.redirect)
-        callback = sub(r'^https', u'http', callback)
-        query = urlencode({'api_key': key, 'cb': callback})
-        return '%s?%s' % (ZOTERO_AUTHORIZATION_URL, query)
-
-    def auth_complete(self, *args, **kwargs):
-        """Return user from authenticate."""
-        token = self.data.get('token')
-        if not token:
-            raise ValueError('No token returned')
-
-        username, access_token = self.access_token(token)
-        data = self.user_data(username)
-        if data is not None:
-            data['access_token'] = access_token
-
-        kwargs.update({'response': data, self.AUTH_BACKEND.name: True})
-        return authenticate(*args, **kwargs)
-
-    def access_token(self, token):
-        """Get the Last.fm session/access token via auth.getSession."""
-        data = {
-            'method': 'auth.getSession',
-            'api_key': self.api_key(),
-            'token': token,
-            'api_sig': self.method_signature('auth.getSession', token),
-            'format': 'json',
-        }
-        query = urlencode(data)
-        url = '%s?%s' % (ZOTERO_API_SERVER, query)
-        try:
-            response = urlopen(url).read()
-            session = simplejson.loads(response)['session']
-            access_token = session['key']
-            username = session['name']
-        except:
-            access_token = ''
-            username = ''
-        return (username, access_token)
-
-    def user_data(self, username):
-        """Request user data."""
-        data = {
-            'method': 'user.getinfo',
-            'api_key': self.api_key(),
-            'user': username,
-            'format': 'json',
-        }
-        query = urlencode(data)
-        url = '%s?%s' % (ZOTERO_API_SERVER, query)
-        try:
-            response = urlopen(url).read()
-            user_data = simplejson.loads(response)['user']
-        except:
-            user_data = None
-        return user_data
-
-    def method_signature(self, method, token):
-        """Generate method signature for API calls."""
-        data = {
-            'key': self.api_key(),
-            'secret': self.secret_key(),
-            'method': method,
-            'token': token,
-        }
-        key = 'api_key%(key)smethod%(method)stoken%(token)s%(secret)s' % data
-        return md5(key).hexdigest()
+    def oauth_request(self, token, url, extra_params=None):
+        """Add OAuth parameters to the request"""
+        extra_params = extra_params or {}
+        # Skip direct super class since scope and other parameters are not supported
+        return super(GoogleOAuth, self).oauth_request(token, url, extra_params)
 
     @classmethod
-    def enabled(cls):
-        """Enable only if settings are defined."""
-        return cls.api_key and cls.secret_key
+    def get_key_and_secret(cls):
+        """Return key and secret and fix anonymous settings"""
+        key_and_secret = super(GoogleAppEngineOAuth, cls).get_key_and_secret()
+        if key_and_secret == (None, None):
+            return 'anonymous', 'anonymous'
+        return key_and_secret
 
-    @classmethod
-    def api_key(cls):
-        return getattr(settings, cls.SETTINGS_KEY_NAME, '')
 
-    @classmethod
-    def secret_key(cls):
-        return getattr(settings, cls.SETTINGS_SECRET_NAME, '')
+def google_appengine_userinfo(url, params):
+    """Loads user data from OAuth Profile Google App Engine App.
+
+    Parameters must be passed in queryset and Authorization header as described
+    on Google OAuth documentation at:
+    http://groups.google.com/group/oauth/browse_thread/thread/d15add9beb418ebc
+    and: http://code.google.com/apis/accounts/docs/OAuth2.html#CallingAnAPI
+    """
+    request = Request(url + '?' + params, headers={'Authorization': params})
+    try:
+        return simplejson.loads(urlopen(request).read())
+    except (ValueError, KeyError, IOError):
+        return None
 
 
 # Backend definition
 BACKENDS = {
-    'zotero': ZoteroAuth,
+    'google-appengine-oauth': GoogleAppEngineOAuth,
 }
