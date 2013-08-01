@@ -67,7 +67,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    #'django.contrib.auth.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
@@ -81,7 +81,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-#    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -118,7 +118,7 @@ INSTALLED_APPS = (
 
 # configure social-auth backends here
 AUTHENTICATION_BACKENDS = (
-    'smartstash.auth.zotero.ZoteroBackend'
+    'smartstash.auth.zotero.ZoteroBackend',
 )
 
 LOGIN_URL          = '/auth/login/'
