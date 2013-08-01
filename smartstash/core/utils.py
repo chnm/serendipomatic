@@ -10,8 +10,7 @@ import random
 #TODO: find a list of stopwords, don't count them
 #nltk?
 
-
-def common_words(text, max_items=15):
+def tokenize(text):
     # TODO: make stopword language configurable?
     stopwords = nltk.corpus.stopwords.words('english')
 
@@ -21,6 +20,10 @@ def common_words(text, max_items=15):
              if w.isalnum() and w.lower() not in stopwords]
     # NOTE: isalnum will restrict to alpha and numeric content (i.e., words & dates);
     # will probalby drop date ranges as well as contractions or quoted terms
+    return words
+
+def common_words(text, max_items=15):
+    words = tokenize(text)
 
     freqdist = nltk.FreqDist()
     for word in words:
@@ -69,9 +72,9 @@ def get_names_from_annotate(doc) :
 
 """
 Returns a dictionary of search terms
-keywords - combination of spotting and annotate queries 
-people - 
-places - 
+keywords - combination of spotting and annotate queries
+people -
+places -
 """
 def get_search_terms(text) :
     spot = {
