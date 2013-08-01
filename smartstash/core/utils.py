@@ -110,7 +110,7 @@ def get_search_terms(text) :
 # Gets a random set of (at most 15) keywords
 def _get_random(keywords, max_items=15) :
     if(max_items > len(keywords)) :
-        max_items = len(keywords)/2
+        max_items = int(len(keywords)*.7)
     return random.sample(keywords, max_items)
 
 
