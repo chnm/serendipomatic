@@ -56,6 +56,9 @@ class ZoteroBackend(SocialAuthBackend):
 class ZoteroAuth(BaseAuth):
     """Last.fm authentication mechanism."""
     AUTH_BACKEND = ZoteroBackend
+    AUTHORIZATION_URL = "https://www.zotero.org/oauth/authorize"
+    REQUEST_TOKEN_URL = "https://www.zotero.org/oauth/request"
+    ACCESS_TOKEN_URL ="https://www.zotero.org/oauth/access"
     SETTINGS_KEY_NAME = 'e61504b6e21a1df7d146'
     SETTINGS_SECRET_NAME = '294d72ffd8dce053aadb'
 
