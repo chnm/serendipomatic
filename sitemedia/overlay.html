@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+
+<!-- Insert below into CSS -->
+<style>
+.imageframe{
+position:relative;
+}
+.overlay{
+background-color:#000;
+top:0;
+color:#fff;
+opacity:0;
+filter: alpha(opacity = 0);
+position:absolute;
+padding: 10px;
+z-index:1000;
+}
+.imageframe:hover .overlay{
+opacity:0.75;
+filter: alpha(opacity = 75);
+transition:opacity 0.25s;
+-moz-transition:opacity 0.25s;
+-webkit-transition:opacity 0.25s;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Insert below into results page. Semi-opaque overlay from top of differently sized images. Suck text data into .overlay and image into .imageframe -->
+
+<div class="imageframe">
+		<img src="">
+	<div class="overlay">
+		<div class="iso_title"><a href="#">Title</a></div>
+		<div class="iso_author">Name</div>
+		<div class="iso_date">Date</div>
+		<div class="iso_source"><a href="#">Linked source repository/URI</a></div>
+	</div>
+</div>
+
+
+</body>
+</html>
