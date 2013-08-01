@@ -58,4 +58,18 @@ $(document).ready(function() {
     $(".imgLiquidFill").imgLiquid();
 });
 </script>
+<script type="text/javascript">
+   // Populates broken image links with default image
+   $(window).load(function() { 
+      $("img").each(function(){ 
+         var image = $(this);             
+         if(image.context.naturalWidth == 0 ||
+         image.readyState == 'uninitialized'){    
+            $(image).unbind("error").attr(
+                "src", "http://news.bbcimg.co.uk/media/images/69039000/jpg/_69039173_jkrowling_pa.jpg"
+            ); 
+         } 
+    }); 
+}); 
+</script>
 {% endblock %}
