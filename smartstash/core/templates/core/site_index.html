@@ -3,29 +3,34 @@
 
 {% block content %}
 
-<div class="one-third column" class="intro" tabindex="5">
+<div class="one-third column" class="intro">
 <img class="icons">
 <h4>Grab Your Stash.</h4>
 <p>Copy and Paste some text from your favorite Wikipedia page, bladdy blah blah, etc. </p>
 </div>
-<div class="one-third column" class="intro" tabindex="6">
+<div class="one-third column" class="intro">
 <img class="icons">
 <h4>Give it a Twirl.</h4>
 <p>Once you've selected your content, click on the magic button for some thrilling results.</p>
 
 </div>
-<div class="one-third column" class="intro" tabindex="7">
+<div class="one-third column" class="intro">
 <img class="icons">
 <h4>Behold!</h4>
 <p>Review the results of the Magic Moustache Machine!</p>
 </div>
 <hr/>
-<div class="main" tabindex="8">
-<h3>Let&rsquo;s Get Started.</h3>
+<div class="main">
+
 <form method="post" action="{% url 'site-index' %}">{% csrf_token %}
-<div class="two-thirds column">
-  {# TODO: needs error styling #}
-    {{ input_form.non_field_errors }}
+<div class="eight columns">
+<h3>Let&rsquo;s Get Started.</h3>
+<h5 style="height: 85px;">What&rsquo;s the last Wikipedia article you&rsquo;ve read? Or a recent paper you&rsquo;ve written? Copy and paste some text to search the Magic Stash Machine.</h5>
+
+    {% if input_form.errors %}
+      {{ input_form.errors }}
+    {% endif %}
+
     {% for field in input_form %}
       <p>{{ form.errors }}</p>
       <label for="{{ field.id }}">{{ field.label }}</label>
@@ -33,11 +38,23 @@
       <p class="help-text">{{ field.help_text }}</p>
     {% endfor %}
 
-    <input class="magic" type="submit" value="Make the Magic!" tabindex="9"/>
+</div>
+<div class="eight columns">
+<div class="zot">
+<h3><img class="zotero" src="{% static 'img/zotero.png' %}" alt="Zotero logo" style="margin:0;padding:0;" />, anyone?</h3>
+<h5 style="height: 85px;">If you are a Zotero user, you can enter your username below to searches your collections. 
+Forgot your Zotero username?</h5>
+<p><label for="zotero_user">Enter your Zotero username.</label></p>
+<p>{{ input_form.zotero_user }}</p>
+</div>
+
+</div> 
+</div>
+
+<div class="sixteen columns">
+<input class="magic" type="submit" value="Make the Magic!" tabindex="6"/>
 </div>
 </form>
-
-</div>
 
 </div><!-- container -->
 
