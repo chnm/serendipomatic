@@ -63,7 +63,12 @@ def get_names_from_annotate(doc) :
 
     return name_set
 
-# Returns a dictionary of search terms ** KEYWORD ONLY **
+"""
+Returns a dictionary of search terms
+keywords - combination of spotting and annotate queries 
+people - 
+places - 
+"""
 def get_search_terms(text) :
     spot = {
         'url':'http://spotlight.dbpedia.org/rest/spot',
