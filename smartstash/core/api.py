@@ -164,7 +164,7 @@ class Flickr(object):
 
                 # url on provider's website with context
                 # http://www.flickr.com/photos/{user-id}/{photo-id}
-                url = 'http://www.flickr.com/photos/'+doc['user-id']+'/'+doc['id']
+                url = 'http://www.flickr.com/photos/'+doc['owner']+'/'+doc['id']
                 
                 # TODO get date data 
                 # date=doc.get('edmTimespanLabel', None)
