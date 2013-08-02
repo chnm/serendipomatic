@@ -15,10 +15,12 @@
   <li><a href="#iso_date">Date</a></li>
   <li><a href="#iso_region">Region</a></li>
 </ul>
+
+<button class="magic" tabindex="5"></button> to add buttons back
 -->
 <p>
-<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Start Over</button></a>
-<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Save Results</button></a>
+<a href="{% url 'site-index' %}">Search again</a><br>
+Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these results</a> (will open on another page)
 <!--<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a>
 <a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a>-->
 </p>
