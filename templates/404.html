@@ -1,0 +1,13 @@
+{% extends 'view_base.html' %}
+{% load static %}
+
+{# html page subtitle (after site title) #}
+{% block page-subtitle %}| Whoops! 404, dude. {% endblock %}
+
+{% block content %}
+<a href="{% url 'site-index' %}">
+<img class="footimg" src="{% static 'img/404hippo.png' %}" alt="404 hippo says sorry" />
+</a>
+<p>Sorry things didn't work out. Go <a href="{% url 'site-index' %}">home</a> and start again.</p>
+
+{% endblock %}

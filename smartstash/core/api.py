@@ -33,6 +33,10 @@ class DPLA(object):
             DPLA.API_KEY,
             ' OR '.join(keywords)
         )
+
+        #qry from unicode string to regular string
+        qry = qry.encode("utf8", "ignore")
+
         logger.debug('dpla query: %s' % qry)
 
         # TODO: restrict to image only, or at least things with preview image
@@ -44,6 +48,11 @@ class DPLA(object):
         items = []
         for doc in results['docs']:
             src_res = doc['sourceResource']
+
+            # for now, just skip items without an image url
+            if not doc.get('object', None):
+                continue
+
             i = DisplayItem(
                 title=src_res.get('title', None),
                 format=src_res.get('type', None),
@@ -95,6 +104,10 @@ class Europeana(object):
             # ' OR '.join(['%s' % kw for kw in keywords])
             ' OR '.join(keywords)
         )
+
+        #qry from unicode string to regular string
+        qry = qry.encode("utf8", "ignore")
+
         logger.debug('europeana query: %s' % qry)
         b = Bibs()
         results = b.search(qry, 'europeanav2', 'search')
@@ -107,6 +120,10 @@ class Europeana(object):
         for doc in results['items']:
             # NOTE: result includes a 'completeness' score
             # which we could use for a first-pass filter to weed out junk records
+
+            # for now, just skip items without an image url
+            if not 'edmPreview' in doc or not doc['edmPreview']:
+                continue
 
             i = DisplayItem(
 
@@ -160,10 +177,18 @@ class Flickr(object):
 
         # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
         start = time.time()
-        # don't think flickr does OR
-        query = ' '.join(set(keywords))
+        # NOTE: flickr does support or, but doesn't like too many terms at once
+        # (15 terms is apparently too many)
+        query = ' OR '.join(set(keywords[:10]))
         logger.debug('flickr query: %s' % query)
-        results = flickr.photos_search(text=query, format='json', is_commons='true')
+        results = flickr.photos_search(text=query, format='json', is_commons='true',
+                                       extras='owner_name',
+                                       sort='relevance')
+        # comma-delimited list of extra fields
+        # need owner name for source
+        # TODO: future enhancement: access to date, location info, etc
+        #                              extras='owner_name,date_upload,date_taken,geo')
+
         logger.info('flickr query completed in %.2f sec' % (time.time() - start))
 
         # this is really stupid and should be uncessary but the 'jsonFlickrApi( )' needs to be stripped for the json to parse properly
@@ -171,17 +196,14 @@ class Flickr(object):
         results = results.rstrip(')')
 
         results = simplejson.loads(results)
-        import pprint
-        pprint.pprint(results)
+        # import pprint
+        # pprint.pprint(results)
 
         items = []
         # no results! log this error?
 
         # NOTE: could be bad api key; check code/stat in response
-        if not 'photos' in results:
-            return items
-
-        if 'photo' not in results['photos']:
+        if not 'photos' in results or 'photo' not in results['photos']:
             return items
 
         for doc in results['photos']['photo']:
@@ -191,12 +213,10 @@ class Flickr(object):
             i = DisplayItem(
 
                 format=doc.get('type', None),
-                source=doc.get('provider'),
-                # FIXME: do we want provider or dataprovider here?
-
+                source=doc.get('ownername', None),
                 # url on provider's website with context
                 # http://www.flickr.com/photos/{user-id}/{photo-id}
-                url = 'http://www.flickr.com/photos/'+doc['owner']+'/'+doc['id']
+                url='http://www.flickr.com/photos/%(owner)s/%(id)s/' % (doc)
 
                 # TODO get date data
                 # date=doc.get('edmTimespanLabel', None)

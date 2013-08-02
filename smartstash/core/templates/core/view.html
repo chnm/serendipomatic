@@ -30,7 +30,7 @@
 {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </p>
 
-<div id="container" class="clickable clearfix">
+<div id="container">
 {% for item in items %}
 
 
@@ -55,11 +55,6 @@
     {% endif %}
 	</div>
 </div>
-
-
-
-
-
 
 <!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
 <!--
@@ -87,18 +82,6 @@
 
 -->
 
-
-
-
-
-
-
-
-
-
-
-
-
 {% comment %}
 {{ item.title|default:'(no source)' }}
 {% endcomment %}
@@ -119,10 +102,30 @@
             $(image).unbind("error").attr(
                 "src", "http://news.bbcimg.co.uk/media/images/69039000/jpg/_69039173_jkrowling_pa.jpg"
             );
+                        $(image).unbind("error").attr(
+                "height", "63"
+            );
+                        $(image).unbind("error").attr(
+                "width", "112"
+            );
          }
     });
 });
 </script>
+ <script>
+    $(function(){
+
+      var $container = $('#container');
+
+      $container.imagesLoaded( function(){
+        $container.isotope({
+          itemSelector : '.imageframe'
+        });
+      });
+
+
+    });
+  </script>
 {% endblock %}
 <script>
 // For sorting
