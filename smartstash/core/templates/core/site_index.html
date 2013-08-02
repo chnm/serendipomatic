@@ -27,9 +27,8 @@
 <h3>Let&rsquo;s Get Started.</h3>
 <h5 style="height: 85px;">What&rsquo;s the last Wikipedia article you&rsquo;ve read? Or a recent paper you&rsquo;ve written? Copy and paste some text to search the Magic Stash Machine.</h5>
 
-    {% if input_form.errors %}
-      {{ input_form.errors }}
-    {% endif %}
+  {# TODO: needs error styling #}
+  {{ input_form.non_field_errors }}
 
     {% for field in input_form %}
       <p>{{ form.errors }}</p>
@@ -40,6 +39,8 @@
 
 </div>
 <div class="eight columns">
+
+
 <div class="zot">
 <h3><img class="zotero" src="{% static 'img/zotero.png' %}" alt="Zotero" style="margin:0;padding:0;" />, anyone?</h3>
 <h5 style="height: 85px;">If you are a Zotero user, you can enter your username below to searches your collections.
