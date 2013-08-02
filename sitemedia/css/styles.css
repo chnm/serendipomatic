@@ -105,3 +105,7 @@ transition:opacity 0.25s;
 padding: 0px;
 margin: 0px;
 }
+.overlay a {
+color: #3B8483;
+font-weight: bold;
+}
