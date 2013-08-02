@@ -85,18 +85,19 @@ def site_index(request):
                     return HttpResponseRedirect(zotero.oauth_authorize_url(request))
 
 
-        # for either text input or zotero where we got terms
+            # if for is valid,
+            # for either text input or zotero where we got terms
 
-        # print search_terms['keywords']
-        # store search terms in the session so we can redirect
-        request.session['search_terms'] = search_terms
+            # print search_terms['keywords']
+            # store search terms in the session so we can redirect
+            request.session['search_terms'] = search_terms
 
-        # insert logic for processing zotero username here
-        # zotero_user = form.cleaned_data['zotero_user']
+            # insert logic for processing zotero username here
+            # zotero_user = form.cleaned_data['zotero_user']
 
-        # redirect
-        # NOTE: should probably be http code 303, see other
-        return HttpResponseRedirect(reverse('view-stash'))
+            # redirect
+            # NOTE: should probably be http code 303, see other
+            return HttpResponseRedirect(reverse('view-stash'))
 
         # if not valid: pass through and redisplay errors
 
