@@ -171,7 +171,8 @@ def saveme(request):
     search_terms = request.session['search_terms']  # TODO: error handling if not set
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
+    flkr_items = Flickr.find_items(**search_terms)
     sources = [DPLA, Europeana]
-    items = [x for t in zip(dpla_items, euro_items) for x in t]
+    items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
     return render(request, 'core/saveme.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
