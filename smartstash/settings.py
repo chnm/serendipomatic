@@ -6,6 +6,8 @@ import os.path
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+EMAIL_SUBJECT_PREFIX = '[Serendipomatic] '
+
 # heroku config
 
 HEROKU = bool(os.environ.get('HEROKU', ''))
