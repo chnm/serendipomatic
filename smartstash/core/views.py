@@ -118,8 +118,12 @@ def view_items(request):
     search_terms = request.session.get('search_terms', None)
 
     #clear the session
+    print request.session.items()
+    for key in request.session.items():
+        print key
+        if key != 'search_terms': del key
+
     print request.session
-    request.session.clear()
 
     # if no search terms, return to site index
     if search_terms is None:
