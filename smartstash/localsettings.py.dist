@@ -11,7 +11,7 @@ TEMPLATE_DEBUG = DEBUG
 API_KEYS = {
     'DPLA': '',
     'Europeana': '',
-    'Flickr':''
+    'Flickr':'',
     'ZOTERO_CONSUMER_KEY': '',
     'ZOTERO_CONSUMER_SECRET': '',
 }

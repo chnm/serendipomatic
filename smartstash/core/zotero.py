@@ -86,6 +86,3 @@ def get_user_items(request, userID, userKey, public = True, startIndex = 0, numI
 
     print results
     return results
-
-if __name__ == "__main__":
-    print get_user_items(get_userID_if_public("briancroxall"), public = True)
