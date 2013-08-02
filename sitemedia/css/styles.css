@@ -109,8 +109,3 @@ margin: 0px;
 color: #3B8483;
 font-weight: bold;
 }
-/* not quite 33.3% */
-.imageframe { width: 33.2%; }
-
-/* images cover up the gap */
-.imageframe img { width: 100.5%; }
