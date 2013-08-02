@@ -2,81 +2,66 @@
 {% load static %}
 
 {% block content %}
-			<header>
-			<img class="scale-with-grid" src="{% static 'img/serendip-o-matic.png' %}" />
-			<h1 class="header" style="margin-top: 70px">Serendip<span>-o-</span>matic</h1>
-			<h2 class="tagline">Let your sources surprise you.</h2> </header>
-			<div class="offset-by-three">
-			<div class="three columns" class="intro">
-			<img src="{% static 'img/bookstack.png' %}" class="icons"/>
-			<h4 class="intro">Feed.</h4>
-			<h5 class="intro">Grab some text or link to your personal library.</h5>
-		</div>
-		<div class="three columns" class="intro">
-						<img src="{% static 'img/bookstack.png' %}" class="icons"/>
 
-			<h4 class="intro">Whirl.</h4>
-			<h5 class="intro">Magically compare your research with major collections.</h5>
-		</div>
-		<div class="three columns" class="intro">
-						<img src="{% static 'img/bookstack.png' %}" class="icons"/>
-
-			<h4 class="intro">Marvel!</h4>
-			<h5 class="intro">Be amazed by what turns up.</h5>
-		</div>
-			</div>
-			
-			
-		</div>
-
-<div class="main">	
-	<hr/>
-	<div class="nine columns">
-		<h3 class="start">Let’s Get Started.</h3>
-		
-		<h3>Grab some text.</h3>
-		<h5>Got a paper you’ve written? How about some research notes? Favourite 
-        song lyrics? Throw it into the Serendip-o-matic! Not sure what to to use? 
-        Try <a href="http://en.wikipedia.org/wiki/Wikipedia:Today's_featured_article" 
-        target="_blank">Wikipedia's daily featured article.</a>
-</h5>
-	<form method="post" action="{% url 'site-index' %}">{% csrf_token %}
-	{% if input_form.errors %}
-      {{ input_form.errors }}
-    {% endif %}
-
-      <p>{{ form.errors }}</p>
-      {{ input_form.text }}
-		
+<div class="one-third column" class="intro">
+<img class="icons">
+<h4>Grab Your Stash.</h4>
+<p>Copy and Paste some text from your favorite Wikipedia page, bladdy blah blah, etc. </p>
 </div>
-<div class="pipe one columns"></div>
-<div class="five columns" >
-	<div class="zot">
-		<h3>
-            <img class="zotero" src="{% static 'img/zotero.png' %}" alt="Zotero" style="margin:0;padding:0;" />, anyone?
-        </h3>
-    <!-- Needs label from Django -->
-	<h5>Got a Zotero account?<br />
-    Enter your username.</h5>
-   {{ input_form.zotero_user }}<br />
-    <button class="magic">Go!</button>
-    <h5>Need help or more info about <a href="http://www.zotero.org/" target="_blank">Zotero</a>?</h5>
+<div class="one-third column" class="intro">
+<img class="icons">
+<h4>Give it a Twirl.</h4>
+<p>Once you've selected your content, click on the magic button for some thrilling results.</p>
 
-	 </div>
+</div>
+<div class="one-third column" class="intro">
+<img class="icons">
+<h4>Behold!</h4>
+<p>Review the results of the Magic Moustache Machine!</p>
+</div>
+<hr/>
+<div class="main">
 
-</div> 
+<form method="post" onclick='this.reset()' action="{% url 'site-index' %}">{% csrf_token %}
+<div class="eight columns">
+<h3>Let&rsquo;s Get Started.</h3>
+<h5 style="height: 85px;">What&rsquo;s the last Wikipedia article you&rsquo;ve read? Or a recent paper you&rsquo;ve written? Copy and paste some text to search the Magic Stash Machine.</h5>
+
+  {# TODO: needs error styling #}
+  {{ input_form.non_field_errors }}
+
+    {% for field in input_form %}
+      <p>{{ form.errors }}</p>
+      <label for="{{ field.id }}">{{ field.label }}</label>
+      {{ field }}
+      <p class="help-text">{{ field.help_text }}</p>
+    {% endfor %}
+
+</div>
+<div class="eight columns">
+
+
+<div class="zot">
+<h3><img class="zotero" src="{% static 'img/zotero.png' %}" alt="Zotero" style="margin:0;padding:0;" />, anyone?</h3>
+<h5 style="height: 85px;">If you are a Zotero user, you can enter your username below to searches your collections.
+Forgot your Zotero username?</h5>
+<p><label for="zotero_user">Enter your Zotero username.</label></p>
+<p>{{ input_form.zotero_user }}</p>
+</div>
+
+</div>
 </div>
 
 <div class="sixteen columns">
-	<button class="magic">Make some magic!</button>
+<input class="magic" type="submit" value="Make the Magic!" tabindex="6"/>
 </div>
 </form>
 
-	</div><!-- container -->
+</div><!-- container -->
 
 <footer>
-	<hr/>
-	<h6>This project was made possible with support from a whole lotta peeps.</h6>
+<hr/>
+<h6>This project was made possible with support from a whole lotta peeps.</h6>
 </footer>
 <!-- End Document
 ================================================== -->
