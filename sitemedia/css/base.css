@@ -128,6 +128,48 @@ header img {
 #skip {display: none;}
 
 
+footer  {
+    background-color: #3B8483;
+    margin: 20px 10px 40px 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.footimg {
+    max-width: 110px;
+    float: left;
+    margin: 0px 20px;
+    padding: 10px 5px 5px 10px;
+}
+
+#footer-info {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #FFFFFF;
+    padding: 10px 20px 20px;
+}
+
+footer a:link, footer a:visited, footer a:active {
+    color: #FFF;
+    font-weight: bold;
+}
+
+footer a:hover {
+    color: #F6971D;
+}
+
+footer strong {
+    color: #fff;
+}
+
+#footermenu {
+    margin: 10px 20px;
+    color: #FFF;
+}
+
+#footermenu a {
+    padding: 25px 5px;
+}
+
 /* #Basic Styles
 ================================================== */
 	body {
