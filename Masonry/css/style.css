@@ -1,0 +1,206 @@
+/* Start: Recommended Isotope styles */
+
+/**** Isotope Filtering ****/
+
+.isotope-item {
+  z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+  pointer-events: none;
+  z-index: 1;
+}
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:      -o-transform, opacity;
+          transition-property:         transform, opacity;
+}
+
+/**** disabling Isotope CSS3 transitions ****/
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+  -webkit-transition-duration: 0s;
+     -moz-transition-duration: 0s;
+      -ms-transition-duration: 0s;
+       -o-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+/* End: Recommended Isotope styles */
+
+
+
+/* disable CSS transitions for containers with infinite scrolling*/
+.isotope.infinite-scrolling {
+  -webkit-transition: none;
+     -moz-transition: none;
+      -ms-transition: none;
+       -o-transition: none;
+          transition: none;
+}
+
+
+/**** Base styles ****/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+a,
+a code {
+  color: #FB4;
+  text-decoration: none;
+}
+
+a:hover,
+a:hover code {
+  color: #4BF;
+}
+
+a:active,
+a:active code {
+  color: #1FB;
+  background: black;
+}
+
+a img { border: none; }
+
+/**** Isotope styles ****/
+
+/* required for containers to inherit vertical size from window */
+html,
+body {
+  height: 100%;
+}
+
+#container {
+
+}
+
+.variable-sizes .element.width2 { width: 230px; }
+
+.variable-sizes .element.height2 { height: 230px; }
+
+.variable-sizes .element.width2.height2 {
+  font-size: 2.0em;
+}
+
+.element.large,
+.variable-sizes .element.large,
+.variable-sizes .element.large.width2.height2 {
+  font-size: 3.0em;
+  width: 350px;
+  height: 350px;
+  z-index: 100;
+}
+
+.clickable .element:hover {
+  cursor: pointer;
+}
+
+.clickable .element:hover h3 {
+  text-shadow:
+    0 0 10px white,
+    0 0 10px white
+  ;
+}
+
+.clickable .element:hover h2 {
+  color: white;
+}
+
+/**** Horizontal ****/
+
+.horizontal #container {
+  height: 80%;
+}
+
+#copy {
+  max-width: 640px;
+}
+
+/**** Photo demo ****/
+
+.photos .photo {
+  width: 320px;
+  margin: 5px;
+  float: left;
+}
+
+.photos .photo img {
+  display: block;
+  width: 100%;
+}
+
+#content {
+  margin-left: 210px;
+}
+
+.demos #content {
+  height: 100%;
+}
+
+/* The Magnificent Clearfix: nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+
+/* From Flipper */
+.container{
+	width:300px;
+	margin:0px auto;
+	height:190px;
+	}
+#image1a, #image2a, #image3a, #image4a, #image5a, #image6a, #image7a, #image8a, #image9a, #image10a{
+	position:absolute;
+	cursor:pointer;
+	width:300px;
+	height:190px;
+}
+
+#image1b, #image2b, #image3b, #image4b, #image5b, #image6b, #image7b, #image8b, #image9b, #image10b{
+width: 300px;
+height: 190px;
+}

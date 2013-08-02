@@ -1,6 +1,9 @@
 # python default ignores from github
 *.py[cod]
 
+#databases
+*.db
+
 # C extensions
 *.so
 

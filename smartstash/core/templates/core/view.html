@@ -4,21 +4,48 @@
 {% block title %}MagicStash Items Display{% endblock %}
 
 {% block content %}
+<ul id="sort-by">
+  <li><a href="#iso_title">Item Type</a></li>
+  <li><a href="#iso_date">Date</a></li>
+  <li><a href="#iso_region">Region</a></li>
+</ul>
 
 <p>
 <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Start Over</button></a>
-<a href="{% url 'view-stash' %}" target="_blank"><button class="magic" tabindex="6">Save Results</button></a>
-<br />
+<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Save Results</button></a>
+<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a>
+<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a>
+</p>
+
+<p>
 <strong>Query Terms:</strong> {{ query_terms.keywords|join:', ' }}
 <br />
 <strong>Sources Used:</strong>
 {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </p>
 
-<div id="container" class="photos clearfix">
+<div id="container">
 {% for item in items %}
 
-     <!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
+
+
+<!-- Insert below into results page. Semi-opaque overlay from top of differently sized images. Suck text data into .overlay and image into .imageframe -->
+
+<div class="imageframe">
+        <img src="{{ item.thumbnail }}" alt="{{ item.title }}" >
+	<div class="overlay">
+		<div class="iso_title">Title: <a href="{{ item.url }}">{{ item.title }}</a></div>
+		<div class="iso_date">Date: {{ item.date }}</div>
+	</div>
+</div>
+
+
+
+
+
+
+<!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
+<!--
 <div class="hover panel" tabindex="{{ forloop.counter|add:6 }}">
 	<div class="front">
 		<div class="pad">
@@ -31,16 +58,28 @@
 	</div>
 	<div class="back">
 		<div class="pad">
-			<div class="iso_date">Date: {{ item.idate }}</div>
-			<div class="iso_title"><a href="{{ item.url }}">Title</a></div>
+			<div class="iso_date">Date: {{ item.date }}</div>
+			<div class="iso_title">Title: <a href="{{ item.url }}">{{ item.title }}</a></div>
+			<div class="iso_title">Location: <a href="{{ item.location }}">{{ item.location }}</a></div>
 		</div>
 	</div>
 </div>
+<input type="hidden" value="{{ item.location }}"/>
 {% endfor %}
 </div>
 
+-->
 
-<hr />
+
+
+
+
+
+
+
+
+
+
 
 <a href="#top"><button tabindex="1000">Return to Top</button></a>
 {% comment %}
@@ -52,25 +91,29 @@
 <!--  <script src="http://isotope.metafizzy.co/jquery.isotope.min.js"></script> -->
 <script src="{% static 'js/isotope-1.5.25.js' %}"></script>
 <script src="{% static 'js/scripts_view.js' %}"></script>
-<!-- Image resizing: https://github.com/karacas/imgLiquid -->
-<script src="https://dl.dropboxusercontent.com/u/6983010/wserv/imgLiquid/js/imgLiquid-min.js"></script>
-<script>
-$(document).ready(function() {
-    $(".imgLiquidFill").imgLiquid();
-});
-</script>
 <script type="text/javascript">
    // Populates broken image links with default image
-   $(window).load(function() { 
-      $("img").each(function(){ 
-         var image = $(this);             
+   $(window).load(function() {
+      $("img").each(function(){
+         var image = $(this);
          if(image.context.naturalWidth == 0 ||
-         image.readyState == 'uninitialized'){    
+         image.readyState == 'uninitialized'){
             $(image).unbind("error").attr(
                 "src", "http://news.bbcimg.co.uk/media/images/69039000/jpg/_69039173_jkrowling_pa.jpg"
-            ); 
-         } 
-    }); 
-}); 
+            );
+         }
+    });
+});
 </script>
 {% endblock %}
+<script>
+// For sorting
+$(document).ready(function() {
+    $('#sort-by a').click(function(){
+      // get href attribute, minus the '#'
+      var sortName = $(this).attr('href').slice(1);
+      $('#container').isotope({ sortBy : sortName });
+      return false;
+    });
+});
+</script>

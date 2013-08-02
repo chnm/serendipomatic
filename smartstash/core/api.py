@@ -1,9 +1,19 @@
 from django.conf import settings
 from django.db import models
 from bibs.bibs import Bibs
+import flickrapi
+import simplejson
+import logging
+import time
 
 from smartstash.core.models import DisplayItem
 
+
+logger = logging.getLogger(__name__)
+
+# TODO: later refactor / cleanup: rename this module to sources,
+# possibly break out into subdirectory
+# document required parts for adding a new one
 
 class DPLA(object):
 
@@ -23,12 +33,13 @@ class DPLA(object):
             DPLA.API_KEY,
             ' OR '.join(keywords)
         )
-        print qry
-        # TODO: debug logging for generated query
+        logger.debug('dpla query: %s' % qry)
 
         # TODO: restrict to image only, or at least things with preview image
+        start = time.time()
         results = api.search(qry, 'dplav2', 'items')
         # TODO: error handling...
+        logger.info('dpla query completed in %.2f sec' % (time.time() - start))
 
         items = []
         for doc in results['docs']:
@@ -47,9 +58,9 @@ class DPLA(object):
                 # url on provider's website with context
                 url=doc.get('isShownAt', None)
             )
-
             if 'date' in src_res:
-                idate = src_res['date'].get('displayDate', None)
+                i.date = src_res['date'].get('displayDate', None)
+
             if 'spatial' in src_res and src_res['spatial']:
                 # sometimes a list but not always
                 if isinstance(src_res['spatial'], list):
@@ -81,9 +92,7 @@ class Europeana(object):
             # ' OR '.join(['%s' % kw for kw in keywords])
             ' OR '.join(keywords)
         )
-
-        print qry
-        # TODO: debug logging for generated query
+        logger.debug('europeana query: %s' % qry)
         b = Bibs()
         results = b.search(qry, 'europeanav2', 'search')
 
@@ -113,6 +122,9 @@ class Europeana(object):
 
             # preview and title are both lists; for now, in both cases,
             # just grab the first one
+
+            if 'edmTimespanLabel' in doc:
+                i.date = doc['edmTimespanLabel'][0]['def']
             if 'title' in doc:
                 i.title = doc['title'][0]
             if 'edmPreview' in doc:
@@ -124,4 +136,75 @@ class Europeana(object):
 
         return items
 
+
+# Flickr Commons API
+# Only return image from flicker commons
+class Flickr(object):
+    name = 'Flickr Commons'
+    url = 'http://www.flickr.com'  # TODO: use flickr commons url?
+
+    API_KEY = settings.API_KEYS['Flickr']
+
+    # TODO rewrite this for Flickr
+    @staticmethod
+    def find_items(keywords):
+
+        flickr = flickrapi.FlickrAPI(Flickr.API_KEY)
+
+        # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
+        start = time.time()
+        results = flickr.photos_search(text=' OR '.join(set(keywords)), format='json', is_commons='true')
+        logger.info('flickr query completed in %.2f sec' % (time.time() - start))
+
+        # this is really stupid and should be uncessary but the 'jsonFlickrApi( )' needs to be stripped for the json to parse properly
+        results = results.lstrip('jsonFlickrApi(')
+        results = results.rstrip(')')
+
+        results = simplejson.loads(results)
+
+        items = []
+        # no results! log this error?
+
+        # NOTE: could be bad api key; check code/stat in response
+        if not 'photos' in results:
+            return items
+
+        if 'photo' not in results['photos']:
+            return items
+
+        for doc in results['photos']['photo']:
+            # NOTE: result includes a 'completeness' score
+            # which we could use for a first-pass filter to weed out junk records
+
+            i = DisplayItem(
+
+                format=doc.get('type', None),
+                source=doc.get('provider'),
+                # FIXME: do we want provider or dataprovider here?
+
+                # url on provider's website with context
+                # http://www.flickr.com/photos/{user-id}/{photo-id}
+                url = 'http://www.flickr.com/photos/'+doc['owner']+'/'+doc['id']
+
+                # TODO get date data
+                # date=doc.get('edmTimespanLabel', None)
+            )
+
+            # NOTE: doc['link'] provides json with full record data
+            # if we want more item details
+            # should NOT be displayed to users (includes api key)
+
+            # flickr title not a list
+            if 'title' in doc:
+                i.title = doc['title']
+            # build the url back to the image
+            # http://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
+            i.thumbnail = 'http://farm%(farm)s.staticflickr.com/%(server)s/%(id)s_%(secret)s.jpg' % doc
+            # i.thumbnail = 'http://farm'+str(doc['farm'])+'.staticflickr.com/'+str(doc['server'])+'/'+str(doc['id'])+'_'+str(doc['secret'])+'.jpg'
+
+            # NOTE: spatial/location information doesn't seem to be included
+            # in this item result
+            items.append(i)
+
+        return items
 
