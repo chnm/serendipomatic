@@ -15,7 +15,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 logger = logging.getLogger(__name__)
 
-logger = logging.getLogger(__name__)
 
 def site_index(request):
     # preliminary site index page
@@ -39,6 +38,7 @@ def site_index(request):
             search_terms = {}
             if text:
                 lang = guess_language.guessLanguage(text[:100])
+                logger.debug('language detected as %s' % lang)
                 common_terms = common_words(text, 15, lang)
                 dbpedia_terms = get_search_terms(text, lang)
 
