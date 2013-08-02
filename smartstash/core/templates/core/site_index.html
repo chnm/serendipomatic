@@ -22,7 +22,7 @@
 <hr/>
 <div class="main">
 
-<form method="post" action="{% url 'site-index' %}">{% csrf_token %}
+<form method="post" onclick='this.reset()' action="{% url 'site-index' %}">{% csrf_token %}
 <div class="eight columns">
 <h3>Let&rsquo;s Get Started.</h3>
 <h5 style="height: 85px;">What&rsquo;s the last Wikipedia article you&rsquo;ve read? Or a recent paper you&rsquo;ve written? Copy and paste some text to search the Magic Stash Machine.</h5>
@@ -42,13 +42,13 @@
 <div class="eight columns">
 <div class="zot">
 <h3><img class="zotero" src="{% static 'img/zotero.png' %}" alt="Zotero" style="margin:0;padding:0;" />, anyone?</h3>
-<h5 style="height: 85px;">If you are a Zotero user, you can enter your username below to searches your collections. 
+<h5 style="height: 85px;">If you are a Zotero user, you can enter your username below to searches your collections.
 Forgot your Zotero username?</h5>
 <p><label for="zotero_user">Enter your Zotero username.</label></p>
 <p>{{ input_form.zotero_user }}</p>
 </div>
 
-</div> 
+</div>
 </div>
 
 <div class="sixteen columns">
