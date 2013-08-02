@@ -40,7 +40,9 @@
   {% endif %}
 	<div class="overlay">
 		<div class="iso_title">Title: {{ item.title|truncatechars:80 }}</div>
+    {% if item.date %}
 		<div class="iso_date">Date: {{ item.date }}</div>
+    {% endif %}
 		<div class="iso_source">Aggregator: <a href="{{ item.url }}">{{ item.aggregator }}</a></div>
 	</div>
 </div>
