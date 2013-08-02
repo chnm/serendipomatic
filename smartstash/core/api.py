@@ -199,7 +199,7 @@ class Flickr(object):
                 i.title = doc['title']
             # build the url back to the image
             # http://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
-            i.thumbnail = 'http://farm%(farm)s.staticflickr.com/%(server)s/%(id)s_%(secret)s.jpg' % doc
+            i.thumbnail = 'http://farm%(farm)s.staticflickr.com/%(server)s/%(id)s_%(secret)s_m.jpg' % doc
             # i.thumbnail = 'http://farm'+str(doc['farm'])+'.staticflickr.com/'+str(doc['server'])+'/'+str(doc['id'])+'_'+str(doc['secret'])+'.jpg'
 
             # NOTE: spatial/location information doesn't seem to be included
