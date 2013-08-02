@@ -9,6 +9,10 @@ from smartstash.core.forms import InputForm
 from smartstash.core.utils import common_words, get_search_terms
 from smartstash.core.api import DPLA, Europeana, Flickr
 
+from smartstash.auth.models import ZoteroUser
+from django.core.exceptions import ObjectDoesNotExist
+
+logger = logging.getLogger(__name__)
 
 logger = logging.getLogger(__name__)
 
@@ -54,24 +58,38 @@ def site_index(request):
 
 
             elif zotero_user:
-                userid = zotero.get_userID(zotero_user)
-                terms = zotero.get_user_items(userid, numItems=10)
-                print terms
 
-                search_terms['keywords'] = terms['date'] + terms['creatorSummary'] \
+                try:
+                    #already exist in the database
+                    zu = ZoteroUser.objects.get(username=zotero_user)
+                    print "Already there!"
+                    terms = zotero.get_user_items(request, zu.userid, zu.token,
+                                                  numItems=20, public=False)
+
+                    search_terms['keywords'] = terms['date'] + terms['creatorSummary'] \
                     + terms['keywords']
-                # TODO: creator summary should go into creator search
+                    # TODO: creator summary should go into creator search
 
-            # print search_terms['keywords']
-            # store search terms in the session so we can redirect
-            request.session['search_terms'] = search_terms
+                    # print search_terms['keywords']
+                    # store search terms in the session so we can redirect
+                    request.session['search_terms'] = search_terms
 
-            # insert logic for processing zotero username here
-            # zotero_user = form.cleaned_data['zotero_user']
+                    # insert logic for processing zotero username here
+                    # zotero_user = form.cleaned_data['zotero_user']
 
-            # redirect
-            # NOTE: should probably be http code 303, see other
-            return HttpResponseRedirect(reverse('view-stash'))
+                    # redirect
+                    # NOTE: should probably be http code 303, see other
+                    return HttpResponseRedirect(reverse('view-stash'))
+
+                except ObjectDoesNotExist:
+                    #don't already exist in the database
+
+                    zu = ZoteroUser(username=zotero_user)
+                    zu.save()
+
+                    request.session['username'] = zotero_user
+
+                    return HttpResponseRedirect(zotero.oauth_authorize_url(request))
 
         # if not valid: pass through and redisplay errors
 

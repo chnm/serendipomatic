@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 # admin.autodiscover()
 
 from smartstash.core import views
+from smartstash.auth import views as authviews
 
 
 urlpatterns = patterns(
@@ -16,6 +17,10 @@ urlpatterns = patterns(
     url(r'^dummy2/$', views.dummy2, name='dummy2'),
     url(r'^dummy3/$', views.dummy3, name='dummy3'),
     url(r'^saveme/$', views.saveme, name='saveme'),
+
+
+    url(r'^localauth/zotero/$', authviews.zotero_oauth, name='zotero'),
+#    url(r'^localauth/', include('smartstash.auth.urls', namespace='localauth')),
 
     # static site content pages
     url(r'^connect/', TemplateView.as_view(template_name='connect.html'),
