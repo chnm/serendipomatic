@@ -30,9 +30,14 @@
  <script type="text/javascript" src="//use.typekit.net/uej1ygs.js"></script>
  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
+ <script type="text/javascript" src="{% static 'js/jquery-1.10.2.js' %}"></script>
+
   <!-- Favicons
   ================================================== -->
-  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+  <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+  <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'images/apple-touch-icon-72x72.png' %}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'images/apple-touch-icon-114x114.png' %}">
 
   {% block extra-head %}{% endblock %} {# extend for pages that need extra css/js #}
 </head>
@@ -83,7 +88,7 @@
 {% block content %}{% endblock %}
 </div>
 
-<footer style="margin-left:-30px;">
+<footer>
 <div id="footermenu">
     <a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="{% url 'connect' %}">Connect</a></div>
     <img class="footimg" src="{% static 'img/burst.png' %}" alt="Burst Image" />
