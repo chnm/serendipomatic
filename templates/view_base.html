@@ -46,16 +46,16 @@
 			<ul>
             <li id="skip"><a class="skip" href="#content" tabindex="1">Skip to Content</a></li>
 			<li><a href="{% url 'site-index' %}" tabindex="2">home</a></li>
-			<li><a href="#" tabindex="3">about</a></li>
+			<li><a href="{% url 'about' %}" tabindex="3">about</a></li>
 			<li><a href="#" tabindex="4">connect</a></li>
 			</ul>
 		</menu>
 
-			<header>
-			<img class="scale-with-grid" src="{% static 'img/serendip-o-matic.png' %}" />
-			<h1 class="header" style="margin-top: 70px">Serendip<span>-o-</span>matic</h1>
-			<h2 class="tagline">Let your sources surprise you.</h2> </header>
-
+<header class="secondary">
+<img src="{% static 'img/serendipo_small.png' %}" />
+<h1 class="header" style="margin-top: 70px">Serendip<span>-o-</span>matic</h1>
+<h2 class="tagline">Let your sources surprise you.</h2> 
+</header>
 
 <a name="content"></a>
 <div>
@@ -65,7 +65,7 @@
 
 <footer>
 <div id="footermenu">
-    <a href="{% url 'site-index' %}">Home</a>|<a href="#">About</a>|<a href="#">Connect</a></div>
+    <a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="#">Connect</a></div>
     <img class="footimg" src="{% static 'img/burst.png' %}" />
     <p id="footer-info" ><strong>Serendip-o-matic</strong> is a project of
     <a href="http://www.oneweekonetool.org" target="_blank" >One Week | One Tool</a>

@@ -84,6 +84,16 @@
 
 	menu.bar a, menu.bar menu.bar a:visited { color: #FFFFFF; text-decoration: none; }
 	menu.bar a:hover, menu.bar a:focus { color: #FFFFFF; text-decoration: underline;}
+
+.main {
+    margin: 0 auto;
+    padding-right: 60px;
+}
+
+.main h2 {
+    color: #BF2431;
+    font-family: "ff-ernestine-web-pro-1","ff-ernestine-web-pro-2", "Source Sans Pro", sans-serif;
+}
 	
 .main h3 {
 		color: #BF2431;
@@ -124,6 +134,13 @@ header img {
 
 }
 
+header.secondary img {
+	margin-left: 0px;
+	max-width: 500px;
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
 
 #skip {display: none;}
 
