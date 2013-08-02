@@ -125,6 +125,7 @@ footer	 { width: 1000px; margin: 0 auto; }
        .container .offset-by-fourteen              { padding-left: 672px; }
        .container .offset-by-fifteen               { padding-left: 720px; }
         header.secondary img { margin-top: 0px; }
+        .intro { padding-top: 15px;}
    }
 
 /*  #Mobile (Portrait)
