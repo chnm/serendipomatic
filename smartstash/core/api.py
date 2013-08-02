@@ -182,7 +182,8 @@ class Flickr(object):
         results = flickr.photos_search(text=query, format='json', is_commons='true',
                                        extras='owner_name',
                                        sort='relevance',
-                                       per_page=25)   # restrict to first 25 items
+                                       per_page=15)
+                                       # restrict to first 15 items (only ~10 for other apis currently)
         # comma-delimited list of extra fields
         # need owner name for source
         # TODO: future enhancement: access to date, location info, etc
