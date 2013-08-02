@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'smartstash.core',
     'smartstash.auth',
+    'smartstash.images',
 )
 
 

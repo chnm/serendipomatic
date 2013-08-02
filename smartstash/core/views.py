@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 import logging
 import time
+import guess_language
 
 from smartstash.core import zotero
 from smartstash.core.forms import InputForm
@@ -14,7 +15,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 logger = logging.getLogger(__name__)
 
-logger = logging.getLogger(__name__)
 
 def site_index(request):
     # preliminary site index page
@@ -37,9 +37,10 @@ def site_index(request):
 
             search_terms = {}
             if text:
-                common_terms = common_words(text, 15)
-                dbpedia_terms = {'keywords': []}
-                # dbpedia_terms = get_search_terms(text)
+                lang = guess_language.guessLanguage(text[:100])
+                logger.debug('language detected as %s' % lang)
+                common_terms = common_words(text, 15, lang)
+                dbpedia_terms = get_search_terms(text, lang)
 
                 # too many terms? phrase? didn't get results when combining
                 # TODO: combine dbpedia + common terms; randomize from dbpedia results
