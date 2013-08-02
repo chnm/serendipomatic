@@ -3,6 +3,14 @@ from django.core.urlresolvers import reverse
 from smartstash.auth.models import ZoteroUser
 import smartstash.core.zotero as zotero
 
+html_escapes = {
+    "&": "&amp;",
+    '"': "&quot;",
+    "'": "&apos;",
+    ">": "&gt;",
+    "<": "&lt;",
+    }
+
 # Create your views here.
 
 def zotero_oauth(request):
@@ -25,6 +33,9 @@ def zotero_oauth(request):
     search_terms = {}
     terms = zotero.get_user_items(request, userid, token, numItems=20, public=False)
     search_terms['keywords'] = terms['date'] + terms['creatorSummary'] + terms['keywords']
+
+    for key, val in search_terms.iteritems():
+        search_terms[key] = [html_escapes.get(c, c) for c in val]
 
     request.session['search_terms'] = search_terms
 

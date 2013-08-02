@@ -15,6 +15,14 @@ accessTokenURL = "https://www.zotero.org/oauth/access"
 
 UPPER_LIMIT = 99
 
+html_escapes = {
+    "&": "&amp;",
+    '"': "&quot;",
+    "'": "&apos;",
+    ">": "&gt;",
+    "<": "&lt;",
+    }
+
 def oauth_authorize_url(request):
     consumer = oauth2.Consumer(consumerKey, consumerSecret)
     client = oauth2.Client(consumer)
@@ -78,6 +86,7 @@ def get_user_items(request, userID, userKey, public = True, startIndex = 0, numI
 
             try:
                 metadata = metadata.encode("ascii", "ignore")
+
 
             except (ValueError, AttributeError):
                 print "{0} at {1}".format("error", metadata)

@@ -16,12 +16,15 @@ from django.core.exceptions import ObjectDoesNotExist
 
 logger = logging.getLogger(__name__)
 
-html_escapes = {
+escapes = {
     "&": "&amp;",
     '"': "&quot;",
     "'": "&apos;",
     ">": "&gt;",
     "<": "&lt;",
+    ",": "",
+    ":": "",
+    "-": ""
     }
 
 
@@ -113,6 +116,10 @@ def site_index(request):
 
 # TODO: view copied from display.views, code probably needs to be refactored
 # into a single app
+def sanitizeString(s):
+    result = ""
+    for c in s: result += escapes.get(c, c)
+    return result
 
 def view_items(request):
     search_terms = request.session.get('search_terms', None)
@@ -128,9 +135,11 @@ def view_items(request):
     if search_terms is None:
         return HttpResponseRedirect(reverse('site-index'))
 
-    # html-encode the search terms for safety
-    for key, val in search_terms.iteritems():
-        search_terms[key] = [html_escapes.get(c, c) for c in val]
+    print "1: ", search_terms
+    # encode the search terms for safety
+    search_terms['keywords'] = [sanitizeString(s) for s in search_terms['keywords']]
+
+    print "2: ", search_terms
 
     start = time.time()
     dpla_items = DPLA.find_items(**search_terms)

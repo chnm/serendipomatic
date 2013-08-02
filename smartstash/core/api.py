@@ -37,6 +37,8 @@ class DPLA(object):
         #qry from unicode string to regular string
         qry = qry.encode("utf8", "ignore")
 
+        print qry
+
         logger.debug('dpla query: %s' % qry)
 
         # TODO: restrict to image only, or at least things with preview image
