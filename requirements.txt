@@ -9,7 +9,7 @@ libZotero
 simplejson
 python-dateutil
 flickrapi
-django-social-auth
+PIL
 
 # heroku
 django-toolbelt
