@@ -119,6 +119,11 @@ def site_index(request):
 
 def view_items(request):
     search_terms = request.session.get('search_terms', None)
+
+    #clear the session
+    print request.session
+    request.session.clear()
+
     # if no search terms, return to site index
     if search_terms is None:
         return HttpResponseRedirect(reverse('site-index'))

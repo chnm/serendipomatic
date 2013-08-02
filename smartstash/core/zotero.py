@@ -42,7 +42,7 @@ def accessToken_userID_from_oauth_verifier(request, oauth_verifier, requestToken
     accessToken = dict(urlparse.parse_qsl(content))
     # print "accessToken_userID_from_oauth_verifier <says>: "
     # print accessToken
-
+    print
     return accessToken['oauth_token'], accessToken['userID']
 
 def get_userID_if_public(username):
