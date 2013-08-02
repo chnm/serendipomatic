@@ -78,16 +78,19 @@ html, body {
 }
 
 .querytitle {
-font-weight: bold;
+     font-weight: bold;
 }
 
 .querystyle {
      color: #3B8483;
-     font-size: 2.5em;
+     font-size: 1.8em;
      line-height: 1.3em;
 }
+
 .queryhead {
+
 }
 
 .querysearch {
+
 }
