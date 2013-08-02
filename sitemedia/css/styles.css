@@ -102,6 +102,5 @@ transition:opacity 0.25s;
 -webkit-transition:opacity 0.25s;
 }
 .imageframe img {
-padding: 0px !important;
-border: red !important;
+border: 5px solid red;
 }
