@@ -124,7 +124,7 @@ def view_items(request):
     if search_terms is None:
         return HttpResponseRedirect(reverse('site-index'))
 
-    #html-encode the search terms for safety
+    # html-encode the search terms for safety
     for key, val in search_terms.iteritems():
         search_terms[key] = [html_escapes.get(c, c) for c in val]
 
