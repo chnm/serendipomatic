@@ -1,4 +1,4 @@
-{% extends 'site_base.html' %}
+{% extends 'view_base.html' %}
 {% load static %}
 
 {% block title %}MagicStash Items Display{% endblock %}
@@ -36,6 +36,7 @@
 	<div class="overlay">
 		<div class="iso_title">Title: <a href="{{ item.url }}">{{ item.title }}</a></div>
 		<div class="iso_date">Date: {{ item.date }}</div>
+		<div class="iso_date">Aggregator: {{ item.aggregator }}</div>
 	</div>
 </div>
 
