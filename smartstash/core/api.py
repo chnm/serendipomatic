@@ -33,6 +33,10 @@ class DPLA(object):
             DPLA.API_KEY,
             ' OR '.join(keywords)
         )
+        
+        #qry from unicode string to regular string
+        qry = qry.encode("utf8", "ignore")
+        
         logger.debug('dpla query: %s' % qry)
 
         # TODO: restrict to image only, or at least things with preview image
@@ -95,6 +99,10 @@ class Europeana(object):
             # ' OR '.join(['%s' % kw for kw in keywords])
             ' OR '.join(keywords)
         )
+        
+        #qry from unicode string to regular string
+        qry = qry.encode("utf8", "ignore")
+        
         logger.debug('europeana query: %s' % qry)
         b = Bibs()
         results = b.search(qry, 'europeanav2', 'search')
