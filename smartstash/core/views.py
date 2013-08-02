@@ -125,8 +125,10 @@ def view_items(request):
         return HttpResponseRedirect(reverse('site-index'))
 
     #html-encode the search terms for safety
-    for key in search_terms:
-        search_terms[key] = "".join(html_escapes.get(c,c) for c in search_terms[key])
+    for key, val in search_terms.iteritems():
+        search_terms[key] = [html_escapes.get(c, c) for c in val]
+
+    print search_terms
 
     # TODO: debug logging?
     start = time.time()
