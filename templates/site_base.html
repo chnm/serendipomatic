@@ -83,20 +83,24 @@
 {% block content %}{% endblock %}
 </div>
 
-<footer>
+<footer style="margin-left:-30px;">
 <div id="footermenu">
     <a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="{% url 'connect' %}">Connect</a></div>
     <img class="footimg" src="{% static 'img/burst.png' %}" alt="Burst Image" />
-    <p id="footer-info" ><strong>Serendip-o-matic</strong> is a project of
+    <div id="footer-info" >
+      <p><strong>Serendip-o-matic</strong> is a project of
     <a href="http://www.oneweekonetool.org" target="_blank" >One Week | One Tool</a>
      from the <a href="http://chnm.gmu.edu" target="_blank">Center for History and New Media</a>,
      <a href="http://www.gmu.edu" target="_blank">George Mason University</a>.<br />
      Funding provided by the <a href="http://www.neh.gov" target="_blank">National Endowment for the Humanities</a>.
      &copy; 2013, Center for History and New Media.<br />
     For more information,
-     contact <a href="mailto:serendipomatic@gmail.com"><strong>serendipomatic@gmail.com</strong></a>.
-     </p>
+     contact <a href="mailto:serendipomatic@gmail.com"><strong>serendipomatic@gmail.com</strong></a>.</p>
+
+     <p>version {{ SW_VERSION }}</p>
+     </div>
 </footer>
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
