@@ -16,6 +16,14 @@ from django.core.exceptions import ObjectDoesNotExist
 
 logger = logging.getLogger(__name__)
 
+html_escapes = {
+    "&": "&amp;",
+    '"': "&quot;",
+    "'": "&apos;",
+    ">": "&gt;",
+    "<": "&lt;",
+    }
+
 
 def site_index(request):
     # preliminary site index page
@@ -115,6 +123,10 @@ def view_items(request):
     # if no search terms, return to site index
     if search_terms is None:
         return HttpResponseRedirect(reverse('site-index'))
+
+    #html-encode the search terms for safety
+    for key in search_terms:
+        search_terms[key] = "".join(html_escapes.get(c,c) for c in search_terms[key])
 
     # TODO: debug logging?
     start = time.time()
