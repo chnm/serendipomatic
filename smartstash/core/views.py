@@ -76,11 +76,8 @@ def site_index(request):
                     #already exist in the database
                     zu = ZoteroUser.objects.get(username=zotero_user)
                     print "Already there!"
-                    terms = zotero.get_user_items(request, zu.userid, zu.token,
-                                                  numItems=25, public=False)
 
-                    search_terms['keywords'] = terms['date'] + terms['creatorSummary'] \
-                    + terms['keywords']
+                    request.session['username'] = zotero_user
                     # TODO: creator summary should go into creator search
 
                 except ObjectDoesNotExist:
@@ -91,7 +88,8 @@ def site_index(request):
 
                     request.session['username'] = zotero_user
 
-                    return HttpResponseRedirect(zotero.oauth_authorize_url(request))
+
+                return HttpResponseRedirect(zotero.oauth_authorize_url(request))
 
 
             # if for is valid,
