@@ -61,7 +61,9 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these resul
     {% endif %}
     {% endcomment %}
     {% if item.source %}
-    <div class="iso_source"><a href="{{ item.url }}">{{ item.source }}</a></div>
+    <div class="iso_source"><a href="{{ item.url }}">{{ item.source }}
+      {% if item.aggregator == 'Flickr Commons' or item.aggregator == 'Europeana' %} on {{ item.aggregator }}{% endif %}
+    </a></div>
     {% endif %}
 	</div>
 </div>
