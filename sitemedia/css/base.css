@@ -214,9 +214,10 @@ header img {
 	.intro {
 		margin-bottom: 30px;
 		margin-left: 40px;
-	}	
+	}
+
 	img.icons {
-		background-color: none;
+		background-color: #FFFFFF;
 		margin-top: 20px;
 		margin-bottom: 2px;
 		padding-left: 0px;
