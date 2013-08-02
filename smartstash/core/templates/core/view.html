@@ -112,7 +112,7 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these resul
          if(image.context.naturalWidth == 0 ||
          image.readyState == 'uninitialized'){
             $(image).unbind("error").attr(
-                "src", "../../../../sitemedia/img/fillerhippo.png"
+                "src", "{% static 'img/fillerhippo.png' %}"
             );
                         $(image).unbind("error").attr(
                 "height", "249"
