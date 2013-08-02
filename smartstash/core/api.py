@@ -71,8 +71,8 @@ class DPLA(object):
                 i.location = space.get('name', None)
 
             # Add the aggregator for reference
-            i.aggregator = 'DPLA'
-            
+            i.aggregator = DPLA.name
+
             items.append(i)
 
         return items
@@ -111,8 +111,9 @@ class Europeana(object):
             i = DisplayItem(
 
                 format=doc.get('type', None),
-                source=doc.get('provider'),
-                # FIXME: do we want provider or dataprovider here?
+                source='; '.join(doc.get('dataProvider', [])),
+                # NOTE: provider is aggregator (i.e., 'The European Library')
+                # dataProvider is original source
 
                 # url on provider's website with context
                 url=doc.get('guid', None),
@@ -132,9 +133,9 @@ class Europeana(object):
                 i.title = doc['title'][0]
             if 'edmPreview' in doc:
                 i.thumbnail = doc['edmPreview'][0]
-                
+
             # Add the aggregator for reference
-            i.aggregator = 'Europeana'
+            i.aggregator = Europeana.name
 
             # NOTE: spatial/location information doesn't seem to be included
             # in this item result
@@ -147,7 +148,7 @@ class Europeana(object):
 # Only return image from flicker commons
 class Flickr(object):
     name = 'Flickr Commons'
-    url = 'http://www.flickr.com'  # TODO: use flickr commons url?
+    url = 'http://www.flickr.com/commons'
 
     API_KEY = settings.API_KEYS['Flickr']
 
@@ -159,7 +160,10 @@ class Flickr(object):
 
         # photos = flickr.photos_search(user_id='73509078@N00', per_page='10')
         start = time.time()
-        results = flickr.photos_search(text=' OR '.join(set(keywords)), format='json', is_commons='true')
+        # don't think flickr does OR
+        query = ' '.join(set(keywords))
+        logger.debug('flickr query: %s' % query)
+        results = flickr.photos_search(text=query, format='json', is_commons='true')
         logger.info('flickr query completed in %.2f sec' % (time.time() - start))
 
         # this is really stupid and should be uncessary but the 'jsonFlickrApi( )' needs to be stripped for the json to parse properly
@@ -167,6 +171,8 @@ class Flickr(object):
         results = results.rstrip(')')
 
         results = simplejson.loads(results)
+        import pprint
+        pprint.pprint(results)
 
         items = []
         # no results! log this error?
@@ -210,7 +216,7 @@ class Flickr(object):
 
             # Add the aggregator for reference
             i.aggregator = 'Flickr Commons'
-            
+
             # NOTE: spatial/location information doesn't seem to be included
             # in this item result
             items.append(i)
