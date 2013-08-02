@@ -53,7 +53,7 @@ def site_index(request):
                     zu = ZoteroUser.objects.get(username=zotero_user)
                     print "Already there!"
                     terms = zotero.get_user_items(request, zu.userid, zu.token,
-                                                  numItems=20, public=False)
+                                                  numItems=25, public=False)
 
                     search_terms['keywords'] = terms['date'] + terms['creatorSummary'] \
                     + terms['keywords']
