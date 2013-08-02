@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.views.decorators.http import require_http_methods
 import logging
 import time
 import guess_language
@@ -25,11 +26,15 @@ escapes = {
     ",": "",
     ":": "",
     "-": ""
-    }
+}
 
 
+@require_http_methods(["GET", "POST"])
 def site_index(request):
     # preliminary site index page
+
+    # TODO, possibly -- might be worth supporting HEAD requests
+    # since this is the site in
 
     if request.method == 'GET':
         # on get request, initialize an empty form for display
