@@ -1,114 +1,89 @@
-/* Start: Recommended Isotope styles */
-
-/**** Isotope Filtering ****/
-
 .isotope-item {
-  z-index: 2;
+     z-index: 2;
 }
 
 .isotope-hidden.isotope-item {
-  pointer-events: none;
-  z-index: 1;
+     pointer-events: none;
+     z-index: 1;
 }
 
-/**** Isotope CSS3 transitions ****/
-
-.isotope,
-.isotope .isotope-item {
-  -webkit-transition-duration: 0.8s;
-     -moz-transition-duration: 0.8s;
-      -ms-transition-duration: 0.8s;
-       -o-transition-duration: 0.8s;
-          transition-duration: 0.8s;
+.isotope, .isotope .isotope-item {
+     transition-duration: 0.8s;
 }
 
 .isotope {
-  -webkit-transition-property: height, width;
-     -moz-transition-property: height, width;
-      -ms-transition-property: height, width;
-       -o-transition-property: height, width;
-          transition-property: height, width;
+     transition-property: height, width;
 }
 
 .isotope .isotope-item {
-  -webkit-transition-property: -webkit-transform, opacity;
-     -moz-transition-property:    -moz-transform, opacity;
-      -ms-transition-property:     -ms-transform, opacity;
-       -o-transition-property:      -o-transform, opacity;
-          transition-property:         transform, opacity;
+     transition-property: transform, opacity;
 }
 
-/**** disabling Isotope CSS3 transitions ****/
-
-.isotope.no-transition,
-.isotope.no-transition .isotope-item,
-.isotope .isotope-item.no-transition {
-  -webkit-transition-duration: 0s;
-     -moz-transition-duration: 0s;
-      -ms-transition-duration: 0s;
-       -o-transition-duration: 0s;
-          transition-duration: 0s;
+.isotope.no-transition, .isotope.no-transition .isotope-item, .isotope .isotope-item.no-transition {
+     transition-duration: 0s;
 }
 
-/* End: Recommended Isotope styles */
-
-/* disable CSS transitions for containers with infinite scrolling*/
 .isotope.infinite-scrolling {
-  -webkit-transition: none;
-     -moz-transition: none;
-      -ms-transition: none;
-       -o-transition: none;
-          transition: none;
+     transition: none 0s ease 0s ;
 }
 
-/**** Isotope styles ****/
-
-/* required for containers to inherit vertical size from window */
-html,
-body {
-  height: 100%;
+html, body {
+     height: 100%;
 }
 
-/* The Magnificent Clearfix: nicolasgallagher.com/micro-clearfix-hack/ */
-.clearfix:before, .clearfix:after { content: ""; display: table; }
-.clearfix:after { clear: both; }
-.clearfix { zoom: 1; }
+.clearfix:before, .clearfix:after {
+     content: "";
+     display: table;
+}
 
-/* Results image overlay styles */
-.imageframe{
-position:relative;
-min-width: 250px;
+.clearfix:after {
+     clear: both;
 }
-.overlay{
-background-color:#000;
-top:0;
-color:#fff;
-opacity:0;
-filter: alpha(opacity = 0);
-position:absolute;
-padding: 10px;
-z-index:1000;
+
+.clearfix {
+
 }
-.imageframe:hover .overlay{
-opacity:0.75;
-filter: alpha(opacity = 75);
-transition:opacity 0.25s;
--moz-transition:opacity 0.25s;
--webkit-transition:opacity 0.25s;
+
+.imageframe {
+     min-width: 250px;
+     position: relative;
 }
+
+.overlay {
+     background-color: #000000;
+     color: #FFFFFF;
+     opacity: 0;
+     padding: 10px;
+     position: absolute;
+     top: 0px;
+     z-index: 1000;
+}
+
+.imageframe:hover .overlay {
+     opacity: 0.75;
+     transition: opacity 0.25s ease 0s;
+}
+
 .imageframe img {
-padding: 0px;
-margin: 0px;
+     margin: 0px;
+     padding: 0px;
 }
+
 .overlay a {
-color: #3B8483;
-font-weight: bold;
+     color: #3B8483;
+     font-weight: bold;
 }
 
 .iso_source a:hover {
-color: white !important;
+     color: white ! important;
 }
+
+.querytitle {
+font-weight: bold;
+}
+
 .querystyle {
-size: 2em;
-color: #BF2431;
+     color: #3B8483;
+     font-size: 2.5em;
+     line-height: 1.3em;
 }

@@ -32,10 +32,11 @@
 		font: inherit;
 		vertical-align: baseline; }
 	article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
-		display: block; 
+		display: block;
 		}
 	body {
-		line-height: 1; }
+		line-height: 1;
+		font-family: 'Source Sans Pro'; }
 	ol, ul {
 		list-style: none; }
 	blockquote, q {
@@ -59,7 +60,7 @@
 	padding: 25px 27px 15px 25px;
 	margin-left: 25px;
 	background-color: #DDDDDD;
-		
+
 }
 .zotuser	textarea {
 		height: 20px;
@@ -98,12 +99,12 @@
     color: #BF2431;
     font-family: "ff-ernestine-web-pro-1","ff-ernestine-web-pro-2", "Source Sans Pro", sans-serif;
 }
-	
+
 .main h3 {
 		color: #BF2431;
-		
+
 	}
-	
+
 .main h3.start {
 	font-size: 40px;
 	color: #3B8483;
@@ -124,7 +125,7 @@
 }
 
 .help-text {
-	
+
 }
 
 h1.header, h2.tagline {
@@ -200,7 +201,7 @@ footer strong {
 		-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
 		-webkit-text-size-adjust: 100%;
  }
- 
+
 
 
 /* #Typography
@@ -209,9 +210,9 @@ footer strong {
 		color: #181818;
 		font-family: 'Source Sans Pro', sans-serif;
 		}
-	
+
 	h1, h2, h3 {font-weight: bold; }
-		
+
 	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
 	h1 { font-size: 64px; line-height: 90px; margin-bottom: 60px; color: #F24150; }
 	h1 span {color:#3b8483;}
@@ -271,9 +272,9 @@ footer strong {
 
 	img.scale-with-grid {
 		max-width: 100%;
-		height: auto; 
+		height: auto;
 		}
-		
+
 	.intro {
 		margin-bottom: 30px;
 		margin-left: 40px;
@@ -286,29 +287,29 @@ footer strong {
 		padding-left: 0px;
 		width: 80px;
 		margin-left: 40px;
-		
+
 	}
-	
+
 	h5.intro {
 		font-size: 14px;
 		line-height: 18px;
-		
-		
+
+
 	}
-	
+
 	h4.intro {
 		font-weight: bold;
 		margin-bottom: 2px;
-		
-		
+
+
 	}
-	
+
 	img.zotero {
 		padding-top: 10px;
 		margin-bottom: 10px;
 	}
 
-	
+
 
 /* #Buttons
 ================================================== */
@@ -341,7 +342,7 @@ footer strong {
 	  margin-bottom: 20px;
 	  line-height: normal;
 	  padding: 8px 10px;
-	  font-family: 'Source Sans Pro', sans-serif; 
+	  font-family: 'Source Sans Pro', sans-serif;
 	  font-weight: bold;}
 button.magic {
 	margin-top: 20px;
@@ -354,7 +355,7 @@ button.magic {
 		background: #349183 linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* W3C */
 		color: #EEE;
 		text-shadow: 0 1px rgba(1, 1, 1, .85);
-		
+
 }
 
 .button:hover.magic {
