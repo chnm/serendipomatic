@@ -11,7 +11,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, nav, sectio
 }
 
 body {
-     font-family: 'Source Sans Pro';
+     font-family: 'Source Sans Pro' !important;
      line-height: 1;
 }
 
@@ -432,7 +432,6 @@ img.zotero {
      border-color: #CCCCCC #AAAAAA #AAAAAA #CCCCCC;
      border-image: none;
      border-radius: 3px 3px 3px 3px;
-     border-right: 1px solid #AAAAAA;
      border-style: solid;
      border-width: 1px;
      color: #444444;
@@ -467,7 +466,6 @@ button.magic {
      background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%) repeat scroll 0% 0% #DDDDDD;
      border-color: #AAAAAA #888888 #888888 #AAAAAA;
      border-image: none;
-     border-right: 1px solid #888888;
      border-style: solid;
      border-width: 1px;
      color: #222222;
