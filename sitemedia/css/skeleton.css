@@ -159,6 +159,7 @@ footer	 { width: 1000px; margin: 0 auto; }
 
        img.icons { float: left; padding-right: 15px; }
        .intro { padding-top: 5px; }
+       header img { margin-bottom: 0px; }
 
        /* Offsets */
        .container .offset-by-one,
@@ -210,7 +211,9 @@ footer	 { width: 1000px; margin: 0 auto; }
        .container .sixteen.columns,
        .container .one-third.column,
        .container .two-thirds.column { width: 420px; }
-        header.secondary img { margin-top: 0px; }
+        header.secondary img { margin-top: 0px;}
+               header img { margin-bottom: 0px; }
+
    }
 
 
