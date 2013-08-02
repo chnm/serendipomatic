@@ -3,10 +3,12 @@ from django import forms
 
 class InputForm(forms.Form):
 
+    start_text = 'Hippopotamus'
+    
     text = forms.CharField(
-        label='Copy and paste some text from an article.',
-        help_text='Cut and paste a block of text. [Is this something that should go in a tooltip?]',
-        widget=forms.Textarea(attrs={'tabindex': 4,}),
+        label='Cut and paste a block of text.',
+        help_text='Cut and paste a block of text.',
+        widget=forms.Textarea(attrs={'tabindex': 4,}), initial=start_text,
         required=False)
         
     zotero_user = forms.CharField(
