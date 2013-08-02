@@ -124,10 +124,6 @@ def view_items(request):
     if search_terms is None:
         return HttpResponseRedirect(reverse('site-index'))
 
-    #html-encode the search terms for safety
-    for key in search_terms:
-        search_terms[key] = "".join(html_escapes.get(c,c) for c in search_terms[key])
-
     # TODO: debug logging?
     start = time.time()
     dpla_items = DPLA.find_items(**search_terms)
