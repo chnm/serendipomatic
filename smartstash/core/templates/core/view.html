@@ -18,12 +18,6 @@
 
 <button class="magic" tabindex="5"></button> to add buttons back
 -->
-<p>
-<a href="{% url 'site-index' %}">Search again</a><br>
-Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these results</a> (will open on another page)
-<!--<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a>
-<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a>-->
-</p>
 
 <p>
 <strong>Query Terms:</strong> {{ query_terms.keywords|join:', ' }}
@@ -31,6 +25,14 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these resul
 <strong>Sources Used:</strong>
 {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </p>
+<p>
+<a href="{% url 'site-index' %}">Search again</a><br>
+Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these results</a> (will open on another page)
+<!--<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a>
+<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a>-->
+</p>
+
+
 
 <div id="container">
 {% for item in items %}
