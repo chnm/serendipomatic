@@ -33,9 +33,15 @@ def resize(request, size):
 
         # TODO: could we do a redirect instead?
         response = HttpResponse(r.content)
+        mimetype = r.headers.get('content-type', None)
+
+        if mimetype:
+            response['content-type'] = mimetype
         # pass thru all headers from original url
-        for header, val in r.headers.iteritems():
-            response[header] = val
+        # NOTE: can't do that because most of them don't apply
+        # for header, val in r.headers.iteritems():
+        #     print '%s = %s' % (header, val)
+        #     response[header] = val
         return response
 
     img.thumbnail(newsize, Image.ANTIALIAS)
