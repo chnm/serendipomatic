@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 import logging
 import time
+import gevent
+import random
 
 from smartstash.core import zotero
 from smartstash.core.forms import InputForm
@@ -12,7 +14,6 @@ from smartstash.core.api import DPLA, Europeana, Flickr
 from smartstash.auth.models import ZoteroUser
 from django.core.exceptions import ObjectDoesNotExist
 
-logger = logging.getLogger(__name__)
 
 logger = logging.getLogger(__name__)
 
@@ -110,23 +111,44 @@ def view_items(request):
         return HttpResponseRedirect(reverse('site-index'))
 
     # TODO: debug logging?
-    start = time.time()
-    dpla_items = DPLA.find_items(**search_terms)
-    euro_items = Europeana.find_items(**search_terms)
-    # added Flickr
-    flkr_items = Flickr.find_items(**search_terms)
-    logger.info('queried 3 sources in in %.2f sec' % (time.time() - start))
 
+    def dpla():
+        return DPLA.find_items(**search_terms)
+    def euro():
+        return Europeana.find_items(**search_terms)
+    def flickr():
+        return Flickr.find_items(**search_terms)
+
+    start = time.time()
+    jobs = [gevent.spawn(service) for service in [dpla, euro, flickr]]
+    gevent.joinall(jobs, timeout=5)
+    items = []
+    for job in jobs:
+        items.extend(job.value)
+    # print [job.value for job in jobs]
+    print '%d items total' % len(items)
+    # result = gevent.joinall([
+    #     gevent.spawn(dpla),
+    #     gevent.spawn(euro),
+    #     gevent.spawn(flickr),
+    # ])
+    logger.info('queried 3 sources in in %.2f sec' % (time.time() - start))
+    # dpla_items = DPLA.find_items(**search_terms)
+    # euro_items = Europeana.find_items(**search_terms)
+    # # added Flickr
+    # flkr_items = Flickr.find_items(**search_terms)
     sources = [DPLA, Europeana, Flickr]
 
-    items = []
-    for i in range(15):
-        # hacky way to alternate content
-        for src in [dpla_items, euro_items, flkr_items]:
-            try:
-                items.append(src[i])
-            except IndexError:
-                pass
+    random.shuffle(items)
+
+    # items = []
+    # for i in range(15):
+    #     # hacky way to alternate content
+    #     for src in [dpla_items, euro_items, flkr_items]:
+    #         try:
+    #             items.append(src[i])
+    #         except IndexError:
+    #             pass
 
     # quick way to shuffle the two lists together based on
     # http://stackoverflow.com/questions/11125212/interleaving-lists-in-python
