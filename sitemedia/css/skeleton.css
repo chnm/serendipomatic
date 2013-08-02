@@ -121,8 +121,8 @@ footer	 { width: 960px; margin: 20px auto; }
        .container .offset-by-thirteen              { padding-left: 624px; }
        .container .offset-by-fourteen              { padding-left: 672px; }
        .container .offset-by-fifteen               { padding-left: 720px; }
+        header.secondary img { margin-top: 0px; }
    }
-
 
 /*  #Mobile (Portrait)
 ================================================== */
@@ -170,6 +170,7 @@ footer	 { width: 960px; margin: 20px auto; }
        .container .offset-by-thirteen,
        .container .offset-by-fourteen,
        .container .offset-by-fifteen { padding-left: 0; }
+        header.secondary img { margin-top: 0px; }
 
    }
 
@@ -203,6 +204,7 @@ footer	 { width: 960px; margin: 20px auto; }
        .container .sixteen.columns,
        .container .one-third.column,
        .container .two-thirds.column { width: 420px; }
+        header.secondary img { margin-top: 0px; }
    }
 
 

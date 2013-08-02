@@ -141,7 +141,7 @@ header.secondary img {
 	margin-left: 0px;
 	max-width: 500px;
 	padding-left: 0px;
-	margin-top: 0px;
+	margin-top: -35px;
 	margin-bottom: 0px;
 }
 
@@ -241,11 +241,11 @@ footer strong {
 
 /* #Links
 ================================================== */
-	a, a:visited { color: #333; text-decoration: underline; outline: 0; }
-	a:hover, a:focus { color: #000; }
+	a, a:visited { color: #BF2431; text-decoration: none; outline: 0; }
+	a:hover, a:focus { color: #BF2431; text-decoration: underline;}
 	p a, p a:visited { line-height: inherit; }
-	h5 a, h5 a:visited { color: green; text-decoration: none; }
-    h5 a:hover, h5 a:focus { color: #000; text-decoration: underline; }
+	h5 a, h5 a:visited { color: #BF2431; text-decoration: none; }
+    h5 a:hover, h5 a:focus { color: #BF2431; text-decoration: underline; }
 
 
 /* #Lists
