@@ -119,8 +119,8 @@ def view_items(request):
 
     #clear the session
     print request.session.items()
-    for key in request.session.items():
-        if key != 'search_terms': del key
+    for key, value in request.session.items():
+        if key != 'search_terms': del request.session[key]
 
     print request.session.items()
 
