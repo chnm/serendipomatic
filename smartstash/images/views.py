@@ -4,6 +4,9 @@ from django.http import Http404, HttpResponse
 import Image
 import requests
 from StringIO import StringIO
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # TODO:
@@ -21,7 +24,14 @@ def resize(request, size):
 
     newsize = (int(size), int(size))
 
-    img = Image.open(StringIO(r.content))
+    try:
+        img = Image.open(StringIO(r.content))
+    except IOError as err:
+        logger.warn('Failed to open %s as image : %s' % (img_url, err))
+        # if the url couldn't be opened, simple pass on the request content
+        # (possibly set an error status code?)
+        return HttpResponse(r.content, mimetype=r.headers['content-type'])
+
     img.thumbnail(newsize, Image.ANTIALIAS)
 
     # serialize to HTTP response
