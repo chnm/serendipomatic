@@ -38,10 +38,14 @@
 </div>
 
 <div class="sixteen columns">
-	<button class="magic">Make some magic!</button>
+	<button class="magic">Make some magic!</button> <button id="reset" class="magic" onclick="javascript:eraseText();return false;">Clear Form</button>
 </div>
 </form>
-
+<script>
+function eraseText() {
+    document.getElementById("texto").value = "";
+}
+</script>
 	</div><!-- container -->
 
 <!-- End Document
