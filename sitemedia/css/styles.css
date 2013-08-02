@@ -69,12 +69,6 @@ body {
   height: 100%;
 }
 
-#container2 {
-  width: 100%;
-  padding: 20px;
-  background: #FFFFFF;
-}
-
 /* The Magnificent Clearfix: nicolasgallagher.com/micro-clearfix-hack/ */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
