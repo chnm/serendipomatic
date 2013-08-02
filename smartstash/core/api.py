@@ -70,6 +70,9 @@ class DPLA(object):
                 # country? state? coords?
                 i.location = space.get('name', None)
 
+            # Add the aggregator for reference
+            i.aggregator = 'DPLA'
+            
             items.append(i)
 
         return items
@@ -129,6 +132,9 @@ class Europeana(object):
                 i.title = doc['title'][0]
             if 'edmPreview' in doc:
                 i.thumbnail = doc['edmPreview'][0]
+                
+            # Add the aggregator for reference
+            i.aggregator = 'Europeana'
 
             # NOTE: spatial/location information doesn't seem to be included
             # in this item result
@@ -202,6 +208,9 @@ class Flickr(object):
             i.thumbnail = 'http://farm%(farm)s.staticflickr.com/%(server)s/%(id)s_%(secret)s.jpg' % doc
             # i.thumbnail = 'http://farm'+str(doc['farm'])+'.staticflickr.com/'+str(doc['server'])+'/'+str(doc['id'])+'_'+str(doc['secret'])+'.jpg'
 
+            # Add the aggregator for reference
+            i.aggregator = 'Flickr Commons'
+            
             # NOTE: spatial/location information doesn't seem to be included
             # in this item result
             items.append(i)
