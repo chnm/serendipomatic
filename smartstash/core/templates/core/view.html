@@ -21,26 +21,31 @@
 
 <p>
 <div class="queryhead">
-<div class="querytitle">Serendip-o-matic ran with these words from your text:</div>
-<div class="querystyle"> {{ query_terms.keywords|join:', ' }}</div>
 
-<br />
+<div class="ten columns">
+  <p>
+    <div class="querytitle">Serendip-o-matic ran with these words from your text:</div>
+    <div class="querystyle"> {{ query_terms.keywords|join:', ' }}</div>
+  </p>
 
-<strong>Sources Used:</strong>
-{% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
-</p></div>
+  <p><strong>Sources used:</strong>
+  {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+</div>
 
-<div class="querysearch four columns">
+
+<div class="querysearch five columns">
+<p><a href="{% url 'site-index' %}">Go home and feed the machine new text!</a></p>
+
 <p>
-<a href="{% url 'site-index' %}">Go home and feed the machine new text!</a><br>
 Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these results</a> (will open on another page)
-<!--<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a>
-<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a>--></div>
 </p>
+{# <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a> #}
+{# <a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a> #}
+</div>
 
+<div class="clearfix"></div>
 
-
-<div id="container">
+<div id="container"> {# force result image div to full width #}
 {% for item in items %}
 
 
