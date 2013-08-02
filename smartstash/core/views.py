@@ -45,32 +45,8 @@ def site_index(request):
             zotero_user = form.cleaned_data['zotero_user']
 
             search_terms = {}
-            if text:
-                lang = guess_language.guessLanguage(text[:100])
-                logger.debug('language detected as %s' % lang)
-                common_terms = common_words(text, 15, lang)
-                dbpedia_terms = get_search_terms(text, lang)
 
-                # too many terms? phrase? didn't get results when combining
-                # TODO: combine dbpedia + common terms; randomize from dbpedia results
-                #search_terms['keywords'].extend(dbpedia_terms['keywords'])
-
-                search_terms['keywords'] = list(dbpedia_terms['keywords'])[:10]
-
-                # if no terms found in dbpedia, use common terms instead
-                # (todo: should be some kind of combination)
-                if not search_terms['keywords']:
-                    search_terms['keywords'] = common_terms['keywords']
-
-                # within dbpedia_terms there are now lists for
-                # people
-                # places
-                # dates {'early': ,'late': }
-                # people and places were reconciled against DBpedia. Dates contains
-                # only four digit values and could be passed to
-
-
-            elif zotero_user:
+            if zotero_user:
 
                 try:
                     #already exist in the database
@@ -93,6 +69,29 @@ def site_index(request):
 
                     return HttpResponseRedirect(zotero.oauth_authorize_url(request))
 
+            elif text:
+                lang = guess_language.guessLanguage(text[:100])
+                logger.debug('language detected as %s' % lang)
+                common_terms = common_words(text, 15, lang)
+                dbpedia_terms = get_search_terms(text, lang)
+
+                # too many terms? phrase? didn't get results when combining
+                # TODO: combine dbpedia + common terms; randomize from dbpedia results
+                #search_terms['keywords'].extend(dbpedia_terms['keywords'])
+
+                search_terms['keywords'] = list(dbpedia_terms['keywords'])[:10]
+
+                # if no terms found in dbpedia, use common terms instead
+                # (todo: should be some kind of combination)
+                if not search_terms['keywords']:
+                    search_terms['keywords'] = common_terms['keywords']
+
+                # within dbpedia_terms there are now lists for
+                # people
+                # places
+                # dates {'early': ,'late': }
+                # people and places were reconciled against DBpedia. Dates contains
+                # only four digit values and could be passed to
 
             # if for is valid,
             # for either text input or zotero where we got terms
