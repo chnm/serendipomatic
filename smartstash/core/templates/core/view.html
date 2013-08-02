@@ -39,7 +39,7 @@
         <img src="{% url 'image:resize' size=300 %}?url={{ item.thumbnail }}" alt="{{ item.title }}" >
   {% endif %}
 	<div class="overlay">
-		<div class="iso_title">Title: {{ item.title }}</div>
+		<div class="iso_title">Title: {{ item.title|truncatechars:80 }}</div>
 		<div class="iso_date">Date: {{ item.date }}</div>
 		<div class="iso_source">Aggregator: <a href="{{ item.url }}">{{ item.aggregator }}</a></div>
 	</div>
