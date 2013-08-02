@@ -33,10 +33,10 @@ class DPLA(object):
             DPLA.API_KEY,
             ' OR '.join(keywords)
         )
-        
+
         #qry from unicode string to regular string
         qry = qry.encode("utf8", "ignore")
-        
+
         logger.debug('dpla query: %s' % qry)
 
         # TODO: restrict to image only, or at least things with preview image
@@ -48,6 +48,11 @@ class DPLA(object):
         items = []
         for doc in results['docs']:
             src_res = doc['sourceResource']
+
+            # for now, just skip items without an image url
+            if not doc.get('object', None):
+                continue
+
             i = DisplayItem(
                 title=src_res.get('title', None),
                 format=src_res.get('type', None),
@@ -99,10 +104,10 @@ class Europeana(object):
             # ' OR '.join(['%s' % kw for kw in keywords])
             ' OR '.join(keywords)
         )
-        
+
         #qry from unicode string to regular string
         qry = qry.encode("utf8", "ignore")
-        
+
         logger.debug('europeana query: %s' % qry)
         b = Bibs()
         results = b.search(qry, 'europeanav2', 'search')
@@ -115,6 +120,10 @@ class Europeana(object):
         for doc in results['items']:
             # NOTE: result includes a 'completeness' score
             # which we could use for a first-pass filter to weed out junk records
+
+            # for now, just skip items without an image url
+            if not 'edmPreview' in doc or not doc['edmPreview']:
+                continue
 
             i = DisplayItem(
 
