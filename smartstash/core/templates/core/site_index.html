@@ -2,25 +2,23 @@
 {% load static %}
 
 {% block content %}
-<div class="main">	
+<div class="main">
 	<hr/>
 	<div class="nine columns">
 		<h3 class="start">Let’s Get Started.</h3>
-		
+
 		<h3>Grab some text.</h3>
-		<h5>Got a paper you’ve written? How about some research notes? Favourite 
-        song lyrics? Throw it into the Serendip-o-matic! Not sure what to to use? 
-        Try <a href="http://en.wikipedia.org/wiki/Wikipedia:Today's_featured_article" 
+		<h5>Got a paper you’ve written? How about some research notes? Favourite
+        song lyrics? Throw it into the Serendip-o-matic! Not sure what to to use?
+        Try <a href="http://en.wikipedia.org/wiki/Wikipedia:Today's_featured_article"
         target="_blank">Wikipedia's daily featured article.</a>
 </h5>
 	<form method="post" action="{% url 'site-index' %}">{% csrf_token %}
-	{% if input_form.errors %}
-      {{ input_form.errors }}
-    {% endif %}
+      {{ input_form.non_field_errors }}
 
       <p>{{ form.errors }}</p>
       {{ input_form.text }}
-		
+
 </div>
 <div class="pipe one columns"></div>
 <div class="five columns" >
@@ -37,7 +35,7 @@
 
 	 </div>
 
-</div> 
+</div>
 </div>
 
 <div class="sixteen columns">
