@@ -25,7 +25,6 @@ def zotero_oauth(request):
     zu.save()
 
     search_terms = {}
-    print token
     terms = zotero.get_user_items(request, zu.userid, token, numItems=20, public=False)
     search_terms['keywords'] = terms['date'] + terms['creatorSummary'] + terms['keywords']
 
