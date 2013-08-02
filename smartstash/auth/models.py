@@ -5,9 +5,9 @@ from django.db import models
 
 class ZoteroUser(models.Model):
     # username, userid, token
-    username = models.CharField(max_length=256, unique=True)
-    userid = models.CharField(max_length=256, unique=True)
-    token = models.CharField(max_length=256)
+    username = models.CharField(max_length=255, unique=True)
+    userid = models.CharField(max_length=255, unique=True)
+    token = models.CharField(max_length=255)
 
     # TODO: __unicode__ method (username?)
 
