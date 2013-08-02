@@ -108,3 +108,6 @@ font-weight: bold;
 .iso_source a:hover {
 color: white !important;
 }
+.querystyle {
+color: red;
+}
