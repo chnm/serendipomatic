@@ -112,6 +112,20 @@
     });
 });
 </script>
+ <script>
+    $(function(){
+
+      var $container = $('#container');
+
+      $container.imagesLoaded( function(){
+        $container.isotope({
+          itemSelector : '.imageframe'
+        });
+      });
+
+
+    });
+  </script>
 {% endblock %}
 <script>
 // For sorting
