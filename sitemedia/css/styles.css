@@ -52,8 +52,6 @@
 
 /* End: Recommended Isotope styles */
 
-
-
 /* disable CSS transitions for containers with infinite scrolling*/
 .isotope.infinite-scrolling {
   -webkit-transition: none;
@@ -62,97 +60,6 @@
        -o-transition: none;
           transition: none;
 }
-
-
-/**** Base styles ****/
-
-html, body, div, span, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
-small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-body {
-  padding: 20px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif;
-  font-size: 13px;
-  line-height: 1.7em;
-  background: #1F1E1D;
-  color: #FFF;
-}
-
-h1, h2, h3, p, ul, ol, pre, dl {
-  margin-bottom: 1.0em;
-}
-
-h1, h2, #super-list, .element, .tagline, #index-list,
-.super-list .link {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-}
-
-h1, h2, h3 { font-weight: bold; }
-
-h1 {
-  font-size: 32px;
-  line-height: 1.1em;
-}
-
-h2 {
-  font-size: 24px;
-  line-height: 1.1em;
-}
-
-ul, ol {
-  margin-left: 1.5em;
-}
-
-a,
-a code {
-  color: #FB4;
-  text-decoration: none;
-}
-
-a:hover,
-a:hover code {
-  color: #4BF;
-}
-
-a:active,
-a:active code {
-  color: #1FB;
-  background: black;
-}
-
-a img { border: none; }
-
-em { font-style: italic; }
-strong { font-weight: bold; }
-
-blockquote {
-  padding-left: 1.0em;
-  margin-left: 1.0em;
-  border-left: 1px solid #333;
-  font-style: italic;
-}
-
-
-
 
 /**** Isotope styles ****/
 
@@ -167,100 +74,6 @@ body {
   padding: 5px;
   margin-bottom: 20px;
 }
-
-
-.element {
-  width: 110px;
-  height: 110px;
-  margin: 5px;
-  float: left;
-  overflow: hidden;
-  position: relative;
-  background: #fff;
-  color: #222;
-  border:2px solid #000;
-}
-
-
-/*
-
-.element * {
-  position: absolute;
-  margin: 0;
-}
-
-.element .symbol {
-  left: 0.2em;
-  top: 0.4em;
-  font-size: 3.8em;
-  line-height: 1.0em;
-  color: #FFF;
-}
-.element.large .symbol {
-  font-size: 4.5em;
-}
-
-.element.fake .symbol {
-  color: #000;
-}
-
-.element .name {
-  left: 0.5em;
-  bottom: 1.6em;
-  font-size: 1.05em;
-}
-
-.element .weight {
-  font-size: 0.9em;
-  left: 0.5em;
-  bottom: 0.5em;
-}
-
-.element .number {
-  font-size: 1.25em;
-  font-weight: bold;
-  color: hsla(0,0%,0%,.5);
-  right: 0.5em;
-  top: 0.5em;
-}
-
-
-.variable-sizes .element.width2 { width: 230px; }
-
-.variable-sizes .element.height2 { height: 230px; }
-
-.variable-sizes .element.width2.height2 {
-  font-size: 2.0em;
-}
-
-.element.large,
-.variable-sizes .element.large,
-.variable-sizes .element.large.width2.height2 {
-  font-size: 3.0em;
-  width: 350px;
-  height: 350px;
-  z-index: 100;
-}
-*/
-
-
-
-
-
-/**** Horizontal ****/
-
-.horizontal #container {
-  height: 80%;
-}
-
-
-/**** Docs ****/
-
-
-
-
-
-
 
 /* The Magnificent Clearfix: nicolasgallagher.com/micro-clearfix-hack/ */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
@@ -287,4 +100,12 @@ filter: alpha(opacity = 75);
 transition:opacity 0.25s;
 -moz-transition:opacity 0.25s;
 -webkit-transition:opacity 0.25s;
+}
+.imageframe img {
+padding: 0px;
+margin: 0px;
+}
+.overlay a {
+color: #3B8483;
+font-weight: bold;
 }

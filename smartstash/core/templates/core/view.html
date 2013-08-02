@@ -24,7 +24,7 @@
 {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </p>
 
-<div id="container" class="photos clearfix">
+<div id="container">
 {% for item in items %}
 
 
@@ -32,7 +32,7 @@
 <!-- Insert below into results page. Semi-opaque overlay from top of differently sized images. Suck text data into .overlay and image into .imageframe -->
 
 <div class="imageframe">
-        <img class="imgLiquidFill" src="{{ item.thumbnail }}" alt="{{ item.title }}" style="width:150px; height:150px;">
+        <img src="{{ item.thumbnail }}" alt="{{ item.title }}" >
 	<div class="overlay">
 		<div class="iso_title">Title: <a href="{{ item.url }}">{{ item.title }}</a></div>
 		<div class="iso_date">Date: {{ item.date }}</div>
@@ -79,7 +79,7 @@
 
 
 
-<hr />
+
 
 <a href="#top"><button tabindex="1000">Return to Top</button></a>
 {% comment %}
@@ -91,13 +91,6 @@
 <!--  <script src="http://isotope.metafizzy.co/jquery.isotope.min.js"></script> -->
 <script src="{% static 'js/isotope-1.5.25.js' %}"></script>
 <script src="{% static 'js/scripts_view.js' %}"></script>
-<!-- Image resizing: https://github.com/karacas/imgLiquid -->
-<script src="https://dl.dropboxusercontent.com/u/6983010/wserv/imgLiquid/js/imgLiquid-min.js"></script>
-<script>
-$(document).ready(function() {
-    $(".imgLiquidFill").imgLiquid();
-});
-</script>
 <script type="text/javascript">
    // Populates broken image links with default image
    $(window).load(function() {

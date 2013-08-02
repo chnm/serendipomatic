@@ -26,6 +26,10 @@
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
+  <!-- Web fonts -->
+  <script type="text/javascript" src="//use.typekit.net/uej1ygs.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
   <!-- Favicons
   ================================================== -->
   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
@@ -51,14 +55,28 @@
 <ul>
 <li><a href="#content" tabindex="1">Skip to Content</a></li>
 <li><a href="{% url 'site-index' %}" tabindex="2">home</a></li>
-<li><a href="{% url 'dummy1' %}" tabindex="3">about</a></li>
-<li><a href="{% url 'dummy2' %}" tabindex="4">contact</a></li>
+<li><a href="{% url 'about' %}" tabindex="3">about</a></li>
+<li><a href="{% url 'connect' %}" tabindex="4">connect</a></li>
 </ul>
 </menu>
 
 <a name="content"></a>
 <div>
 {% block content %}{% endblock %}
+</div>
+
+<!-- footer -->
+<div class="footer">
+<!-- mimic header tabs -->
+<p><a href="">Home</a> | <a href="">About</a> | <a href="">Connect</a> | <a href="">Contact</a></p>
+<!-- standard funding text -->
+
+<div id="footer">
+<div id="footer-logo">
+</div>
+<p id="footer-info"><strong>Serendip-o-matic</strong> is a project of <a href="http://www.oneweekonetool.org" tabindex="1020">One Week | One Tool</a> from the <a href="http://chnm.gmu.edu" tabindex="1021">Center for History and New Media</a>, <a href="http://www.gmu.edu" tabindex="1022">George Mason University</a>.
+ Funding provided by the National Endowment for the Humanities. &copy; 2013, Center for History and New Media. For more information,
+ contact <strong>serendipomatic@gmail.com</strong>. Follow <a href="http://www.twitter.com/serendipomatic" tabindex="1023">@serendipomatic</a>.</p>
 </div>
 
 </body>
