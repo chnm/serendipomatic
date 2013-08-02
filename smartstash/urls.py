@@ -20,6 +20,8 @@ urlpatterns = patterns(
     # static site content pages
     url(r'^connect/', TemplateView.as_view(template_name='connect.html'),
         name='connect'),
+    url(r'^about/', TemplateView.as_view(template_name='about.html'),
+        name='about'),
     url(r'^dummy2/', TemplateView.as_view(template_name='dummy2.html'),
         name='dummy2'),
     url(r'^dummy3/', TemplateView.as_view(template_name='dummy3.html'),
