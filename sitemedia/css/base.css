@@ -41,6 +41,10 @@ table {
      color: red;
 }
 
+/* Feed the Hippo */
+.no-js #loader {display: none; }
+.js #loader {position: absolute; width: 209px; z-index: 1000;}
+
 .zot {
      background-color: #DDDDDD;
      margin-left: 25px;
