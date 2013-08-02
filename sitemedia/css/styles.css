@@ -94,3 +94,12 @@ html, body {
 .querysearch {
 
 }
+
+.gohome {
+     margin-top: 20px;
+}
+
+.gohome a:link {
+    color: 3B8483 !important;
+font-weight: bold;
+}
