@@ -109,3 +109,8 @@ margin: 0px;
 color: #3B8483;
 font-weight: bold;
 }
+/* not quite 33.3% */
+.item { width: 49.1%; }
+
+/* images cover up the gap */
+.item img { width: 100.5%; }
