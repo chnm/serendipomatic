@@ -112,15 +112,20 @@ def sanitizeString(s):
 def view_items(request):
     search_terms = request.session.get('search_terms', None)
 
-    #clear the session
+    # if no search terms, return to site index
+    if search_terms is None or not search_terms['keywords']:
+        # TODO: add a django session message here,
+        # especially if they posted data and we didn't get any keywords
+        return HttpResponseRedirect(reverse('site-index'))
+
+    # clear the session
+    print request.session.items()
     for key, value in request.session.items():
         if key != 'search_terms': del request.session[key]
 
-    # if no search terms, return to site index
-    if search_terms is None:
-        return HttpResponseRedirect(reverse('site-index'))
-
     # sanitize the search terms for API queries
+
+    # encode the search terms for safety
     search_terms['keywords'] = [sanitizeString(s) for s in search_terms['keywords']]
 
     start = time.time()
