@@ -10,6 +10,7 @@ simplejson
 python-dateutil
 flickrapi
 PIL
+guess-language
 
 # heroku
 django-toolbelt
