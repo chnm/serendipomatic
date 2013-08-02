@@ -6,11 +6,9 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from smartstash.core.forms import InputForm
 
-
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+class FormTest(TestCase):
+    def test_whitespace_validation(self):
+        form = InputForm({'text': "   "})
+        self.assertFalse(form.is_valid())

@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from smartstash.auth.models import ZoteroUser
 import smartstash.core.zotero as zotero
+from smartstash.core.utils import common_words
 
 html_escapes = {
     "&": "&amp;",
@@ -14,31 +15,24 @@ html_escapes = {
 # Create your views here.
 
 def zotero_oauth(request):
-
-    #zu = ZoteroUser.objects.get(username=request.session['username'])
     request.session['oauth_verifier'] = request.GET['oauth_verifier']
 
-    # Don't save the token in the database like this
-    # zu.token, zu.userid = zotero.accessToken_userID_from_oauth_verifier(
-    #                                                                     request,
-    #                                                                     request.GET['oauth_verifier'],
-    #                                                                     request.session['request_token']
-    #
-    try:                                                                     )
-        token, userid = zotero.accessToken_userID_from_oauth_verifier(
-                                                                        request,
-                                                                        request.GET['oauth_verifier'],
-                                                                        request.session['request_token']
-                                                                        )
-        search_terms = {}
-        terms = zotero.get_user_items(request, userid, token, numItems=20, public=False)
-        search_terms['keywords'] = terms['date'] + terms['creatorSummary'] + terms['keywords']
+    try:
+        token, userid = zotero.access_info(request,
+                                           request.GET['oauth_verifier'],
+                                           request.session['request_token']
+                                           )
 
+        terms = zotero.get_user_items(request, userid, token, numItems=20)
+
+        #tokenize
+        search_terms = common_words("".join(terms['abstractSummary'] + terms['creatorSummary'] + terms['title']))
+
+        #sanitize
         for key, val in search_terms.iteritems():
             search_terms[key] = [html_escapes.get(c, c) for c in val]
 
         request.session['search_terms'] = search_terms
-
         return HttpResponseRedirect(reverse('view-stash'))
 
     except HTTPError:

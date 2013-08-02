@@ -49,24 +49,7 @@ def site_index(request):
 
             search_terms = {}
             if zotero_user:
-
-                try:
-                    #already exist in the database
-                    # zu = ZoteroUser.objects.get(username=zotero_user)
-                    print "Already there!"
-
-                    request.session['username'] = zotero_user
-                    # TODO: creator summary should go into creator search
-
-                except ObjectDoesNotExist:
-                    #don't already exist in the database
-
-                    # zu = ZoteroUser(username=zotero_user)
-                    # zu.save()
-
-                    request.session['username'] = zotero_user
-
-
+                request.session['username'] = zotero_user
                 return HttpResponseRedirect(zotero.oauth_authorize_url(request))
 
             elif text:
