@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 import logging
 import time
 import guess_language
+import random
 
 from smartstash.core import zotero
 from smartstash.core.forms import InputForm
@@ -125,19 +126,12 @@ def view_items(request):
 
     sources = [DPLA, Europeana, Flickr]
 
-    items = []
-    for i in range(15):
-        # hacky way to alternate content
-        for src in [dpla_items, euro_items, flkr_items]:
-            try:
-                items.append(src[i])
-            except IndexError:
-                pass
+    # combine all results into a single list and then shuffle them together
+    items = dpla_items + euro_items + flkr_items
+    # shuffle images so we get a more even mix, esp. if one source
+    # (such as flickr) returns more items than the others
+    random.shuffle(items)
 
-    # quick way to shuffle the two lists together based on
-    # http://stackoverflow.com/questions/11125212/interleaving-lists-in-python
-    # items = [x for t in zip(dpla_items, euro_items) for x in t]
-	# items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
     # NOTE: we may need to clear the cache when we do a 'start over'....
 
     return render(request, 'core/view.html',
