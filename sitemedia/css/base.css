@@ -51,7 +51,8 @@
 
 /*Amy's Crap */
 
-.error {color:red; font-weight: bold;}
+.error { color:red; font-weight: bold; }
+.aggregator { color: red; }
 
 .zot {
     width: 230px;
