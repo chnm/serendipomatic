@@ -1,12 +1,16 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+import logging
+import time
 
 from smartstash.core import zotero
 from smartstash.core.forms import InputForm
 from smartstash.core.utils import common_words, get_search_terms
 from smartstash.core.api import DPLA, Europeana, Flickr
 
+
+logger = logging.getLogger(__name__)
 
 def site_index(request):
     # preliminary site index page
@@ -49,7 +53,6 @@ def site_index(request):
                 # only four digit values and could be passed to
 
 
-
             elif zotero_user:
                 userid = zotero.get_userID(zotero_user)
                 terms = zotero.get_user_items(userid, numItems=10)
@@ -87,10 +90,12 @@ def view_items(request):
         return HttpResponseRedirect(reverse('site-index'))
 
     # TODO: debug logging?
+    start = time.time()
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
     # added Flickr
     flkr_items = Flickr.find_items(**search_terms)
+    logger.info('queried 3 sources in in %.2f sec' % (time.time() - start))
 
     sources = [DPLA, Europeana, Flickr]
 
