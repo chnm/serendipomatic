@@ -119,7 +119,6 @@ def view_items(request):
         return HttpResponseRedirect(reverse('site-index'))
 
     # clear the session
-    print request.session.items()
     for key, value in request.session.items():
         if key != 'search_terms': del request.session[key]
 
