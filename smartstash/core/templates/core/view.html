@@ -20,15 +20,17 @@
 -->
 
 <p>
-<div class="queryhead ten columns">
+<div class="queryhead">
 <div class="querytitle">Query Terms:</div>
 <div class="querystyle"> {{ query_terms.keywords|join:', ' }}</div>
 
 <br />
-<div class="querysearch four columns">
+
 <strong>Sources Used:</strong>
 {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </p></div>
+
+<div class="querysearch four columns">
 <p>
 <a href="{% url 'site-index' %}">Search again</a><br>
 Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these results</a> (will open on another page)
@@ -108,13 +110,13 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these resul
          if(image.context.naturalWidth == 0 ||
          image.readyState == 'uninitialized'){
             $(image).unbind("error").attr(
-                "src", "http://news.bbcimg.co.uk/media/images/69039000/jpg/_69039173_jkrowling_pa.jpg"
+                "src", "fillerhippo.png"
             );
                         $(image).unbind("error").attr(
-                "height", "63"
+                "height", "249"
             );
                         $(image).unbind("error").attr(
-                "width", "112"
+                "width", "248"
             );
          }
     });
