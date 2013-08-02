@@ -125,21 +125,15 @@ def view_items(request):
     search_terms = request.session.get('search_terms', None)
 
     #clear the session
-    print request.session.items()
     for key, value in request.session.items():
         if key != 'search_terms': del request.session[key]
-
-    print request.session.items()
 
     # if no search terms, return to site index
     if search_terms is None:
         return HttpResponseRedirect(reverse('site-index'))
 
-    print "1: ", search_terms
-    # encode the search terms for safety
+    # sanitize the search terms for API queries
     search_terms['keywords'] = [sanitizeString(s) for s in search_terms['keywords']]
-
-    print "2: ", search_terms
 
     start = time.time()
     dpla_items = DPLA.find_items(**search_terms)

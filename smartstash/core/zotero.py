@@ -48,9 +48,9 @@ def accessToken_userID_from_oauth_verifier(request, oauth_verifier, requestToken
 
     response, content = client.request(accessTokenURL, "POST")
     accessToken = dict(urlparse.parse_qsl(content))
-    # print "accessToken_userID_from_oauth_verifier <says>: "
-    # print accessToken
-    print
+
+    if 'oauth_problem' in accessToken: raise HTTPError
+
     return accessToken['oauth_token'], accessToken['userID']
 
 def get_userID_if_public(username):

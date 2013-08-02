@@ -23,20 +23,23 @@ def zotero_oauth(request):
     #                                                                     request,
     #                                                                     request.GET['oauth_verifier'],
     #                                                                     request.session['request_token']
-    #                                                                     )
-    token, userid = zotero.accessToken_userID_from_oauth_verifier(
-                                                                    request,
-                                                                    request.GET['oauth_verifier'],
-                                                                    request.session['request_token']
-                                                                    )
+    #
+    try:                                                                     )
+        token, userid = zotero.accessToken_userID_from_oauth_verifier(
+                                                                        request,
+                                                                        request.GET['oauth_verifier'],
+                                                                        request.session['request_token']
+                                                                        )
+        search_terms = {}
+        terms = zotero.get_user_items(request, userid, token, numItems=20, public=False)
+        search_terms['keywords'] = terms['date'] + terms['creatorSummary'] + terms['keywords']
 
-    search_terms = {}
-    terms = zotero.get_user_items(request, userid, token, numItems=20, public=False)
-    search_terms['keywords'] = terms['date'] + terms['creatorSummary'] + terms['keywords']
+        for key, val in search_terms.iteritems():
+            search_terms[key] = [html_escapes.get(c, c) for c in val]
 
-    for key, val in search_terms.iteritems():
-        search_terms[key] = [html_escapes.get(c, c) for c in val]
+        request.session['search_terms'] = search_terms
 
-    request.session['search_terms'] = search_terms
+        return HttpResponseRedirect(reverse('view-stash'))
 
-    return HttpResponseRedirect(reverse('view-stash'))
+    except HTTPError:
+        return HttpResponseRedirect(reverse('site-index'))
