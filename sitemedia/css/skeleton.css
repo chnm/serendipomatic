@@ -84,6 +84,9 @@ footer	 { width: 1000px; margin: 0 auto; }
        .column.omega, .columns.omega               { margin-right: 0; margin-left: 10px; }
        .alpha.omega                                { margin-left: 0; margin-right: 0; }
 
+       img.icons { float: left; padding-right: 15px; }
+       .intro { padding-top: 5px; }
+
        .container .one.column,
        .container .one.columns                     { width: 28px; }
        .container .two.columns                     { width: 76px; }
@@ -153,6 +156,9 @@ footer	 { width: 1000px; margin: 0 auto; }
        .container .sixteen.columns,
        .container .one-third.column,
        .container .two-thirds.column  { width: 300px; }
+
+       img.icons { float: left; padding-right: 15px; }
+       .intro { padding-top: 5px; }
 
        /* Offsets */
        .container .offset-by-one,
