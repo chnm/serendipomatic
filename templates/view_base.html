@@ -26,10 +26,6 @@
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
- <!-- Web fonts -->
- <script type="text/javascript" src="//use.typekit.net/uej1ygs.js"></script>
- <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
   <!-- Favicons
   ================================================== -->
   <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
@@ -45,8 +41,8 @@
 <!-- Delete everything in this .container and get started on your own site! -->
 
 <div class="container">
-		<div class="sixteen columns" "top">
-			<menu class="bar">
+<div class="sixteen columns">
+<menu class="bar">
 			<ul>
             <li id="skip"><a class="skip" href="#content" tabindex="1">Skip to Content</a></li>
 			<li><a href="{% url 'site-index' %}" tabindex="2">home</a></li>
@@ -54,6 +50,12 @@
 			<li><a href="#" tabindex="4">connect</a></li>
 			</ul>
 		</menu>
+
+			<header>
+			<img class="scale-with-grid" src="{% static 'img/serendip-o-matic.png' %}" />
+			<h1 class="header" style="margin-top: 70px">Serendip<span>-o-</span>matic</h1>
+			<h2 class="tagline">Let your sources surprise you.</h2> </header>
+
 
 <a name="content"></a>
 <div>
