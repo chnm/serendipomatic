@@ -49,7 +49,7 @@ def site_index(request):
 
                 try:
                     #already exist in the database
-                    zu = ZoteroUser.objects.get(username=zotero_user)
+                    # zu = ZoteroUser.objects.get(username=zotero_user)
                     print "Already there!"
 
                     request.session['username'] = zotero_user
@@ -58,8 +58,8 @@ def site_index(request):
                 except ObjectDoesNotExist:
                     #don't already exist in the database
 
-                    zu = ZoteroUser(username=zotero_user)
-                    zu.save()
+                    # zu = ZoteroUser(username=zotero_user)
+                    # zu.save()
 
                     request.session['username'] = zotero_user
 
@@ -120,10 +120,9 @@ def view_items(request):
     #clear the session
     print request.session.items()
     for key in request.session.items():
-        print key
         if key != 'search_terms': del key
 
-    print request.session
+    print request.session.items()
 
     # if no search terms, return to site index
     if search_terms is None:
