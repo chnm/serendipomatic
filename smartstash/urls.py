@@ -13,6 +13,9 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.site_index, name='site-index'),
     url(r'^stash/$', views.view_items, name='view-stash'),
+    url(r'^images/', include('smartstash.images.urls',
+        namespace='image')),
+
     url(r'^dummy1/$', views.dummy1, name='dummy1'),
     url(r'^dummy2/$', views.dummy2, name='dummy2'),
     url(r'^dummy3/$', views.dummy3, name='dummy3'),
