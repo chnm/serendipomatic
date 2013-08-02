@@ -1,7 +1,7 @@
 # Create your views here.
 from django.http import Http404, HttpResponse
 
-import Image
+from PIL import Image
 import requests
 from StringIO import StringIO
 import logging
