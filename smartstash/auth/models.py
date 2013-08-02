@@ -9,7 +9,8 @@ class ZoteroUser(models.Model):
     userid = models.CharField(max_length=255, unique=True)
     token = models.CharField(max_length=255)
 
-    # TODO: __unicode__ method (username?)
+    def __unicode__(self):
+        return self.username
 
     def __repr__(self):
         return '<ZoteroUser %s>' % self.username

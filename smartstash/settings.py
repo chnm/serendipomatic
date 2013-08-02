@@ -148,20 +148,13 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-#    'social_auth',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'smartstash.core',
     'smartstash.auth',
     'smartstash.images',
-)
-
-
-# configure social-auth backends here
-AUTHENTICATION_BACKENDS = (
-    'smartstash.auth.zotero.ZoteroBackend',
 )
 
 
