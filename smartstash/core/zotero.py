@@ -5,9 +5,10 @@ import smartstash.core.utils
 from dateutil.parser import parse
 from smartstash.core.utils import tokenize
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
-consumerKey = "5e69825605d1edef32ba"
-consumerSecret = "7bd7fc06f4d35e3f5b33"
+consumerKey = settings.API_KEYS['ZOTERO_CONSUMER_KEY']
+consumerSecret = settings.API_KEYS['ZOTERO_CONSUMER_SECRET']
 requestTokenURL = "https://www.zotero.org/oauth/request"
 authorizeURL = "https://www.zotero.org/oauth/authorize"
 accessTokenURL = "https://www.zotero.org/oauth/access"

@@ -124,17 +124,22 @@ def view_items(request):
     if search_terms is None:
         return HttpResponseRedirect(reverse('site-index'))
 
-    # TODO: debug logging?
+    # html-encode the search terms for safety
+    for key, val in search_terms.iteritems():
+        search_terms[key] = [html_escapes.get(c, c) for c in val]
+
     start = time.time()
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
     # added Flickr
     flkr_items = Flickr.find_items(**search_terms)
-    logger.info('queried 3 sources in in %.2f sec' % (time.time() - start))
+    logger.info('Queried 3 sources in %.2f sec' % (time.time() - start))
 
     sources = [DPLA, Europeana, Flickr]
 
     # combine all results into a single list and then shuffle them together
+    logger.info('Number of items by source: DPLA=%d, Europeana=%d, Flickr=%d' % \
+                 (len(dpla_items), len(euro_items), len(flkr_items)))
     items = dpla_items + euro_items + flkr_items
     # shuffle images so we get a more even mix, esp. if one source
     # (such as flickr) returns more items than the others

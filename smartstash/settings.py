@@ -39,14 +39,14 @@ if HEROKU:
     API_KEYS = {
         'DPLA': os.environ.get('DPLA_API_KEY'),
         'Europeana': os.environ.get('EUROPEANA_API_KEY'),
-        'Flickr': os.environ.get('FLICKR_API_KEY')
+        'Flickr': os.environ.get('FLICKR_API_KEY'),
+        'ZOTERO_CONSUMER_KEY': os.environ.get("ZOTERO_CONSUMER_KEY"),
+        'ZOTERO_CONSUMER_SECRET': os.environ.get("ZOTERO_CONSUMER_SECRET")
     }
 
 
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
 TEMPLATE_DEBUG = DEBUG
-
-
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html

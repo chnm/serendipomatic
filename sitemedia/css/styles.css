@@ -45,7 +45,6 @@ html, body {
 }
 
 .imageframe {
-     min-width: 250px;
      position: relative;
 }
 
@@ -86,4 +85,9 @@ font-weight: bold;
      color: #3B8483;
      font-size: 2.5em;
      line-height: 1.3em;
+}
+.queryhead {
+}
+
+.querysearch {
 }
