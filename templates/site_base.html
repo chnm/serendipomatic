@@ -51,7 +51,7 @@
             <li id="skip"><a class="skip" href="#content" tabindex="1">Skip to Content</a></li>
 			<li><a href="{% url 'site-index' %}" tabindex="2">home</a></li>
 			<li><a href="{% url 'about' %}" tabindex="3">about</a></li>
-			<li><a href="#" tabindex="4">connect</a></li>
+			<li><a href="{% url 'connect' %}" tabindex="4">connect</a></li>
 			</ul>
 		</menu>
 			<header>
@@ -86,7 +86,7 @@
 
 <footer>
 <div id="footermenu">
-    <a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="#">Connect</a></div>
+    <a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="{% url 'connect' %}">Connect</a></div>
     <img class="footimg" src="{% static 'img/burst.png' %}" />
     <p id="footer-info" ><strong>Serendip-o-matic</strong> is a project of
     <a href="http://www.oneweekonetool.org" target="_blank" >One Week | One Tool</a>
