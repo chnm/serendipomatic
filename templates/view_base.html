@@ -32,6 +32,7 @@
   <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
   <link rel="apple-touch-icon" sizes="72x72" href="{% static 'images/apple-touch-icon-72x72.png' %}">
   <link rel="apple-touch-icon" sizes="114x114" href="{% static 'images/apple-touch-icon-114x114.png' %}">
+  {% block extra-head %}{% endblock %} {# extend for pages that need extra css/js #}
 </head>
 <body>
 <a name="top"></a>
@@ -54,7 +55,7 @@
 <header class="secondary">
 <img src="{% static 'img/serendipo_small.png' %}" alt="Serendip-o-matic" />
 <h1 class="header" style="margin-top: 70px">Serendip<span>-o-</span>matic</h1>
-<h2 class="tagline">Let your sources surprise you.</h2> 
+<h2 class="tagline">Let your sources surprise you.</h2>
 </header>
 
 <a name="content"></a>
@@ -72,9 +73,9 @@
      from the <a href="http://chnm.gmu.edu" target="_blank">Center for History and New Media</a>,
      <a href="http://www.gmu.edu" target="_blank">George Mason University</a>.<br />
      Funding provided by the <a href="http://www.neh.gov" target="_blank">National Endowment for the Humanities</a>.
-     &copy; 2013, Center for History and New Media. For more information,
-     contact <strong>serendipomatic@gmail.com</strong>.
-     Follow <a href="http://www.twitter.com/serendipomatic">@serendipomatic</a>.
+     &copy; 2013, Center for History and New Media.<br />
+    For more information,
+     contact <a href="mailto:serendipomatic@gmail.com"><strong>serendipomatic@gmail.com</strong></a>.
      </p>
 </footer>
 

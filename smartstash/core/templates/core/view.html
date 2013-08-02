@@ -3,6 +3,11 @@
 
 {% block title %}MagicStash Items Display{% endblock %}
 
+{% block extra-head %}
+<!-- add extra css/js here -->
+  <link href="{% static 'css/results.css' %}" rel="stylesheet" media="screen" />
+{% endblock %}
+
 {% block content %}
 <!--
 <ul id="sort-by">
@@ -25,7 +30,7 @@
 {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </p>
 
-<div id="container" class="clickable clearfix">
+<div id="container">
 {% for item in items %}
 
 
@@ -39,18 +44,24 @@
         <img src="{% url 'image:resize' size=300 %}?url={{ item.thumbnail }}" alt="{{ item.title }}" >
   {% endif %}
 	<div class="overlay">
-		<div class="iso_title">Title: {{ item.title|truncatechars:80 }}</div>
+		<div class="iso_title">{{ item.title|truncatechars:80 }}</div>
+    {% comment %} {# not displaying date for the moment #}
     {% if item.date %}
-		<div class="iso_date">Date: {{ item.date }}</div>
+		<div class="iso_date">{{ item.date }}</div>
     {% endif %}
-		<div class="iso_source">Aggregator: <a href="{{ item.url }}">{{ item.aggregator }}</a></div>
+    {% endcomment %}
+    {% if item.source %}
+    <div class="iso_source"><a href="{{ item.url }}">{{ item.source }}</a></div>
+    {% endif %}
+<<<<<<< HEAD
+<<<<<<< HEAD
 	</div>
 </div>
-
-
-
-
-
+=======
+=======
+>>>>>>> 68622e00bd4abba4646f8bf373044ed7ae8d5665
+	</div>
+</div>
 
 <!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
 <!--
@@ -77,18 +88,10 @@
 </div>
 
 -->
-
-
-
-
-
-
-
-
-
-
-
-
+<<<<<<< HEAD
+>>>>>>> d76900bbdce46bd2489c1ab483d47239dae77cd1
+=======
+>>>>>>> 68622e00bd4abba4646f8bf373044ed7ae8d5665
 
 {% comment %}
 {{ item.title|default:'(no source)' }}
@@ -109,6 +112,12 @@
          image.readyState == 'uninitialized'){
             $(image).unbind("error").attr(
                 "src", "http://news.bbcimg.co.uk/media/images/69039000/jpg/_69039173_jkrowling_pa.jpg"
+            );
+                        $(image).unbind("error").attr(
+                "height", "63"
+            );
+                        $(image).unbind("error").attr(
+                "width", "112"
             );
          }
     });
