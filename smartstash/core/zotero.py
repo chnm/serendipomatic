@@ -13,7 +13,6 @@ requestTokenURL = "https://www.zotero.org/oauth/request"
 authorizeURL = "https://www.zotero.org/oauth/authorize"
 accessTokenURL = "https://www.zotero.org/oauth/access"
 
-
 UPPER_LIMIT = 99
 
 def oauth_authorize_url(request):

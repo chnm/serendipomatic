@@ -12,6 +12,8 @@ API_KEYS = {
     'DPLA': '',
     'Europeana': '',
     'Flickr':''
+    'ZOTERO_CONSUMER_KEY': '',
+    'ZOTERO_CONSUMER_SECRET': '',
 }
 
 # Make this unique, and don't share it with anybody.

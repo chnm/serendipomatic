@@ -118,7 +118,6 @@ def site_index(request):
 # into a single app
 
 def view_items(request):
-
     search_terms = request.session.get('search_terms', None)
     # if no search terms, return to site index
     if search_terms is None:
