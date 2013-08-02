@@ -8,33 +8,37 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # heroku config
 
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-DATABASES = {'default':  dj_database_url.config()}
+HEROKU = bool(os.environ.get('HEROKU', ''))
 
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# heroku-specific configuration
+if HEROKU:
 
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
+    # Parse database configuration from $DATABASE_URL
+    import dj_database_url
+    DATABASES = {'default':  dj_database_url.config()}
 
-# Static asset configuration
-# STATIC_ROOT = 'static'
-# STATIC_URL = '/static/'
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+    # Allow all host headers
+    ALLOWED_HOSTS = ['*']
 
-# get 'local' settings via heroku env
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-print 'secret key =', SECRET_KEY
+    # Static asset configuration
+    # STATIC_ROOT = 'static'
+    # STATIC_URL = '/static/'
 
-API_KEYS = {
-    'DPLA': os.environ.get('DPLA_API_KEY'),
-    'Europeana': os.environ.get('EUROPEANA_API_KEY'),
-    'Flickr': os.environ.get('FLICKR_API_KEY')
-}
+    # STATICFILES_DIRS = (
+    #     os.path.join(BASE_DIR, 'static'),
+    # )
+
+    # get 'local' settings via heroku env
+    SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
+    API_KEYS = {
+        'DPLA': os.environ.get('DPLA_API_KEY'),
+        'Europeana': os.environ.get('EUROPEANA_API_KEY'),
+        'Flickr': os.environ.get('FLICKR_API_KEY')
+    }
 
 
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
@@ -159,17 +163,12 @@ AUTHENTICATION_BACKENDS = (
     'smartstash.auth.zotero.ZoteroBackend',
 )
 
-LOGIN_URL          = '/auth/login/'
-LOGIN_REDIRECT_URL = '/auth/logged-in/'
-LOGIN_ERROR_URL    = '/auth/login-error/'
 
-# TODO: disable under heroku
-
-try:
-    from localsettings import *
-except ImportError:
-    import sys
-    print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
-        'stuff blows up, try copying localsettings.py.dist to ' + \
-        'localsettings.py and setting appropriately for your environment.'
-    pass
+if not HEROKU:
+    try:
+        from localsettings import *
+    except ImportError:
+        import sys
+        print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
+            'stuff blows up, try copying localsettings.py.dist to ' + \
+            'localsettings.py and setting appropriately for your environment.'
