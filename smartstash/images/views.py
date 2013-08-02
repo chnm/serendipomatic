@@ -28,9 +28,15 @@ def resize(request, size):
         img = Image.open(StringIO(r.content))
     except IOError as err:
         logger.warn('Failed to open %s as image : %s' % (img_url, err))
-        # if the url couldn't be opened, simple pass on the request content
+        # if the url couldn't be opened, simple pass on the content
         # (possibly set an error status code?)
-        return HttpResponse(r.content, mimetype=r.headers['content-type'])
+
+        # TODO: could we do a redirect instead?
+        response = HttpResponse(r.content)
+        # pass thru all headers from original url
+        for header, val in r.headers.iteritems():
+            response[header] = val
+        return response
 
     img.thumbnail(newsize, Image.ANTIALIAS)
 
