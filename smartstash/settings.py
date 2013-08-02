@@ -163,12 +163,13 @@ LOGIN_URL          = '/auth/login/'
 LOGIN_REDIRECT_URL = '/auth/logged-in/'
 LOGIN_ERROR_URL    = '/auth/login-error/'
 
+# TODO: disable under heroku
 
-# try:
-#     from localsettings import *
-# except ImportError:
-#     import sys
-#     print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
-#         'stuff blows up, try copying localsettings.py.dist to ' + \
-#         'localsettings.py and setting appropriately for your environment.'
-#     pass
+try:
+    from localsettings import *
+except ImportError:
+    import sys
+    print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
+        'stuff blows up, try copying localsettings.py.dist to ' + \
+        'localsettings.py and setting appropriately for your environment.'
+    pass
