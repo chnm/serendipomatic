@@ -10,9 +10,8 @@ html_escapes = {
     "'": "&apos;",
     ">": "&gt;",
     "<": "&lt;",
-    }
+}
 
-# Create your views here.
 
 def zotero_oauth(request):
     request.session['oauth_verifier'] = request.GET['oauth_verifier']
@@ -24,7 +23,6 @@ def zotero_oauth(request):
                                            )
 
         terms = zotero.get_user_items(request, userid, token, numItems=20)
-
         #tokenize
         search_terms = common_words("".join(terms['abstractSummary'] + terms['creatorSummary'] + terms['title']))
 
