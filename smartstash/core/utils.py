@@ -41,9 +41,7 @@ stopword_lang = {
 def tokenize(text, lang='en'):
     # if language is not specified or not in our list, fall back to english
     stopwords = nltk.corpus.stopwords.words(stopword_lang.get(lang, 'english'))
-
     tokens = nltk.word_tokenize(text)
-
     words = [w.lower() for w in tokens
              if w.isalnum() and w.lower() not in stopwords]
     # NOTE: isalnum will restrict to alpha and numeric content (i.e., words & dates);
@@ -67,8 +65,11 @@ def common_words(text, max_items=15, lang='en'):
 """
 Returns JSON response from dbpedia spotlight annotate (or other source)
 """
-def query(query) :
-    r = requests.get(query['url'], params=query['params'], headers = {'accept': 'application/json'})
+def query(query):
+    r = requests.post(query['url'], params=query['params'], headers={'accept': 'application/json'})
+
+    #This will raise an exception if the response is something other than a-ok
+    r.raise_for_status()
 
     return r.text
 
@@ -94,7 +95,7 @@ def get_names_from_spotting(doc, lang='en'):
 
 """
 """
-def get_names_from_annotate(doc) :
+def get_names_from_annotate(doc):
     json_data = simplejson.loads(doc)
     name_set = set()
 
@@ -126,27 +127,31 @@ def get_search_terms(text, lang='en'):
         }
     }
 
-    terms = { }
+    try:
+        terms = {}
+        spot_set = set()
+        annotate_set = set()
 
-    spot_set = set()
-    annotate_set = set()
+        resp_s = query(spot)
+        spot_set = get_names_from_spotting(resp_s, lang)
 
-    resp_s = query(spot)
-    spot_set = get_names_from_spotting(resp_s, lang)
+        resp_a = query(annotate)
+        annotate_set = get_names_from_annotate(resp_a)
 
-    resp_a = query(annotate)
-    annotate_set = get_names_from_annotate(resp_a)
+        terms = _get_types(resp_a)
+        # get a random set of keywords from the union of spot and annotate
+        terms['keywords'] = _get_random(spot_set.union(annotate_set))
+        # gets early and late dates if not present these are enpty strings
+        terms['dates'] = _get_dates(text)
 
-    terms = _get_types(resp_a)
-    # get a random set of keywords from the union of spot and annotate
-    terms['keywords'] = _get_random(spot_set.union(annotate_set))
-    # gets early and late dates if not present these are enpty strings
-    terms['dates'] = _get_dates(text)
+        return terms
 
-    return terms
+    except requests.exceptions.HTTPError as e:
+        print "DBPedia threw an error: ", e
+        return {'keywords' : [], 'dates' : []}
 
 # Gets a random set of (at most 15) keywords
-def _get_random(keywords, max_items=15) :
+def _get_random(keywords, max_items=15):
     if(max_items > len(keywords)) :
         max_items = int(len(keywords)*.7)
     return random.sample(keywords, max_items)
