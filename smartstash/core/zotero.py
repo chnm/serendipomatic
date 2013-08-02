@@ -4,13 +4,14 @@ from bs4 import BeautifulSoup
 import smartstash.core.utils
 from dateutil.parser import parse
 from smartstash.core.utils import tokenize
+from django.core.urlresolvers import reverse
 
 consumerKey = "5e69825605d1edef32ba"
 consumerSecret = "7bd7fc06f4d35e3f5b33"
 requestTokenURL = "https://www.zotero.org/oauth/request"
 authorizeURL = "https://www.zotero.org/oauth/authorize"
 accessTokenURL = "https://www.zotero.org/oauth/access"
-callbackURL = 'http://127.0.0.1:8000/localauth/zotero/'
+
 
 UPPER_LIMIT = 99
 
@@ -18,8 +19,12 @@ def oauth_authorize_url(request):
     consumer = oauth2.Consumer(consumerKey, consumerSecret)
     client = oauth2.Client(consumer)
 
+    # generate callback url relative to the current server url
+    # NOTE: if this doesn't match the server, session data won't be preserved
+    # across the redirect!!!
+    callback_url =  request.build_absolute_uri(reverse('zotero'))
     response, content = client.request(requestTokenURL, "POST",
-                                       body = urllib.urlencode({'oauth_callback' : callbackURL}))
+                                       body = urllib.urlencode({'oauth_callback' : callback_url}))
     requestToken = dict(urlparse.parse_qsl(content))
 
     request.session['request_token'] = requestToken
