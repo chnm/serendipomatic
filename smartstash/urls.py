@@ -18,8 +18,8 @@ urlpatterns = patterns(
     url(r'^saveme/$', views.saveme, name='saveme'),
 
     # static site content pages
-    url(r'^dummy1/', TemplateView.as_view(template_name='dummy1.html'),
-        name='dummy1'),
+    url(r'^connect/', TemplateView.as_view(template_name='connect.html'),
+        name='connect'),
     url(r'^dummy2/', TemplateView.as_view(template_name='dummy2.html'),
         name='dummy2'),
     url(r'^dummy3/', TemplateView.as_view(template_name='dummy3.html'),
