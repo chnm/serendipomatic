@@ -40,8 +40,8 @@ def accessToken_userID_from_oauth_verifier(request, oauth_verifier, requestToken
 
     response, content = client.request(accessTokenURL, "POST")
     accessToken = dict(urlparse.parse_qsl(content))
-    print "accessToken_userID_from_oauth_verifier <says>: "
-    print accessToken
+    # print "accessToken_userID_from_oauth_verifier <says>: "
+    # print accessToken
 
     return accessToken['oauth_token'], accessToken['userID']
 
