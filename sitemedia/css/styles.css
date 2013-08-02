@@ -83,6 +83,8 @@ body {
 /* Results image overlay styles */
 .imageframe{
 position:relative;
+min-width: 200px;
+background: #999999;
 }
 .overlay{
 background-color:#000;
