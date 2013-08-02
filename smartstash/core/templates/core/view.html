@@ -56,32 +56,6 @@
 	</div>
 </div>
 
-<!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
-<!--
-<div class="hover panel" tabindex="{{ forloop.counter|add:6 }}">
-	<div class="front">
-		<div class="pad">
-		<div class="photo">
-	<div class="iso_image"><a href="{{ item.url }}" target="_blank">
-            <img class="imgLiquidFill" src="{{ item.thumbnail }}" alt="{{ item.title }}" style="width:150px; height:150px;">
-        </a></div>
-		</div>
-		</div>
-	</div>
-	<div class="back">
-		<div class="pad">
-			<div class="iso_date">Date: {{ item.date }}</div>
-			<div class="iso_title">Title: <a href="{{ item.url }}">{{ item.title }}</a></div>
-			<div class="iso_title">Location: <a href="{{ item.location }}">{{ item.location }}</a></div>
-		</div>
-	</div>
-</div>
-<input type="hidden" value="{{ item.location }}"/>
-{% endfor %}
-</div>
-
--->
-
 {% comment %}
 {{ item.title|default:'(no source)' }}
 {% endcomment %}
