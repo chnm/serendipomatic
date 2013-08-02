@@ -87,11 +87,7 @@ font-weight: bold;
      line-height: 1.3em;
 }
 .queryhead {
-float: left;
-
 }
 
 .querysearch {
-float:left;
-clear: right;
 }
