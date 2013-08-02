@@ -26,7 +26,7 @@ class InputForm(forms.Form):
         zotero_user = cleaned_data.get('zotero_user', None)
 
         if not any([text, zotero_user]):
-            raise forms.ValidationError('Please enter text or a zotero username')
+            raise forms.ValidationError('Please enter some text or a Zotero username.')
 
         # Always return the full collection of cleaned data.
         return cleaned_data

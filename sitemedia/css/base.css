@@ -51,6 +51,8 @@
 
 /*Amy's Crap */
 
+.error {color:red; font-weight: bold;}
+
 .zot {
 	padding: 25px 27px 15px;
 	margin-top: 20px;
