@@ -15,7 +15,7 @@
         Try <a href="http://en.wikipedia.org/wiki/Wikipedia:Today's_featured_article"
         target="_blank">Wikipedia's daily featured article.</a>
 </h5>
-	<form method="post" action="{% url 'site-index' %}">{% csrf_token %}
+	<form name="hippo" method="post" onclick="eraseText();" action="{% url 'site-index' %}">{% csrf_token %}
 
       {{ input_form.text }}
 
@@ -40,7 +40,7 @@
 </div>
 
 <div class="sixteen columns">
-	<button class="magic">Make some magic!</button> <button id="reset" class="magic" onclick="javascript:eraseText();return false;">Clear Form</button>
+	<button class="magic">Make some magic!</button>
 </div>
 </form>
 <script>
