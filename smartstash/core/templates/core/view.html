@@ -59,14 +59,14 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these resul
         <img src="{% url 'image:resize' size=300 %}?url={{ item.thumbnail }}" alt="{{ item.title }}" >
   {% endif %}
 	<div class="overlay">
-		<div class="iso_title">{{ item.title|truncatechars:80 }}</div>
+		<div class="iso_title"><a href="{{ item.url }}">"{{ item.title|truncatechars:80 }}"</a></div>
     {% comment %} {# not displaying date for the moment #}
     {% if item.date %}
 		<div class="iso_date">{{ item.date }}</div>
     {% endif %}
     {% endcomment %}
     {% if item.source %}
-    <div class="iso_source"><a href="{{ item.url }}">{{ item.source }}
+    <div class="iso_source">from <a href="{{ item.url }}">{{ item.source }}
       {% if item.aggregator == 'Flickr Commons' or item.aggregator == 'Europeana' %} on {{ item.aggregator }}{% endif %}
     </a></div>
     {% endif %}
