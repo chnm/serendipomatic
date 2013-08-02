@@ -182,7 +182,8 @@ class Flickr(object):
         query = ' OR '.join(set(keywords[:10]))
         logger.debug('flickr query: %s' % query)
         results = flickr.photos_search(text=query, format='json', is_commons='true',
-                                       extras='owner_name')
+                                       extras='owner_name',
+                                       sort='relevance')
         # comma-delimited list of extra fields
         # need owner name for source
         # TODO: future enhancement: access to date, location info, etc
@@ -195,8 +196,8 @@ class Flickr(object):
         results = results.rstrip(')')
 
         results = simplejson.loads(results)
-        import pprint
-        pprint.pprint(results)
+        # import pprint
+        # pprint.pprint(results)
 
         items = []
         # no results! log this error?
