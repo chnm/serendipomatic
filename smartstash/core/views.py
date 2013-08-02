@@ -45,7 +45,28 @@ def site_index(request):
             zotero_user = form.cleaned_data['zotero_user']
 
             search_terms = {}
-            if text:
+            if zotero_user:
+
+                try:
+                    #already exist in the database
+                    zu = ZoteroUser.objects.get(username=zotero_user)
+                    print "Already there!"
+
+                    request.session['username'] = zotero_user
+                    # TODO: creator summary should go into creator search
+
+                except ObjectDoesNotExist:
+                    #don't already exist in the database
+
+                    zu = ZoteroUser(username=zotero_user)
+                    zu.save()
+
+                    request.session['username'] = zotero_user
+
+
+                return HttpResponseRedirect(zotero.oauth_authorize_url(request))
+
+            elif text:
                 lang = guess_language.guessLanguage(text[:100])
                 logger.debug('language detected as %s' % lang)
                 common_terms = common_words(text, 15, lang)
@@ -68,28 +89,6 @@ def site_index(request):
                 # dates {'early': ,'late': }
                 # people and places were reconciled against DBpedia. Dates contains
                 # only four digit values and could be passed to
-
-
-            elif zotero_user:
-
-                try:
-                    #already exist in the database
-                    zu = ZoteroUser.objects.get(username=zotero_user)
-                    print "Already there!"
-
-                    request.session['username'] = zotero_user
-                    # TODO: creator summary should go into creator search
-
-                except ObjectDoesNotExist:
-                    #don't already exist in the database
-
-                    zu = ZoteroUser(username=zotero_user)
-                    zu.save()
-
-                    request.session['username'] = zotero_user
-
-
-                return HttpResponseRedirect(zotero.oauth_authorize_url(request))
 
 
             # if for is valid,
