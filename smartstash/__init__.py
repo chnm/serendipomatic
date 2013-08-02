@@ -1,4 +1,4 @@
-__version_info__ = (0, 1, 0, 'dev')
+__version_info__ = (1, 0, 0, 'pre')
 # software version: set last term to 'dev', 'pre', or None for final release
 
 # Dot-connect all but the last. Last is dash-connected if not None.
