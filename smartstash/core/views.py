@@ -128,13 +128,33 @@ def view_items(request):
     search_terms['keywords'] = [sanitizeString(s) for s in search_terms['keywords']]
 
     start = time.time()
-    dpla_items = DPLA.find_items(**search_terms)
-    euro_items = Europeana.find_items(**search_terms)
-    # added Flickr
-    flkr_items = Flickr.find_items(**search_terms)
-    trove_items = Trove.find_items(**search_terms)
+    try:
+        dpla_items = DPLA.find_items(**search_terms)
+    except Exception as err:
+        logger.error('Error querying DPLA - %s' % err)
+        dpla_items = []
+
+    try:
+        euro_items = Europeana.find_items(**search_terms)
+    except Exception as err:
+        logger.error('Error querying Europeana - %s' % err)
+        euro_items = []
+
+    try:
+        flkr_items = Flickr.find_items(**search_terms)
+    except Exception as err:
+        logger.error('Error querying Flickr - %s' % err)
+        flkr_items = []
+
+    try:
+        trove_items = Trove.find_items(**search_terms)
+    except Exception as err:
+        logger.error('Error querying Trove - %s' % err)
+        trove_items = []
+
     logger.info('Queried 4 sources in %.2f sec' % (time.time() - start))
 
+    # TODO: should we remove from source list if we failed?
     sources = [DPLA, Europeana, Flickr, Trove]
 
     # combine all results into a single list and then shuffle them together
