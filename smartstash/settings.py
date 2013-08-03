@@ -176,3 +176,10 @@ if not HEROKU:
 TRAVIS = bool(os.environ.get('TRAVIS', ''))
 if TRAVIS:
     SECRET_KEY = 'not really very secret is it'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'stash.db'),
+        }
+    }
+
