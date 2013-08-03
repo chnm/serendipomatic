@@ -1,4 +1,8 @@
 
+
+[![Build Status](https://travis-ci.org/chnm/serendipomatic.png)](https://travis-ci.org/chnm/serendipomatic)
+
+
 Installation
 -------------
 
