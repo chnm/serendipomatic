@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HTTPError
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from smartstash.auth.models import ZoteroUser
 import smartstash.core.zotero as zotero
