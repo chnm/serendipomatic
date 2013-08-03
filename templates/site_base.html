@@ -1,4 +1,9 @@
-{# base site template for pages on the site #}
+{% comment %}
+This should be used as the base template for all pages on the site.
+
+It should include all html, css, javascript common to all pages, and
+provide blocks for any sections that vary per page.
+{% endcomment %}
 {% load static %}
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->

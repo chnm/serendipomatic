@@ -1,3 +1,10 @@
+{% comment %}
+This template is used as the base template for the site home page.
+
+(Possibly could be consolidated with site_index.html since unlikely to
+be re-used?)
+{% endcomment %}
+
 {% extends 'page_base.html' %}
 {% load static %}
 
@@ -45,7 +52,7 @@
     <h5 class="intro">Be amazed by what turns up.</h5>
   </div>
  </div>
-{% endblock %}
+{% block %}
 
 {% block content %}{% endblock %}
 

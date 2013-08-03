@@ -1,6 +1,8 @@
+{% comment %}
+This template is for secondary pages on the site, and uses the smaller
+secondary header.
+{% endcomment %}
 {% extends 'site_base.html' %}
-{# base site template for secondary site pages  #}
-
 {% load static %}
 
 {% block header %}
@@ -16,7 +18,7 @@
 {% block content %}{% endblock %}
 </div>
 
-{% block after-content %}  {# FIXME: should this be on every page ? #}
+{% block after-content %}  {# FIXME: should this be on every page or just results ? #}
 <p style="text-align: center; margin: 15px 0 5px 0;"><a href="#top"><button tabindex="1000">Return to Top</button></a></p>
 {% endblock %}  {# NOTE: extend and set to empty to override #}
 
