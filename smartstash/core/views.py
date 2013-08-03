@@ -13,11 +13,9 @@ from smartstash.core.forms import InputForm
 from smartstash.core.utils import common_words, get_search_terms
 from smartstash.core.api import DPLA, Europeana, Flickr, Trove
 
-from smartstash.auth.models import ZoteroUser
-from django.core.exceptions import ObjectDoesNotExist
-
 logger = logging.getLogger(__name__)
 
+# see fixme in auth.views
 escapes = {
     "&": "&amp;",
     '"': "&quot;",
@@ -30,7 +28,7 @@ escapes = {
 }
 
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["GET", "POST"])   # TODO: support HEAD requests?
 def site_index(request):
     # preliminary site index page
 
@@ -110,6 +108,7 @@ def sanitizeString(s):
     for c in s: result += escapes.get(c, c)
     return result
 
+
 def view_items(request):
     search_terms = request.session.get('search_terms', None)
 
@@ -123,8 +122,11 @@ def view_items(request):
         return HttpResponseRedirect(reverse('site-index'))
 
     # clear the session
+    # TODO: should probably be more specific what we need to clear (zotero auth info?)
+    # since other items may be added to the session at some point (e.g. messages)
     for key, value in request.session.items():
-        if key != 'search_terms': del request.session[key]
+        if key != 'search_terms':
+            del request.session[key]
 
     # sanitize the search terms for API queries
 
@@ -188,7 +190,10 @@ def view_items(request):
     return render(request, 'core/view.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
 
+
 def saveme(request):
+    # TODO: save results needs to be built into result page so
+    # we can guarantee items match, are listed in the same order, etc
 
     search_terms = request.session['search_terms']  # TODO: error handling if not set
     dpla_items = DPLA.find_items(**search_terms)
