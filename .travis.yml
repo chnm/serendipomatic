@@ -10,4 +10,15 @@ install:
   - "python -m nltk.downloader stopwords"
 # command to run tests, e.g. python setup.py test
 # TODO: convert to django-nose when possible, only run local tests
-script: manage.py test s
+script: manage.py test
+
+# NOTE: could blacklist branches from testing if we want
+# branches:
+#   except:
+#     - brokenDisplay
+#     - experimental
+
+# TODO: set up auto heroku deploy !!
+# deploy:
+#   provider: heroku
+#   api_key: "YOUR API KEY"
