@@ -17,7 +17,6 @@ def resize(request, size):
     if img_url is None:
         raise Http404
 
-
     # test to make sure valid first?
     r = requests.get(img_url)
     if r.status_code != requests.codes.ok:
@@ -39,4 +38,3 @@ def resize(request, size):
     response = HttpResponse(mimetype="image/png")
     img.save(response, "PNG")
     return response
-

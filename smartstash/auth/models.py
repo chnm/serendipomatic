@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 
+# NOTE: currently unused; probably this will go away when we refactor
+# zotero/oauth
+
 
 class ZoteroUser(models.Model):
     # username, userid, token
@@ -15,13 +18,3 @@ class ZoteroUser(models.Model):
     def __repr__(self):
         return '<ZoteroUser %s>' % self.username
 
-
-# examples code
-# from smartstash.auth.models import ZoteroUser
-#
-# find specific user by username:
-# ZoteroUser.objects.get(username='rlskoeser')
-# raises does not exist exception: https://docs.djangoproject.com/en/1.2/ref/exceptions/#objectdoesnotexist-and-doesnotexist
-# create a new one:
-# zu = ZoteroUser(username='rlskoeser')
-# zu.save()

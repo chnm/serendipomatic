@@ -1,10 +1,9 @@
-import string
-import simplejson
-import re
-import requests
 import nltk
 import random
 import re
+import requests
+import string
+import simplejson
 
 from django.conf import settings
 
@@ -42,6 +41,7 @@ def tokenize(text, lang='en'):
     # will probably drop date ranges as well as contractions or quoted terms
     return words
 
+
 def common_words(text, max_items=15, lang='en'):
     words = tokenize(text, lang)
 
@@ -56,10 +56,10 @@ def common_words(text, max_items=15, lang='en'):
     # TODO: also look at using nltk to generate collocations
 
 
-"""
-Returns JSON response from dbpedia spotlight annotate (or other source)
-"""
 def query(query):
+    """
+    Returns JSON response from dbpedia spotlight annotate (or other source)
+    """
     r = requests.post(query['url'], params=query['params'], headers={'accept': 'application/json'})
 
     #This will raise an exception if the response is something other than a-ok
@@ -67,10 +67,11 @@ def query(query):
 
     return r.text
 
-"""
-Return a set named entities from a Spotting query
-"""
+
 def get_names_from_spotting(doc, lang='en'):
+    """
+    Return a set named entities from a Spotting query
+    """
     json_data = simplejson.loads(doc)
     stopwords = nltk.corpus.stopwords.words(stopword_lang.get(lang, 'english'))
 
@@ -83,12 +84,11 @@ def get_names_from_spotting(doc, lang='en'):
     for item in annotations:
         name = unicode(item['@name']) or ''
         name = name.translate({None: string.punctuation}).strip()
-        if(name not in stopwords) :
+        if (name not in stopwords):
             name_set.add(name.lower())
     return name_set
 
-"""
-"""
+
 def get_names_from_annotate(doc):
     json_data = simplejson.loads(doc)
     name_set = set()
@@ -98,17 +98,19 @@ def get_names_from_annotate(doc):
 
     return name_set
 
-"""
-Returns a dictionary of search terms
-keywords - combination of spotting and annotate queries
-people -
-places -
-"""
+
 def get_search_terms(text, lang='en'):
+    """
+    Returns a dictionary of search terms
+    keywords - combination of spotting and annotate queries
+    people -
+    places -
+    """
+
     spot = {
-        'url':'http://spotlight.dbpedia.org/rest/spot',
+        'url': 'http://spotlight.dbpedia.org/rest/spot',
         'params': {
-            'text':text,
+            'text': text,
         }
     }
 
@@ -142,26 +144,27 @@ def get_search_terms(text, lang='en'):
 
     except requests.exceptions.HTTPError as e:
         print "DBPedia threw an error: ", e
-        return {'keywords' : [], 'dates' : []}
+        return {'keywords': [], 'dates': []}
+
 
 # Gets a random set of (at most 15) keywords
 def _get_random(keywords, max_items=15):
-    if(max_items > len(keywords)) :
+    if (max_items > len(keywords)) :
         max_items = int(len(keywords)*.7)
     return random.sample(keywords, max_items)
 
 
-def _get_types(entities) :
-    json_data = simplejson.loads ( entities )
+def _get_types(entities):
+    json_data = simplejson.loads(entities)
     types = {
         'people': [],
         'places': [],
     }
     for item in json_data.get('Resources', []):
         str_types = str(item['@types'])
-        if('DBpedia:Person' in str_types) :
+        if ('DBpedia:Person' in str_types) :
             types['people'].append(item['@surfaceForm'])
-        if('DBpedia:Place' in str_types) :
+        if ('DBpedia:Place' in str_types) :
             types['places'].append(item['@surfaceForm'])
 
      # make the lists distinct get_search_terms
@@ -170,16 +173,17 @@ def _get_types(entities) :
 
     return types
 
-# Get early and late daetes. Currently only support four digit years
-# TODO should expand support at a later point
-def _get_dates(text) :
+
+def _get_dates(text):
+    # Get early and late dates. Currently only support four digit years
+    # TODO should expand support at a later point
     dates = {
-        'early':'',
-        'late':''
+        'early': '',
+        'late': ''
     }
     regex = re.compile('\d{4}')
     all_dates = regex.findall(text)
-    if(all_dates and len(all_dates) >2) :
+    if(all_dates and len(all_dates) > 2):
         dates['early'] = all_dates[0]
         dates['late'] = all_dates[1]
     return dates
