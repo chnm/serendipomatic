@@ -20,7 +20,7 @@
 
 {# FIXME: top attribute here is different from main template; what does this even do? #}
 {# <div class="sixteen columns" "top"> #}
- {% block main-col-attrs %}"top"{% endblock %}
+{% block main-col-attrs %}"top"{% endblock %}
 
 {% block header %}
  <header>
@@ -45,7 +45,7 @@
     <h5 class="intro">Be amazed by what turns up.</h5>
   </div>
  </div>
-{% block %}
+{% endblock %}
 
 {% block content %}{% endblock %}
 

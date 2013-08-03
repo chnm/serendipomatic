@@ -37,18 +37,16 @@
 <!-- Primary Page Layout
 ================================================== -->
 
-<!-- Delete everything in this .container and get started on your own site! -->
-
 <div class="container">
-<div class="sixteen columns" {% block main-col-attrs %}{% endblock %}>
-<menu class="bar">
-			<ul>
-            <li id="skip"><a class="skip" href="#content" tabindex="1">Skip to Content</a></li>
-			<li><a href="{% url 'site-index' %}" tabindex="2">home</a></li>
-			<li><a href="{% url 'about' %}" tabindex="3">about</a></li>
-			<li><a href="{% url 'connect' %}" tabindex="4">connect</a></li>
-			</ul>
-		</menu>
+  <div class="sixteen columns" {% block main-col-attrs %}{% endblock %}>
+    <menu class="bar">
+     <ul>
+      <li id="skip"><a class="skip" href="#content" tabindex="1">Skip to Content</a></li>
+      <li><a href="{% url 'site-index' %}" tabindex="2">home</a></li>
+      <li><a href="{% url 'about' %}" tabindex="3">about</a></li>
+      <li><a href="{% url 'connect' %}" tabindex="4">connect</a></li>
+    </ul>
+  </menu>
 
 {% block header %}{% endblock %}
 
