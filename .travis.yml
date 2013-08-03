@@ -1,7 +1,7 @@
 language: python
 python:
   - "2.7"
-# currently only works on 2.7 (due to bibs dependency); good/nice to support 2.5?
+# currently only works on 2.7 (due to bibs dependency); good/nice to support 2.6?
 #  - "2.6"
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 # install a local squid proxy to allow testing schemas
@@ -23,3 +23,13 @@ script: python manage.py test
 # deploy:
 #   provider: heroku
 #   api_key: "YOUR API KEY"
+deploy:
+  provider: heroku
+  api_key:
+    secure: NHTqjBAt2ZykjcJpdOXg4yWHK+spS0iw8nJasbILmcGUv7as+zcwi5Px/s3QgJ9drzURBk//0w3BMYmeZWkn3Y485mGlQEa0eOZfCU99b5aGTqRM6++pd6XJJ8fHNekFxs5pIu4fS3ZjuK5lFk7RqPjABzkjOCGUA0+WZU9i4KU=
+  repo: chnm/serendipomatic
+  app: dev-serendipomatic
+  # restrict to dev branch once we get people switched over to git flow
+#  on: develop
+ run:
+    - "python manage.py syncdb"
