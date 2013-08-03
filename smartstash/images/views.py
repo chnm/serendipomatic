@@ -1,5 +1,5 @@
 # Create your views here.
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 
 from PIL import Image
 import requests
@@ -17,6 +17,7 @@ def resize(request, size):
     if img_url is None:
         raise Http404
 
+
     # test to make sure valid first?
     r = requests.get(img_url)
     if r.status_code != requests.codes.ok:
@@ -28,21 +29,9 @@ def resize(request, size):
         img = Image.open(StringIO(r.content))
     except IOError as err:
         logger.warn('Failed to open %s as image : %s' % (img_url, err))
-        # if the url couldn't be opened, simple pass on the content
-        # (possibly set an error status code?)
 
-        # TODO: could we do a redirect instead?
-        response = HttpResponse(r.content)
-        mimetype = r.headers.get('content-type', None)
-
-        if mimetype:
-            response['content-type'] = mimetype
-        # pass thru all headers from original url
-        # NOTE: can't do that because most of them don't apply
-        # for header, val in r.headers.iteritems():
-        #     print '%s = %s' % (header, val)
-        #     response[header] = val
-        return response
+        # if there's a problem, just redirect to the original
+        return HttpResponseRedirect(img_url)
 
     img.thumbnail(newsize, Image.ANTIALIAS)
 
