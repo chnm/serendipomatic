@@ -10,7 +10,7 @@ import random
 from smartstash.core import zotero
 from smartstash.core.forms import InputForm
 from smartstash.core.utils import common_words, get_search_terms
-from smartstash.core.api import DPLA, Europeana, Flickr
+from smartstash.core.api import DPLA, Europeana, Flickr, Trove
 
 from smartstash.auth.models import ZoteroUser
 from django.core.exceptions import ObjectDoesNotExist
@@ -132,14 +132,15 @@ def view_items(request):
     euro_items = Europeana.find_items(**search_terms)
     # added Flickr
     flkr_items = Flickr.find_items(**search_terms)
-    logger.info('Queried 3 sources in %.2f sec' % (time.time() - start))
+    trove_items = Trove.find_items(**search_terms)
+    logger.info('Queried 4 sources in %.2f sec' % (time.time() - start))
 
-    sources = [DPLA, Europeana, Flickr]
+    sources = [DPLA, Europeana, Flickr, Trove]
 
     # combine all results into a single list and then shuffle them together
-    logger.info('Number of items by source: DPLA=%d, Europeana=%d, Flickr=%d' % \
-                 (len(dpla_items), len(euro_items), len(flkr_items)))
-    items = dpla_items + euro_items + flkr_items
+    logger.info('Number of items by source: DPLA=%d, Europeana=%d, Flickr=%d, Trove=%d' % \
+                 (len(dpla_items), len(euro_items), len(flkr_items), len(trove_items)))
+    items = dpla_items + euro_items + flkr_items + trove_items
     # shuffle images so we get a more even mix, esp. if one source
     # (such as flickr) returns more items than the others
     random.shuffle(items)
@@ -170,7 +171,8 @@ def saveme(request):
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
     flkr_items = Flickr.find_items(**search_terms)
-    sources = [DPLA, Europeana]
-    items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
+    trove_items = Trove.find_items(**search_terms)
+    sources = [DPLA, Europeana, Trove]
+    items = [x for t in zip(dpla_items, euro_items, flkr_items, trove_items) for x in t]
     return render(request, 'core/saveme.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
