@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.db import models
 from bibs.bibs import Bibs
 import flickrapi
 import simplejson
@@ -16,6 +15,7 @@ logger = logging.getLogger(__name__)
 # TODO: later refactor / cleanup: rename this module to sources,
 # possibly break out into subdirectory
 # document required parts for adding a new one
+
 
 class DPLA(object):
 
@@ -51,7 +51,8 @@ class DPLA(object):
             src_res = doc['sourceResource']
 
             # for now, just skip items without an image url
-            if not doc.get('object', None): continue
+            if not doc.get('object', None):
+                continue
 
             i = DisplayItem(
                 title=src_res.get('title', None),
@@ -310,4 +311,3 @@ class Flickr(object):
             items.append(i)
 
         return items
-
