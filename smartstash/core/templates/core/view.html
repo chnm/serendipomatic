@@ -59,7 +59,7 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these resul
         <img src="{% url 'image:resize' size=300 %}?url={{ item.thumbnail }}" alt="{{ item.title }}" >
   {% endif %}
 	<div class="overlay">
-		<div class="iso_title"><a href="{{ item.url }}">"{{ item.title|truncatechars:80 }}"</a></div>
+		<div class="iso_title"><a href="{{ item.url }}" target="_blank">"{{ item.title|truncatechars:80 }}"</a></div>
     {% comment %} {# not displaying date for the moment #}
     {% if item.date %}
 		<div class="iso_date">{{ item.date }}</div>
