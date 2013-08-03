@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -114,6 +115,9 @@ def view_items(request):
 
     # if no search terms, return to site index
     if search_terms is None or not search_terms['keywords']:
+        if 'keywords' in search_terms:
+            messages.error(request, '''Whoops! Somehow we didn't come up with any search terms for you''')
+
         # TODO: add a django session message here,
         # especially if they posted data and we didn't get any keywords
         return HttpResponseRedirect(reverse('site-index'))
@@ -128,28 +132,33 @@ def view_items(request):
     search_terms['keywords'] = [sanitizeString(s) for s in search_terms['keywords']]
 
     start = time.time()
+    error = False
     try:
         dpla_items = DPLA.find_items(**search_terms)
     except Exception as err:
         logger.error('Error querying DPLA - %s' % err)
+        error = True
         dpla_items = []
 
     try:
         euro_items = Europeana.find_items(**search_terms)
     except Exception as err:
         logger.error('Error querying Europeana - %s' % err)
+        error = True
         euro_items = []
 
     try:
         flkr_items = Flickr.find_items(**search_terms)
     except Exception as err:
         logger.error('Error querying Flickr - %s' % err)
+        error = True
         flkr_items = []
 
     try:
         trove_items = Trove.find_items(**search_terms)
     except Exception as err:
         logger.error('Error querying Trove - %s' % err)
+        error = True
         trove_items = []
 
     logger.info('Queried 4 sources in %.2f sec' % (time.time() - start))
@@ -161,6 +170,15 @@ def view_items(request):
     logger.info('Number of items by source: DPLA=%d, Europeana=%d, Flickr=%d, Trove=%d' % \
                  (len(dpla_items), len(euro_items), len(flkr_items), len(trove_items)))
     items = dpla_items + euro_items + flkr_items + trove_items
+
+    # if none of the API calls worked, message & return to home page
+    if not items:
+        msg = '''We couldn't find anything for you. Please try again.'''
+        # if error is true, at least one of the api calls failed
+        # otherwise, presumably we callled all apis and didn't get any results (?)
+        messages.error(request, msg)
+        return HttpResponseRedirect(reverse('site-index'))
+
     # shuffle images so we get a more even mix, esp. if one source
     # (such as flickr) returns more items than the others
     random.shuffle(items)

@@ -25,6 +25,13 @@
 <div class="pipe one columns"></div>
 <div class="five columns" >
     <div class="error">{{ input_form.non_field_errors }}</div>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
 	<div class="zot">
 		<h3>
             <img class="zotero" src="{% static 'img/zotero.png' %}" alt="Zotero" style="margin:0;padding:0;" />, anyone?
