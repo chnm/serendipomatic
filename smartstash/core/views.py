@@ -115,7 +115,7 @@ def view_items(request):
 
     # if no search terms, return to site index
     if search_terms is None or not search_terms['keywords']:
-        if 'keywords' in search_terms:
+        if search_terms and 'keywords' in search_terms:
             messages.error(request, '''Whoops! Somehow we didn't come up with any search terms for you''')
 
         # TODO: add a django session message here,
