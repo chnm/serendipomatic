@@ -115,7 +115,7 @@ def view_items(request):
 
     # if no search terms, return to site index
     if search_terms is None or not search_terms['keywords']:
-        if search_terms and 'keywords' in search_terms:
+        if search_terms is not None and 'keywords' in search_terms:
             messages.error(request, '''Whoops! Somehow we didn't come up with any search terms for you''')
 
         # TODO: add a django session message here,
@@ -187,21 +187,6 @@ def view_items(request):
 
     return render(request, 'core/view.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
-
-def dummy1(request):
-    output = 'Lorem ipsum &c.'
-    return render(request, 'dummy1.html',
-                  {'output': output})
-
-def dummy2(request):
-    output = 'Lorem ipsum &c. &c.'
-    return render(request, 'dummy2.html',
-                  {'output': output})
-
-def dummy3(request):
-    output = 'Lorem ipsum &c. &c. &c.'
-    return render(request, 'dummy3.html',
-                  {'output': output})
 
 def saveme(request):
 
