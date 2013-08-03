@@ -5,6 +5,8 @@ import flickrapi
 import simplejson
 import logging
 import time
+from urllib2 import urlopen, URLError, HTTPError
+from urllib import quote_plus
 
 from smartstash.core.models import DisplayItem
 
@@ -156,6 +158,72 @@ class Europeana(object):
             # in this item result
             items.append(i)
 
+        return items
+
+
+class Trove(object):
+    '''
+    Adds support for Trove API from National Library of Australia.
+    Get your API key: http://trove.nla.gov.au/general/api
+    '''
+
+    name = 'Trove'
+    url = 'http://trove.nla.gov.au/'
+
+    API_KEY = settings.API_KEYS['Trove']
+    # Currently limited to picture & objects zone
+    # Might want to add other zones in the future
+    API_URL = 'http://api.trove.nla.gov.au/result?q=%s&zone=picture&key=%s&encoding=json'
+
+    @staticmethod
+    def find_items(keywords=[]):
+        qry = ' OR '.join(keywords)
+
+        #qry from unicode string to regular string
+        qry = qry.encode("utf8", "ignore")
+        logger.debug('trove query: %s' % qry)
+        qry_url = Trove.API_URL % (quote_plus(qry), Trove.API_KEY)
+        items = []
+        start = time.time()
+        try:
+            response = urlopen(qry_url)
+        except HTTPError as e:
+            logger.error('trove api error: %s' % e)
+        except URLError as e:
+            logger.error('trove api error: %s' % e)
+        else:
+            logger.info('trove query completed in %.2f sec' % (time.time() - start))
+            results = simplejson.load(response)
+            try:
+                for doc in results['response']['zone'][0]['records']['work']:
+
+                    # skip items without a thumbnail url
+                    # have to dig around in identifier
+                    thumbnail = None
+                    if 'identifier' in doc:
+                        for link in doc['identifier']:
+                            if link['linktype'] == "thumbnail":
+                                thumbnail = link['value']
+                    if not thumbnail:
+                        continue
+
+                    i = DisplayItem(
+                        title=doc.get('title', None),
+                        format='; '.join(doc.get('type', [])),
+                        # no way to get contributor name without another API call
+                        # so just set source to Trove for now
+                        source='Trove',
+                        url=doc.get('troveUrl', None),
+                        date=doc.get('issued', None),
+                        thumbnail=thumbnail
+                    )
+
+                    # Add the aggregator for reference
+                    i.aggregator = Trove.name
+                    items.append(i)
+            except (KeyError, IndexError, TypeError):
+                # Either no results or something was wrong with the JSON
+                logger.debug('Trove returned no results')
         return items
 
 

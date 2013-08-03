@@ -14,6 +14,7 @@ API_KEYS = {
     'Flickr':'',
     'ZOTERO_CONSUMER_KEY': '',
     'ZOTERO_CONSUMER_SECRET': '',
+    'Trove': '',
 }
 
 # Make this unique, and don't share it with anybody.
