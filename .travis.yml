@@ -1,0 +1,13 @@
+language: python
+python:
+  - "2.7"
+# currently only works on 2.7 (due to bibs dependency); good/nice to support 2.5?
+#  - "2.6"
+# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+# install a local squid proxy to allow testing schemas
+install:
+  - "pip install -r requirements.txt --use-mirrors"
+  - "python -m nltk.downloader stopwords"
+# command to run tests, e.g. python setup.py test
+# TODO: convert to django-nose when possible, only run local tests
+script: manage.py test s
