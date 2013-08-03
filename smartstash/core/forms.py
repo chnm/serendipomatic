@@ -9,15 +9,16 @@ class InputForm(forms.Form):
     text = forms.CharField(
         label='Cut and paste a block of text.',
         help_text='Cut and paste a block of text.',
-        widget=forms.Textarea(attrs={'tabindex': 4, 'id': 'texto'},
-                              initial=start_text, required=False)
+        widget=forms.Textarea(attrs={'tabindex': 4, 'id': 'texto'}),
+        initial=start_text,
+        required=False
     )
 
     zotero_user = forms.CharField(
         label='Enter your Zotero username.',
         help_text="Enter your Zotero username.",
-        widget=forms.TextInput(attrs={'tabindex': 5},
-                               required=False)
+        widget=forms.TextInput(attrs={'tabindex': 5}),
+        required=False
     )
 
     # TODO: alternate inputs- zotero url?
