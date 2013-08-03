@@ -1,0 +1,22 @@
+{% extends 'site_base.html' %}
+{# base site template for secondary site pages  #}
+
+{% load static %}
+
+{% block header %}
+<header class="secondary">
+  <a href="{% url 'site-index' %}"><img src="{% static 'img/serendipo_small.png' %}" alt="Serendip-o-matic" /></a>
+  <h1 class="header" style="margin-top: 70px">Serendip<span>-o-</span>matic</h1>
+  <h2 class="tagline">Let your sources surprise you.</h2>
+</header>
+{% endblock %}
+
+<a name="content"></a>
+<div>
+{% block content %}{% endblock %}
+</div>
+
+{% block after-content %}  {# FIXME: should this be on every page ? #}
+<p style="text-align: center; margin: 15px 0 5px 0;"><a href="#top"><button tabindex="1000">Return to Top</button></a></p>
+{% endblock %}  {# NOTE: extend and set to empty to override #}
+
