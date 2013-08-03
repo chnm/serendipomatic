@@ -41,7 +41,8 @@ if HEROKU:
         'Europeana': os.environ.get('EUROPEANA_API_KEY'),
         'Flickr': os.environ.get('FLICKR_API_KEY'),
         'ZOTERO_CONSUMER_KEY': os.environ.get("ZOTERO_CONSUMER_KEY"),
-        'ZOTERO_CONSUMER_SECRET': os.environ.get("ZOTERO_CONSUMER_SECRET")
+        'ZOTERO_CONSUMER_SECRET': os.environ.get("ZOTERO_CONSUMER_SECRET"),
+        'Trove': os.environ.get("TROVE_API_KEY"),
     }
 
 
