@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.views.decorators.http import require_http_methods
 import logging
 import time
 import guess_language
@@ -9,13 +11,11 @@ import random
 from smartstash.core import zotero
 from smartstash.core.forms import InputForm
 from smartstash.core.utils import common_words, get_search_terms
-from smartstash.core.api import DPLA, Europeana, Flickr
-
-from smartstash.auth.models import ZoteroUser
-from django.core.exceptions import ObjectDoesNotExist
+from smartstash.core.api import DPLA, Europeana, Flickr, Trove
 
 logger = logging.getLogger(__name__)
 
+# see fixme in auth.views
 escapes = {
     "&": "&amp;",
     '"': "&quot;",
@@ -25,11 +25,15 @@ escapes = {
     ",": "",
     ":": "",
     "-": ""
-    }
+}
 
 
+@require_http_methods(["GET", "POST"])   # TODO: support HEAD requests?
 def site_index(request):
     # preliminary site index page
+
+    # TODO, possibly -- might be worth supporting HEAD requests
+    # since this is the site in
 
     if request.method == 'GET':
         # on get request, initialize an empty form for display
@@ -104,33 +108,79 @@ def sanitizeString(s):
     for c in s: result += escapes.get(c, c)
     return result
 
+
 def view_items(request):
     search_terms = request.session.get('search_terms', None)
 
-    #clear the session
-    for key, value in request.session.items():
-        if key != 'search_terms': del request.session[key]
-
     # if no search terms, return to site index
-    if search_terms is None:
+    if search_terms is None or not search_terms['keywords']:
+        if search_terms is not None and 'keywords' in search_terms:
+            messages.error(request, '''Whoops! Somehow we didn't come up with any search terms for you''')
+
+        # TODO: add a django session message here,
+        # especially if they posted data and we didn't get any keywords
         return HttpResponseRedirect(reverse('site-index'))
 
+    # clear the session
+    # TODO: should probably be more specific what we need to clear (zotero auth info?)
+    # since other items may be added to the session at some point (e.g. messages)
+    for key, value in request.session.items():
+        if key != 'search_terms':
+            del request.session[key]
+
     # sanitize the search terms for API queries
+
+    # encode the search terms for safety
     search_terms['keywords'] = [sanitizeString(s) for s in search_terms['keywords']]
 
     start = time.time()
-    dpla_items = DPLA.find_items(**search_terms)
-    euro_items = Europeana.find_items(**search_terms)
-    # added Flickr
-    flkr_items = Flickr.find_items(**search_terms)
-    logger.info('Queried 3 sources in %.2f sec' % (time.time() - start))
+    error = False
+    try:
+        dpla_items = DPLA.find_items(**search_terms)
+    except Exception as err:
+        logger.error('Error querying DPLA - %s' % err)
+        error = True
+        dpla_items = []
 
-    sources = [DPLA, Europeana, Flickr]
+    try:
+        euro_items = Europeana.find_items(**search_terms)
+    except Exception as err:
+        logger.error('Error querying Europeana - %s' % err)
+        error = True
+        euro_items = []
+
+    try:
+        flkr_items = Flickr.find_items(**search_terms)
+    except Exception as err:
+        logger.error('Error querying Flickr - %s' % err)
+        error = True
+        flkr_items = []
+
+    try:
+        trove_items = Trove.find_items(**search_terms)
+    except Exception as err:
+        logger.error('Error querying Trove - %s' % err)
+        error = True
+        trove_items = []
+
+    logger.info('Queried 4 sources in %.2f sec' % (time.time() - start))
+
+    # TODO: should we remove from source list if we failed?
+    sources = [DPLA, Europeana, Flickr, Trove]
 
     # combine all results into a single list and then shuffle them together
-    logger.info('Number of items by source: DPLA=%d, Europeana=%d, Flickr=%d' % \
-                 (len(dpla_items), len(euro_items), len(flkr_items)))
-    items = dpla_items + euro_items + flkr_items
+    logger.info('Number of items by source: DPLA=%d, Europeana=%d, Flickr=%d, Trove=%d' % \
+                 (len(dpla_items), len(euro_items), len(flkr_items), len(trove_items)))
+    items = dpla_items + euro_items + flkr_items + trove_items
+
+    # if none of the API calls worked, message & return to home page
+    if not items:
+        msg = '''We couldn't find anything for you. Please try again.'''
+        # if error is true, at least one of the api calls failed
+        # otherwise, presumably we callled all apis and didn't get any results (?)
+        messages.error(request, msg)
+        return HttpResponseRedirect(reverse('site-index'))
+
     # shuffle images so we get a more even mix, esp. if one source
     # (such as flickr) returns more items than the others
     random.shuffle(items)
@@ -140,28 +190,17 @@ def view_items(request):
     return render(request, 'core/view.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
 
-def dummy1(request):
-    output = 'Lorem ipsum &c.'
-    return render(request, 'dummy1.html',
-                  {'output': output})
-
-def dummy2(request):
-    output = 'Lorem ipsum &c. &c.'
-    return render(request, 'dummy2.html',
-                  {'output': output})
-
-def dummy3(request):
-    output = 'Lorem ipsum &c. &c. &c.'
-    return render(request, 'dummy3.html',
-                  {'output': output})
 
 def saveme(request):
+    # TODO: save results needs to be built into result page so
+    # we can guarantee items match, are listed in the same order, etc
 
     search_terms = request.session['search_terms']  # TODO: error handling if not set
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
     flkr_items = Flickr.find_items(**search_terms)
-    sources = [DPLA, Europeana]
-    items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
+    trove_items = Trove.find_items(**search_terms)
+    sources = [DPLA, Europeana, Trove]
+    items = [x for t in zip(dpla_items, euro_items, flkr_items, trove_items) for x in t]
     return render(request, 'core/saveme.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})

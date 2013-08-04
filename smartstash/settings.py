@@ -12,6 +12,7 @@ EMAIL_SUBJECT_PREFIX = '[Serendipomatic] '
 
 HEROKU = bool(os.environ.get('HEROKU', ''))
 
+
 # heroku-specific configuration
 if HEROKU:
 
@@ -41,7 +42,8 @@ if HEROKU:
         'Europeana': os.environ.get('EUROPEANA_API_KEY'),
         'Flickr': os.environ.get('FLICKR_API_KEY'),
         'ZOTERO_CONSUMER_KEY': os.environ.get("ZOTERO_CONSUMER_KEY"),
-        'ZOTERO_CONSUMER_SECRET': os.environ.get("ZOTERO_CONSUMER_SECRET")
+        'ZOTERO_CONSUMER_SECRET': os.environ.get("ZOTERO_CONSUMER_SECRET"),
+        'Trove': os.environ.get("TROVE_API_KEY"),
     }
 
 
@@ -168,3 +170,16 @@ if not HEROKU:
         print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
             'stuff blows up, try copying localsettings.py.dist to ' + \
             'localsettings.py and setting appropriately for your environment.'
+
+
+# settings specific to travis-ci
+TRAVIS = bool(os.environ.get('TRAVIS', ''))
+if TRAVIS:
+    SECRET_KEY = 'not really very secret is it'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'stash.db'),
+        }
+    }
+

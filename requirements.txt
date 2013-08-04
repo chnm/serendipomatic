@@ -1,6 +1,7 @@
 # list all python requirements here for installation with pip
 Django>=1.5
-git+https://github.com/reklaklislaw/bibs.git#egg=bibs
+#git+https://github.com/reklaklislaw/bibs.git#egg=bibs
+git+https://github.com/chnm/bibs@feature/europeana-urls#egg=bibs
 nltk
 oauth2
 requests
@@ -14,6 +15,7 @@ guess-language
 
 # heroku
 django-toolbelt
+
 
 # should be installed as dependencies of bibs but don't seem to be
 PyYAML

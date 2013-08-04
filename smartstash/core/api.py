@@ -1,10 +1,11 @@
 from django.conf import settings
-from django.db import models
 from bibs.bibs import Bibs
 import flickrapi
 import simplejson
 import logging
 import time
+from urllib2 import urlopen, URLError, HTTPError
+from urllib import quote_plus
 
 from smartstash.core.models import DisplayItem
 
@@ -14,6 +15,7 @@ logger = logging.getLogger(__name__)
 # TODO: later refactor / cleanup: rename this module to sources,
 # possibly break out into subdirectory
 # document required parts for adding a new one
+
 
 class DPLA(object):
 
@@ -49,7 +51,8 @@ class DPLA(object):
             src_res = doc['sourceResource']
 
             # for now, just skip items without an image url
-            if not doc.get('object', None): continue
+            if not doc.get('object', None):
+                continue
 
             i = DisplayItem(
                 title=src_res.get('title', None),
@@ -159,6 +162,72 @@ class Europeana(object):
         return items
 
 
+class Trove(object):
+    '''
+    Adds support for Trove API from National Library of Australia.
+    Get your API key: http://trove.nla.gov.au/general/api
+    '''
+
+    name = 'Trove'
+    url = 'http://trove.nla.gov.au/'
+
+    API_KEY = settings.API_KEYS['Trove']
+    # Currently limited to picture & objects zone
+    # Might want to add other zones in the future
+    API_URL = 'http://api.trove.nla.gov.au/result?q=%s&zone=picture&key=%s&encoding=json'
+
+    @staticmethod
+    def find_items(keywords=[]):
+        qry = ' OR '.join(keywords)
+
+        #qry from unicode string to regular string
+        qry = qry.encode("utf8", "ignore")
+        logger.debug('trove query: %s' % qry)
+        qry_url = Trove.API_URL % (quote_plus(qry), Trove.API_KEY)
+        items = []
+        start = time.time()
+        try:
+            response = urlopen(qry_url)
+        except HTTPError as e:
+            logger.error('trove api error: %s' % e)
+        except URLError as e:
+            logger.error('trove api error: %s' % e)
+        else:
+            logger.info('trove query completed in %.2f sec' % (time.time() - start))
+            results = simplejson.load(response)
+            try:
+                for doc in results['response']['zone'][0]['records']['work']:
+
+                    # skip items without a thumbnail url
+                    # have to dig around in identifier
+                    thumbnail = None
+                    if 'identifier' in doc:
+                        for link in doc['identifier']:
+                            if link['linktype'] == "thumbnail":
+                                thumbnail = link['value']
+                    if not thumbnail:
+                        continue
+
+                    i = DisplayItem(
+                        title=doc.get('title', None),
+                        format='; '.join(doc.get('type', [])),
+                        # no way to get contributor name without another API call
+                        # so just set source to Trove for now
+                        source='Trove',
+                        url=doc.get('troveUrl', None),
+                        date=doc.get('issued', None),
+                        thumbnail=thumbnail
+                    )
+
+                    # Add the aggregator for reference
+                    i.aggregator = Trove.name
+                    items.append(i)
+            except (KeyError, IndexError, TypeError):
+                # Either no results or something was wrong with the JSON
+                logger.debug('Trove returned no results')
+        return items
+
+
 # Flickr Commons API
 # Only return image from flicker commons
 class Flickr(object):
@@ -182,7 +251,8 @@ class Flickr(object):
         results = flickr.photos_search(text=query, format='json', is_commons='true',
                                        extras='owner_name',
                                        sort='relevance',
-                                       per_page=25)   # restrict to first 25 items
+                                       per_page=15)
+                                       # restrict to first 15 items (only ~10 for other apis currently)
         # comma-delimited list of extra fields
         # need owner name for source
         # TODO: future enhancement: access to date, location info, etc
@@ -241,4 +311,3 @@ class Flickr(object):
             items.append(i)
 
         return items
-

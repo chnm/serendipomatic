@@ -1,5 +1,5 @@
 # Create your views here.
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 
 from PIL import Image
 import requests
@@ -28,9 +28,9 @@ def resize(request, size):
         img = Image.open(StringIO(r.content))
     except IOError as err:
         logger.warn('Failed to open %s as image : %s' % (img_url, err))
-        # if the url couldn't be opened, simple pass on the request content
-        # (possibly set an error status code?)
-        return HttpResponse(r.content, mimetype=r.headers['content-type'])
+
+        # if there's a problem, just redirect to the original
+        return HttpResponseRedirect(img_url)
 
     img.thumbnail(newsize, Image.ANTIALIAS)
 
@@ -38,4 +38,3 @@ def resize(request, size):
     response = HttpResponse(mimetype="image/png")
     img.save(response, "PNG")
     return response
-
