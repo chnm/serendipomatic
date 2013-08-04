@@ -11,7 +11,10 @@ TEMPLATE_DEBUG = DEBUG
 API_KEYS = {
     'DPLA': '',
     'Europeana': '',
-    'Flickr':''
+    'Flickr':'',
+    'ZOTERO_CONSUMER_KEY': '',
+    'ZOTERO_CONSUMER_SECRET': '',
+    'Trove': '',
 }
 
 # Make this unique, and don't share it with anybody.
@@ -68,12 +71,32 @@ LOGGING = {
             '()': 'django.utils.log.RequireDebugFalse'
         }
     },
+    'formatters': {
+        'basic': {
+            'format': '[%(asctime)s] %(levelname)s:%(name)s::%(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S',
+        },
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/tmp/smartstash-django.log',
+            'maxBytes': 1024,
+            'backupCount': 3,
+            'formatter': 'basic',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'basic'
+        },
     },
     'loggers': {
         'django.request': {
@@ -81,8 +104,15 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'smartstash': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
     }
 }
+
+
 
 
 

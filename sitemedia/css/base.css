@@ -1,284 +1,456 @@
-/*
-* Skeleton V1.2
-* Copyright 2011, Dave Gamache
-* www.getskeleton.com
-* Free to use under the MIT license.
-* http://www.opensource.org/licenses/mit-license.php
-* 6/20/2012
-*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+     border: 0px none;
+     font: inherit;
+     margin: 0px;
+     padding: 0px;
+     vertical-align: baseline;
+}
 
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
+     display: block;
+}
 
-/* Table of Content
-==================================================
-	#Reset & Basics
-	#Basic Styles
-	#Site Styles
-	#Typography
-	#Links
-	#Lists
-	#Images
-	#Buttons
-	#Forms
-	#Misc */
+body {
+     font-family: 'Source Sans Pro' !important;
+     line-height: 1;
+}
 
+ol, ul {
+     list-style: none outside none;
+}
 
-/* #Reset & Basics (Inspired by E. Meyers)
-================================================== */
-	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-		margin: 0;
-		padding: 0;
-		border: 0;
-		font-size: 100%;
-		font: inherit;
-		vertical-align: baseline; }
-	article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
-		display: block; 
-		}
-	body {
-		line-height: 1; }
-	ol, ul {
-		list-style: none; }
-	blockquote, q {
-		quotes: none; }
-	blockquote:before, blockquote:after,
-	q:before, q:after {
-		content: '';
-		content: none; }
-	table {
-		border-collapse: collapse;
-		border-spacing: 0; }
+blockquote, q {
+     quotes: none;
+}
 
+blockquote:before, blockquote:after, q:before, q:after {
+     content: none;
+}
 
-/*Amy's Crap */
+table {
+     border-collapse: collapse;
+     border-spacing: 0px;
+}
+
+.error {
+     color: red;
+     font-weight: bold;
+}
+
+.aggregator {
+     color: red;
+}
+
+/* Feed the Hippo */
+.no-js #loader {display: none; }
+.js #loader {position: absolute; width: 209px; z-index: 1000;}
 
 .zot {
-	padding: 25px 27px 15px;
-	margin-top: 20px;
-	background-color: #DDDDDD;
-		
+     background-color: #DDDDDD;
+     margin-left: 25px;
+     padding: 25px 27px 15px 25px;
+     width: 230px;
 }
-.zotuser	textarea {
-		height: 20px;
-	}
 
-	menu.bar {
-		height: 30px;
-		padding: 0 20px;
-        margin-top: 20px;
-		font-family: 'Source Sans Pro', sans-serif;
-		font-weight: bold;
-		text-align: right;
-	}
-	menu.bar ul {
-		display: block;
+.zotuser textarea {
+     height: 20px;
+}
 
-	}
-	menu.bar ul li{
-		display:inline;
-		color: #FFFFFF;
-		margin-right: 10px;
-		background-color: #3B8483;
-		padding: 10px;
-		border-radius: 5px 5px;
-	}
+menu.bar {
+     font-family: 'Source Sans Pro',sans-serif;
+     font-weight: bold;
+     height: 30px;
+     margin-top: 20px;
+     padding: 0px 20px;
+     text-align: right;
+}
 
-	menu.bar a, menu.bar a:visited { color: #FFFFFF; text-decoration: none; }
-	a:hover, a:focus { color: #FFFFFF; text-decoration: underline;}
-	
+menu.bar ul {
+     display: block;
+}
+
+menu.bar ul li {
+     background-color: #3B8483;
+     border-radius: 5px 5px 5px 5px;
+     color: #FFFFFF;
+     display: inline;
+     margin-right: 10px;
+     padding: 10px;
+}
+
+menu.bar a, menu.bar menu.bar a:visited {
+     color: #FFFFFF;
+     text-decoration: none;
+}
+
+menu.bar a:hover, menu.bar a:focus {
+     color: #FFFFFF;
+     text-decoration: underline;
+}
+
+.main {
+     margin: 0px auto;
+     padding-right: 0px;
+}
+
+.main h2 {
+     color: #BF2431;
+     font-family: "ff-ernestine-web-pro-1","ff-ernestine-web-pro-2","Source Sans Pro",sans-serif;
+}
+
 .main h3 {
-		color: #BF2431;
-		
-	}
-	
+     color: #BF2431;
+}
+
 .main h3.start {
-	font-size: 40px;
-	color: #3B8483;
-	display:block;
+     color: #3B8483;
+     display: block;
+     font-size: 40px;
 }
 
 .main .pipe {
-	border-top: #FFFFFF 5px solid;
-	border-bottom: #FFFFFF 5px solid;
-	margin-top: 50px;
-	padding: 10px 10px 20px;
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: bold;
-	font-size: 40px;
-	color: #FFF;
-	text-align: center;
-
+     border-bottom: 5px solid #FFFFFF;
+     border-top: 5px solid #FFFFFF;
+     color: #FFFFFF;
+     font-family: 'Source Sans Pro',sans-serif;
+     font-size: 40px;
+     font-weight: bold;
+     margin-top: 50px;
+     padding: 10px 10px 20px;
+     text-align: center;
 }
 
 .help-text {
-	
+
 }
 
 h1.header, h2.tagline {
-	display: none;
+     display: none;
 }
 
 header img {
-	margin-bottom: -120px;
-	padding-left: 60px;
-	width: 80%;
-
+     margin-bottom: -120px;
+     padding-left: 60px;
+     width: 80%;
 }
 
+header.secondary img {
+     margin-bottom: 0px;
+     margin-left: 0px;
+     margin-top: -35px;
+     max-width: 500px;
+     padding-left: 0px;
+}
 
-#skip {display: none;}
+#skip {
+     display: none;
+}
 
+footer {
+     background-color: #3B8483;
+     margin: 20px 10px 40px 20px;
+     padding-bottom: 20px;
+     padding-top: 20px;
+}
 
-/* #Basic Styles
-================================================== */
-	body {
-		background: #EFF2E4;
-		font: 14px/21px  'Merriweather', serif;
-		color: #444;
-		-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
-		-webkit-text-size-adjust: 100%;
- }
- 
+.footimg {
+     float: left;
+     margin: 0px 20px;
+     max-width: 110px;
+     padding: 10px 5px 5px 10px;
+}
 
+#footer-info {
+     color: #FFFFFF;
+     font-family: 'Source Sans Pro',sans-serif;
+     padding: 10px 20px 20px;
+}
 
-/* #Typography
-================================================== */
-	h1, h2, h3, h4, h5, h6 {
-		color: #181818;
-		font-family: 'Source Sans Pro', sans-serif;
-		}
-	
-	h1, h2, h3 {font-weight: bold; }
-		
-	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
-	h1 { font-size: 64px; line-height: 90px; margin-bottom: 60px; color: #F24150; }
-	h1 span {color:#3b8483;}
-	h2 { font-size: 35px; line-height: 40px; margin-bottom: 10px; }
-	h3 { font-size: 29px; line-height: 35px; margin-bottom: 8px; }
-	h4 { font-size: 21px; line-height: 30px; margin-bottom: 4px; }
-	h5 { font-size: 17px; line-height: 24px; }
-	h6 { font-size: 14px; line-height: 21px; }
-	.subheader { color: #777; }
+footer a:link, footer a:visited, footer a:active {
+     color: #FFFFFF;
+     font-weight: bold;
+}
 
-	p { margin: 0 0 20px 0; }
-	p img { margin: 0; }
-	p.lead { font-size: 21px; line-height: 27px; color: #777;  }
+footer a:hover {
+     color: #F6971D;
+}
 
-	em { font-style: italic; }
-	strong { font-weight: bold; color: #333; }
-	small { font-size: 80%; }
+footer strong {
+     color: #FFFFFF;
+}
 
-/*	Blockquotes  */
-	blockquote, blockquote p { font-size: 17px; line-height: 24px; color: #777; font-style: italic; }
-	blockquote { margin: 0 0 20px; padding: 9px 20px 0 19px; border-left: 1px solid #ddd; }
-	blockquote cite { display: block; font-size: 12px; color: #555; }
-	blockquote cite:before { content: "\2014 \0020"; }
-	blockquote cite a, blockquote cite a:visited, blockquote cite a:visited { color: #555; }
+#footermenu {
+     color: #FFFFFF;
+     margin: 10px 20px;
+}
 
-	hr { border: solid #ddd; border-width: 1px 0 0; clear: both; margin: 10px 0 30px; height: 0; }
+#footermenu a {
+     padding: 25px 5px;
+}
 
+body {
+     background: none repeat scroll 0% 0% #EFF2E4;
+     color: #444444;
+     font: 14px/21px 'Source Sans Pro',serif;
+}
 
-/* #Links
-================================================== */
-	a, a:visited { color: #333; text-decoration: underline; outline: 0; }
-	a:hover, a:focus { color: #000; }
-	p a, p a:visited { line-height: inherit; }
-	h5 a, h5 a:visited { color: green; text-decoration: none; }
-    h5 a:hover, h5 a:focus { color: #000; text-decoration: underline; }
+h1, h2, h3, h4, h5, h6 {
+     color: #181818;
+     font-family: 'Source Sans Pro',sans-serif;
+}
 
+h1, h2, h3 {
+     font-weight: bold;
+}
 
-/* #Lists
-================================================== */
-	ul, ol { margin-bottom: 20px; }
-	ul { list-style: none outside; }
-	ol { list-style: decimal; }
-	ol, ul.square, ul.circle, ul.disc { margin-left: 30px; }
-	ul.square { list-style: square outside; }
-	ul.circle { list-style: circle outside; }
-	ul.disc { list-style: disc outside; }
-	ul ul, ul ol,
-	ol ol, ol ul { margin: 4px 0 5px 30px; font-size: 90%;  }
-	ul ul li, ul ol li,
-	ol ol li, ol ul li { margin-bottom: 6px; }
-	li { line-height: 18px; margin-bottom: 12px; }
-	ul.large li { line-height: 21px; }
-	li p { line-height: 21px; }
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+     font-weight: inherit;
+}
 
-/* #Images
-================================================== */
+h1 {
+     color: #F24150;
+     font-size: 64px;
+     line-height: 90px;
+     margin-bottom: 60px;
+}
 
-	img.scale-with-grid {
-		max-width: 100%;
-		height: auto; 
-		}
-		
-	.intro {
-		margin-bottom: 30px;
-		margin-left: 40px;
-	}	
-	img.icons {
-		background-color: none;
-		margin-top: 20px;
-		margin-bottom: 2px;
-		padding-left: 0px;
-		width: 80px;
-		margin-left: 40px;
-		
-	}
-	
-	h5.intro {
-		font-size: 14px;
-		line-height: 18px;
-		
-		
-	}
-	
-	h4.intro {
-		font-weight: bold;
-		margin-bottom: 2px;
-		
-		
-	}
-	
-	img.zotero {
-		padding-top: 10px;
-		margin-bottom: 10px;
-	}
+h1 span {
+     color: #3B8483;
+}
 
-	
+h2 {
+     font-size: 35px;
+     line-height: 40px;
+     margin-bottom: 10px;
+}
 
-/* #Buttons
-================================================== */
+h3 {
+     font-size: 29px;
+     line-height: 35px;
+     margin-bottom: 8px;
+}
 
-	.button,
-	button,
-	input[type="submit"],
-	input[type="reset"],
-	input[type="button"] {
-		background: #eee; /* Old browsers */
-		background: #eee -moz-linear-gradient(top, rgba(255,255,255,.2) 0%, rgba(0,0,0,.2) 100%); /* FF3.6+ */
-		background: #eee -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,.2)), color-stop(100%,rgba(0,0,0,.2))); /* Chrome,Safari4+ */
-		background: #eee -webkit-linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* Chrome10+,Safari5.1+ */
-		background: #eee -o-linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* Opera11.10+ */
-		background: #eee -ms-linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* IE10+ */
-		background: #eee linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* W3C */
-	  border: 1px solid #aaa;
-	  border-top: 1px solid #ccc;
-	  border-left: 1px solid #ccc;
-	  -moz-border-radius: 3px;
-	  -webkit-border-radius: 3px;
-	  border-radius: 3px;
-	  color: #444;
-	  display: inline-block;
-	  font-size: 24px;
-	  font-weight: bold;
-	  text-decoration: none;
-	  text-shadow: 0 1px rgba(255, 255, 255, .75);
-	  cursor: pointer;
-	  margin-bottom: 20px;
-	  line-height: normal;
-	  padding: 8px 10px;
-	  font-family: 'Source Sans Pro', sans-serif; 
-	  font-weight: bold;}
+h4 {
+     font-size: 21px;
+     line-height: 30px;
+     margin-bottom: 4px;
+}
+
+h5 {
+     font-size: 17px;
+     line-height: 24px;
+}
+
+h6 {
+     font-size: 14px;
+     line-height: 21px;
+}
+
+.subheader {
+     color: #777777;
+}
+
+p {
+     margin: 0px 0px 20px;
+}
+
+p img {
+     margin: 0px;
+}
+
+p.lead {
+     color: #777777;
+     font-size: 21px;
+     line-height: 27px;
+}
+
+em {
+     font-style: italic;
+}
+
+strong {
+     color: #333333;
+     font-weight: bold;
+}
+
+small {
+     font-size: 80%;
+}
+
+blockquote, blockquote p {
+     color: #777777;
+     font-size: 17px;
+     font-style: italic;
+     line-height: 24px;
+}
+
+blockquote {
+     border-left: 1px solid #DDDDDD;
+     margin: 0px 0px 20px;
+     padding: 9px 20px 0px 19px;
+}
+
+blockquote cite {
+     color: #555555;
+     display: block;
+     font-size: 12px;
+}
+
+blockquote cite:before {
+     content: "— ";
+}
+
+blockquote cite a, blockquote cite a:visited, blockquote cite a:visited {
+     color: #555555;
+}
+
+hr {
+     -moz-border-bottom-colors: none;
+     -moz-border-left-colors: none;
+     -moz-border-right-colors: none;
+     -moz-border-top-colors: none;
+     border-color: #DDDDDD;
+     border-image: none;
+     border-style: solid;
+     border-width: 1px 0px 0px;
+     clear: both;
+     height: 0px;
+     margin: 10px 0px 30px;
+}
+
+a, a:visited {
+     color: #BF2431;
+     outline: 0px none;
+     text-decoration: none;
+}
+
+a:hover, a:focus {
+     color: #BF2431;
+     text-decoration: underline;
+}
+
+p a, p a:visited {
+     line-height: inherit;
+}
+
+h5 a, h5 a:visited {
+     color: #BF2431;
+     text-decoration: none;
+}
+
+h5 a:hover, h5 a:focus {
+     color: #BF2431;
+     text-decoration: underline;
+}
+
+ul, ol {
+     margin-bottom: 20px;
+}
+
+ul {
+     list-style: none outside none;
+}
+
+ol {
+     list-style: decimal outside none;
+}
+
+ol, ul.square, ul.circle, ul.disc {
+     margin-left: 30px;
+}
+
+ul.square {
+     list-style: square outside none;
+}
+
+ul.circle {
+     list-style: circle outside none;
+}
+
+ul.disc {
+     list-style: disc outside none;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+     font-size: 90%;
+     margin: 4px 0px 5px 30px;
+}
+
+ul ul li, ul ol li, ol ol li, ol ul li {
+     margin-bottom: 6px;
+}
+
+li {
+     line-height: 18px;
+     margin-bottom: 12px;
+}
+
+ul.large li {
+     line-height: 21px;
+}
+
+li p {
+     line-height: 21px;
+}
+
+img.scale-with-grid {
+     height: auto;
+     max-width: 100%;
+}
+
+.intro {
+     margin-bottom: 30px;
+     margin-left: 40px;
+}
+
+img.icons {
+     background-color: #FFFFFF;
+     margin-bottom: 2px;
+     margin-left: 40px;
+     margin-top: 20px;
+     padding-left: 0px;
+     width: 80px;
+}
+
+h5.intro {
+     font-size: 14px;
+     line-height: 18px;
+}
+
+h4.intro {
+     font-weight: bold;
+     margin-bottom: 2px;
+}
+
+img.zotero {
+     margin-bottom: 10px;
+     padding-top: 10px;
+}
+
+.button, button, input[type="submit"], input[type="reset"], input[type="button"] {
+     -moz-border-bottom-colors: none;
+     -moz-border-left-colors: none;
+     -moz-border-right-colors: none;
+     -moz-border-top-colors: none;
+     background: -moz-linear-gradient(center top , rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%) repeat scroll 0% 0% #EEEEEE;
+     border-color: #CCCCCC #AAAAAA #AAAAAA #CCCCCC;
+     border-image: none;
+     border-radius: 3px 3px 3px 3px;
+     border-style: solid;
+     border-width: 1px;
+     color: #444444;
+     cursor: pointer;
+     display: inline-block;
+     font-family: 'Source Sans Pro',sans-serif;
+     font-size: 24px;
+     font-weight: bold;
+     line-height: normal;
+     margin-bottom: 20px;
+     padding: 8px 10px;
+     text-decoration: none;
+     text-shadow: 0px 1px rgba(255, 255, 255, 0.75);
+}
+
 button.magic {
 	margin-top: 20px;
 	background: #349183; /* Old browsers */
@@ -344,68 +516,72 @@ button.magic {
     padding: 0;
 	}
 
+form {
+     margin-bottom: 20px;
+}
 
-/* #Forms
-================================================== */
+fieldset {
+     margin-bottom: 20px;
+}
 
-	form {
-		margin-bottom: 20px; }
-	fieldset {
-		margin-bottom: 20px; }
-	input[type="text"],
-	input[type="password"],
-	input[type="email"],
-	textarea,
-	select {
-		border: 1px solid #ccc;
-		padding: 6px 4px;
-		outline: none;
-		-moz-border-radius: 2px;
-		-webkit-border-radius: 2px;
-		border-radius: 2px;
-		font: 13px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #777;
-		margin: 0;
-		width: 210px;
-		max-width: 100%;
-		display: block;
-		margin-bottom: 20px;
-		background: #fff; }
-	select {
-		padding: 0; }
-	input[type="text"]:focus,
-	input[type="password"]:focus,
-	input[type="email"]:focus,
-	textarea:focus {
-		border: 1px solid #aaa;
- 		color: #444;
- 		-moz-box-shadow: 0 0 3px rgba(0,0,0,.2);
-		-webkit-box-shadow: 0 0 3px rgba(0,0,0,.2);
-		box-shadow:  0 0 3px rgba(0,0,0,.2); }
-	textarea {
-		/*min-height: 60px;*/
-		margin-top: 10px;
-		height: 300px;
-		width: 610px; }
-	label,
-	legend {
-		display: block;
-		font-weight: bold;
-		font-size: 13px;  }
-	select {
-		width: 220px; }
-	input[type="checkbox"] {
-		display: inline; }
-	label span,
-	legend span {
-		font-weight: normal;
-		font-size: 13px;
-		color: #444; }
+input[type="text"], input[type="password"], input[type="email"], textarea, select {
+     background: none repeat scroll 0% 0% #FFFFFF;
+     border-radius: 2px 2px 2px 2px;
+     border: 1px solid #CCCCCC;
+     color: #777777;
+     display: block;
+     font: 13px "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+     margin: 0px 0px 20px;
+     max-width: 100%;
+     outline: medium none;
+     padding: 6px 4px;
+     width: 210px;
+}
 
-/* #Misc
-================================================== */
-	.remove-bottom { margin-bottom: 0 !important; }
-	.half-bottom { margin-bottom: 10px !important; }
-	.add-bottom { margin-bottom: 20px !important; }
+select {
+     padding: 0px;
+}
 
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus {
+     border: 1px solid #AAAAAA;
+     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+     color: #444444;
+}
 
+textarea {
+     height: 300px;
+     margin-top: 10px;
+     width: 610px;
+}
+
+label, legend {
+     display: block;
+     font-size: 13px;
+     font-weight: bold;
+}
+
+select {
+     width: 220px;
+}
+
+input[type="checkbox"] {
+     display: inline;
+}
+
+label span, legend span {
+     color: #444444;
+     font-size: 13px;
+     font-weight: normal;
+}
+
+.remove-bottom {
+     margin-bottom: 0px ! important;
+}
+
+.half-bottom {
+     margin-bottom: 10px ! important;
+}
+
+.add-bottom {
+     margin-bottom: 20px ! important;
+}

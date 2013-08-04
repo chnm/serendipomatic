@@ -1,6 +1,3 @@
-from django.db import models
-
-# Create your models here.
 
 
 class DisplayItem(object):
@@ -28,8 +25,7 @@ class DisplayItem(object):
             setattr(self, key, val)
 
     def __repr__(self):
-        return '<%s %s>' % (self.title, self.thumbnail or '<no url>')
-
+        return u'<%s %s>' % (self.title, self.thumbnail or '<no url>')
 
 
 # common result item

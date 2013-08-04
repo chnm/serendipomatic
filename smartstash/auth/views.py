@@ -2,24 +2,44 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from smartstash.auth.models import ZoteroUser
 import smartstash.core.zotero as zotero
+from smartstash.core.utils import common_words
 
-# Create your views here.
+
+# FIXME: consolidate with duplicate code in core.views
+# - should almost certainly be using an existing library/tool for this
+#   (prettu sure there is something in django we can use)
+html_escapes = {
+    "&": "&amp;",
+    '"': "&quot;",
+    "'": "&apos;",
+    ">": "&gt;",
+    "<": "&lt;",
+}
+
 
 def zotero_oauth(request):
-
-    zu = ZoteroUser.objects.get(username=request.session['username'])
     request.session['oauth_verifier'] = request.GET['oauth_verifier']
-    zu.token, zu.userid = zotero.accessToken_userID_from_oauth_verifier(
-                                                                        request,
-                                                                        request.GET['oauth_verifier'],
-                                                                        request.session['request_token']
-                                                                        )
-    zu.save()
 
-    search_terms = {}
-    terms = zotero.get_user_items(request, zu.userid, zu.token, numItems=20, public=False)
-    search_terms['keywords'] = terms['date'] + terms['creatorSummary'] + terms['keywords']
+    try:
+        token, userid = zotero.access_info(
+            request,
+            request.GET['oauth_verifier'],
+            request.session['request_token']
+        )
 
-    request.session['search_terms'] = search_terms
+        terms = zotero.get_user_items(request, userid, token, numItems=20)
+        #tokenize
+        search_terms = common_words("".join(terms['abstractSummary'] + terms['creatorSummary'] + terms['title']))
 
-    return HttpResponseRedirect(reverse('view-stash'))
+        #sanitize
+        for key, val in search_terms.iteritems():
+            search_terms[key] = [html_escapes.get(c, c) for c in val]
+
+        request.session['search_terms'] = search_terms
+        return HttpResponseRedirect(reverse('view-stash'))
+
+    # except HTTPError:
+    # FIXME: HTTPerror is not imported; where is this defined?
+    # what user state causes this exception?
+    except Exception:
+        return HttpResponseRedirect(reverse('site-index'))

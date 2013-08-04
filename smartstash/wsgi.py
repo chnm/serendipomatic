@@ -1,3 +1,4 @@
+
 """
 WSGI config for smartstash project.
 
@@ -25,7 +26,20 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "smartstash.settings")
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
 from django.core.wsgi import get_wsgi_application
-application = get_wsgi_application()
+
+
+# heroku/non-heroku
+try:
+
+    # if import succeeds, assume heroku
+    from dj_static import Cling
+    application = Cling(get_wsgi_application())
+
+except ImportError:
+
+    # otherwis, do normal stuff
+    application = get_wsgi_application()
+
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication

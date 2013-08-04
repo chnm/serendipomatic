@@ -1,30 +1,51 @@
-{% extends 'site_base.html' %}
+{% extends 'view_base.html' %}
 {% load static %}
 
 {% block title %}MagicStash Items Display{% endblock %}
 
+{% block extra-head %}
+<!-- add extra css/js here -->
+
+{% endblock %}
+
 {% block content %}
+<!--
 <ul id="sort-by">
   <li><a href="#iso_title">Item Type</a></li>
   <li><a href="#iso_date">Date</a></li>
   <li><a href="#iso_region">Region</a></li>
 </ul>
 
-<p>
-<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Start Over</button></a>
-<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Save Results</button></a>
-<a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a>
-<a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a>
-</p>
+<button class="magic" tabindex="5"></button> to add buttons back
+-->
 
 <p>
-<strong>Query Terms:</strong> {{ query_terms.keywords|join:', ' }}
-<br />
-<strong>Sources Used:</strong>
-{% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
-</p>
+<div class="queryhead">
 
-<div id="container">
+<div class="ten columns">
+  <p>
+    <div class="querytitle">Serendip-o-matic ran with these words from your text:</div>
+    <div class="querystyle"> {{ query_terms.keywords|join:', ' }}</div>
+  </p>
+
+  <p><strong>Sources used:</strong>
+  {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+</div>
+
+
+<div class="querysearch five columns">
+<div class="gohome"><a href="{% url 'site-index' %}">Go home and feed the machine new text!</a></div>
+
+<p>
+Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these results</a> (will open on another page)
+</p>
+{# <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a> #}
+{# <a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a> #}
+</div>
+
+<div class="clearfix"></div>
+
+<div id="container"> {# force result image div to full width #}
 {% for item in items %}
 
 
@@ -32,17 +53,25 @@
 <!-- Insert below into results page. Semi-opaque overlay from top of differently sized images. Suck text data into .overlay and image into .imageframe -->
 
 <div class="imageframe">
+  {% if 'flickr.com' in item.thumbnail %}
         <img src="{{ item.thumbnail }}" alt="{{ item.title }}" >
+  {% else %}
+        <img src="{% url 'image:resize' size=300 %}?url={{ item.thumbnail }}" alt="{{ item.title }}" >
+  {% endif %}
 	<div class="overlay">
-		<div class="iso_title">Title: <a href="{{ item.url }}">{{ item.title }}</a></div>
-		<div class="iso_date">Date: {{ item.date }}</div>
+		<div class="iso_title"><a href="{{ item.url }}" target="_blank">"{{ item.title|truncatechars:80 }}"</a></div>
+    {% comment %} {# not displaying date for the moment #}
+    {% if item.date %}
+		<div class="iso_date">{{ item.date }}</div>
+    {% endif %}
+    {% endcomment %}
+    {% if item.source %}
+    <div class="iso_source">from {{ item.source }}
+      {% if item.aggregator == 'Flickr Commons' or item.aggregator == 'Europeana' %} on {{ item.aggregator }}{% endif %}
+    </div>
+    {% endif %}
 	</div>
 </div>
-
-
-
-
-
 
 <!-- Change the number in the add filter depending on the number of tabindexes required before results. -->
 <!--
@@ -65,23 +94,15 @@
 	</div>
 </div>
 <input type="hidden" value="{{ item.location }}"/>
-{% endfor %}
 </div>
 
 -->
+{% endfor %}
 
 
+<p style="text-align: center; margin: 15px 0 5px 0;"><a href="#top"><button tabindex="1000">Return to Top</button></a></p>
 
 
-
-
-
-
-
-
-
-
-<a href="#top"><button tabindex="1000">Return to Top</button></a>
 {% comment %}
 {{ item.title|default:'(no source)' }}
 {% endcomment %}
@@ -91,6 +112,7 @@
 <!--  <script src="http://isotope.metafizzy.co/jquery.isotope.min.js"></script> -->
 <script src="{% static 'js/isotope-1.5.25.js' %}"></script>
 <script src="{% static 'js/scripts_view.js' %}"></script>
+<script src="{% static 'js/fake-element.js' %}"></script>
 <script type="text/javascript">
    // Populates broken image links with default image
    $(window).load(function() {
@@ -99,12 +121,32 @@
          if(image.context.naturalWidth == 0 ||
          image.readyState == 'uninitialized'){
             $(image).unbind("error").attr(
-                "src", "http://news.bbcimg.co.uk/media/images/69039000/jpg/_69039173_jkrowling_pa.jpg"
+                "src", "{% static 'img/fillerhippo.png' %}"
+            );
+                        $(image).unbind("error").attr(
+                "height", "249"
+            );
+                        $(image).unbind("error").attr(
+                "width", "248"
             );
          }
     });
 });
 </script>
+ <script>
+    $(function(){
+
+      var $container = $('#container');
+
+      $container.imagesLoaded( function(){
+        $container.isotope({
+          itemSelector : '.imageframe'
+        });
+      });
+
+
+    });
+  </script>
 {% endblock %}
 <script>
 // For sorting

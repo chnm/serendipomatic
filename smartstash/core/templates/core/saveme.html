@@ -1,20 +1,22 @@
-{% extends 'site_base.html' %}
+{% extends 'view_base.html' %}
 {% load static %}
 
 {% block title %}Save Your MagicStash Items{% endblock %}
 
 {% block content %}
 
-<h3>Instructions:</h3>
-<p><strong>Query Terms:</strong> {{ query_terms.keywords|join:', ' }}</p>
-<p><strong>Sources Used:</strong>
+<h3>Instructions: This list is generated from your last result set. To save it, 
+copy and paste it into a text editor or select Save from the File menu in your 
+browser.</h3>
+<p><strong>Terms Used:</strong> {{ query_terms.keywords|join:', ' }}<br />
+<strong>Sources Used:</strong>
 {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}
 </p>
 
 <div>
 <ol>
 {% for item in items %}
-    <li>{{ item.title }}: {{ item.url }}</li>
+    <li>{{ item.title }}: {{ item.url }}. <span class="aggregator">From {{ item.aggregator }}.</span></li>
 {% endfor %}
 </ol>
 </div>

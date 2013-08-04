@@ -1,8 +1,54 @@
 # Django settings for smartstash project.
 
+import os
 import os.path
 
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+EMAIL_SUBJECT_PREFIX = '[Serendipomatic] '
+
+# heroku config
+
+HEROKU = bool(os.environ.get('HEROKU', ''))
+
+
+# heroku-specific configuration
+if HEROKU:
+
+    # Parse database configuration from $DATABASE_URL
+    import dj_database_url
+    DATABASES = {'default':  dj_database_url.config()}
+
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Allow all host headers
+    ALLOWED_HOSTS = ['*']
+
+    # Static asset configuration
+    # STATIC_ROOT = 'static'
+    # STATIC_URL = '/static/'
+
+    # STATICFILES_DIRS = (
+    #     os.path.join(BASE_DIR, 'static'),
+    # )
+
+    # get 'local' settings via heroku env
+    SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
+    API_KEYS = {
+        'DPLA': os.environ.get('DPLA_API_KEY'),
+        'Europeana': os.environ.get('EUROPEANA_API_KEY'),
+        'Flickr': os.environ.get('FLICKR_API_KEY'),
+        'ZOTERO_CONSUMER_KEY': os.environ.get("ZOTERO_CONSUMER_KEY"),
+        'ZOTERO_CONSUMER_SECRET': os.environ.get("ZOTERO_CONSUMER_SECRET"),
+        'Trove': os.environ.get("TROVE_API_KEY"),
+    }
+
+
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', ''))
+TEMPLATE_DEBUG = DEBUG
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -106,31 +152,34 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-#    'social_auth',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'smartstash.core',
     'smartstash.auth',
+    'smartstash.images',
 )
 
 
-# configure social-auth backends here
-AUTHENTICATION_BACKENDS = (
-    'smartstash.auth.zotero.ZoteroBackend',
-)
+if not HEROKU:
+    try:
+        from localsettings import *
+    except ImportError:
+        import sys
+        print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
+            'stuff blows up, try copying localsettings.py.dist to ' + \
+            'localsettings.py and setting appropriately for your environment.'
 
-LOGIN_URL          = '/auth/login/'
-LOGIN_REDIRECT_URL = '/auth/logged-in/'
-LOGIN_ERROR_URL    = '/auth/login-error/'
 
+# settings specific to travis-ci
+TRAVIS = bool(os.environ.get('TRAVIS', ''))
+if TRAVIS:
+    SECRET_KEY = 'not really very secret is it'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'stash.db'),
+        }
+    }
 
-try:
-    from localsettings import *
-except ImportError:
-    import sys
-    print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
-        'stuff blows up, try copying localsettings.py.dist to ' + \
-        'localsettings.py and setting appropriately for your environment.'
-    pass
