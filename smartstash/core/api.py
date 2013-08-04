@@ -108,10 +108,11 @@ class Europeana(object):
 
         #qry from unicode string to regular string
         qry = qry.encode("utf8", "ignore")
-
         logger.debug('europeana query: %s' % qry)
+        start = time.time()
         b = Bibs()
         results = b.search(qry, 'europeanav2', 'search')
+        logger.info('europeana query completed in %.2f sec' % (time.time() - start))
 
         items = []
         # no results! log this error?

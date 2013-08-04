@@ -14,6 +14,7 @@ from smartstash.core.forms import InputForm
 from smartstash.core.utils import common_words, get_search_terms
 from smartstash.core.api import DPLA, Europeana, Flickr, Trove
 
+logger = logging.getLogger(__name__)
 
 # see fixme in auth.views
 escapes = {
@@ -133,31 +134,39 @@ def view_items(request):
     # encode the search terms for safety
     search_terms['keywords'] = [sanitizeString(s) for s in search_terms['keywords']]
 
-<<<<<<< HEAD
-
     error = False
     sources = [DPLA, Europeana, Flickr, Trove]
+    # sources = [DPLA, Europeana, Flickr]
     def query_service(api):
-        logger.debug('querying %s' % api.name)
+        # return api with result so we can tell which sources had results
+        result = {'api': api, 'items': []}
         try:
-            items = api.find_items(**search_terms)
+            result['items'] = api.find_items(**search_terms)
         except Exception as err:
-            logger.error('Error querying %s - %s' % (api.name, err))
-            error = True
-            items = []
-
-        return items
+            result['error'] = err
+        return result
 
     start = time.time()
     jobs = [gevent.spawn(query_service, api) for api in sources]
-    gevent.joinall(jobs, timeout=5)
+    gevent.joinall(jobs, timeout=10)
     items = []
     for job in jobs:
-        print(job)  # TODO: can we determine which one is which
-        items.extend(job.value)
-    print '%d items total' % len(items)
+        result = job.value
+        if 'error' in result:
+            logger.error('Error querying %s - %s' %
+                         (result['api'].name, err), result['error'])
+        else:
+            items.extend(result['items'])
+
     logger.info('Queried %d sources in in %.2f sec' %
             (len(sources), time.time() - start))
+
+    logger.info('Number of items by source: %s' % \
+        ' '.join('%s=%d' % (job.value['api'].name, len(job.value['items']))
+                  for job in jobs))
+
+        # %DPLA=%d, Europeana=%d, Flickr=%d, Trove=%d' % \
+        #          (len(dpla_items), len(euro_items), len(flkr_items), len(trove_items)))
     # shuffle images so we get a more even mix, esp. if one source
     # (such as flickr) returns more items than the others
     random.shuffle(items)

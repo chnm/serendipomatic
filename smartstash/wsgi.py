@@ -14,7 +14,11 @@ middleware here, or combine a Django application with an application of another
 framework.
 
 """
+
 import os
+
+# NOTE: this will probably need some adjustment for apache/mod_wsgi
+from gevent import monkey; monkey.patch_all()
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
@@ -37,7 +41,7 @@ try:
 
 except ImportError:
 
-    # otherwis, do normal stuff
+    # otherwise, do normal stuff
     application = get_wsgi_application()
 
 
