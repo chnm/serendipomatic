@@ -94,10 +94,14 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these resul
 	</div>
 </div>
 <input type="hidden" value="{{ item.location }}"/>
-{% endfor %}
 </div>
 
 -->
+{% endfor %}
+
+
+<p style="text-align: center; margin: 15px 0 5px 0;"><a href="#top"><button tabindex="1000">Return to Top</button></a></p>
+
 
 {% comment %}
 {{ item.title|default:'(no source)' }}
