@@ -56,7 +56,11 @@
 
 <script>
 function eraseText() {
-    document.getElementById("texto").value = "";
+  window.jQuery.get('static/default.txt', function(data){
+    if (document.getElementById("texto").value == data){
+      document.getElementById("texto").value = "";
+    }
+  })
 }
 
 function loading() {

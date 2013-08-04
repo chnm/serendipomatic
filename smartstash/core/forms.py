@@ -1,15 +1,14 @@
+import os
 from django import forms
 from django.conf import settings
 
 class InputForm(forms.Form):
 
-    start_text = open(settings.DEFAULT_TEXT_PATHNAME).read()
-
     text = forms.CharField(
         label='Cut and paste a block of text.',
         help_text='Cut and paste a block of text.',
         widget=forms.Textarea(attrs={'tabindex': 4, 'id': 'texto'}),
-        initial=start_text,
+        initial=open(os.path.join(settings.STATICFILES_DIRS[0], "default.txt")).read(),
         required=False
     )
 

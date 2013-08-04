@@ -3,7 +3,6 @@
 import os
 import os.path
 
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 EMAIL_SUBJECT_PREFIX = '[Serendipomatic] '
@@ -139,7 +138,7 @@ ROOT_URLCONF = 'smartstash.urls'
 WSGI_APPLICATION = 'smartstash.wsgi.application'
 
 #Text file to draw the starting text from
-DEFAULT_TEXT_PATHNAME = os.path.join(BASE_DIR, "default.txt")
+#DEFAULT_TEXT_PATHNAME = os.path.join(BASE_DIR, "default.txt")
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
