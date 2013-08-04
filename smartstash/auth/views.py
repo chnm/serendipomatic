@@ -35,5 +35,5 @@ def zotero_oauth(request):
         request.session['search_terms'] = search_terms
         return HttpResponseRedirect(reverse('view-stash'))
 
-    except HTTPError:
+    except:
         return HttpResponseRedirect(reverse('site-index'))
