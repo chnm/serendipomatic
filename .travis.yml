@@ -29,7 +29,6 @@ deploy:
     secure: NHTqjBAt2ZykjcJpdOXg4yWHK+spS0iw8nJasbILmcGUv7as+zcwi5Px/s3QgJ9drzURBk//0w3BMYmeZWkn3Y485mGlQEa0eOZfCU99b5aGTqRM6++pd6XJJ8fHNekFxs5pIu4fS3ZjuK5lFk7RqPjABzkjOCGUA0+WZU9i4KU=
   repo: chnm/serendipomatic
   app: dev-serendipomatic
-# TODO: restrict to dev branch once we get people switched over to git flow
-#  on: develop
+  on: develop
   run:
     - "python manage.py syncdb"
