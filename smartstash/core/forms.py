@@ -1,11 +1,10 @@
 from django import forms
-
+from django.conf import settings
 
 class InputForm(forms.Form):
 
-    start_text = '''
-    The hippopotamus (Hippopotamus amphibius), or hippo, from the ancient Greek for "river horse", is a large, mostly herbivorous mammal in sub-Saharan Africa, and one of only two extant species in the family Hippopotamidae (the other is the pygmy hippopotamus). After the elephant and rhinoceros, the hippopotamus is the third-largest type of land mammal and the heaviest extant artiodactyl. Despite their physical resemblance to pigs and other terrestrial even-toed ungulates, their closest living relatives are cetaceans (whales, porpoises, etc.) from which they diverged about 55 million years ago. The common ancestor of whales and hippos split from other even-toed ungulates around 60 million years ago. The earliest known hippopotamus fossils, belonging to the genus Kenyapotamus in Africa, date to around 16 million years ago.
-    '''
+    start_text = open(settings.DEFAULT_TEXT_PATHNAME).read()
+
     text = forms.CharField(
         label='Cut and paste a block of text.',
         help_text='Cut and paste a block of text.',
