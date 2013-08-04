@@ -70,14 +70,11 @@ def get_user_items(userID, public = True, startIndex = 0, numItems = 99):
                         metadata = parse(metadata)
 
                 except ValueError:
-                    print "ValueError at {0}".format(metadata)
+                    print "Error encoding or parsing date with {0}".format(metadata)
 
                 results[metadataType].append(metadata)
-        #for s in results['abstractNote']: results['keywords'] += tokenize(s)
+
         startIndex += numItems
         items = zlib.fetchItems({'limit': numItems, 'start': startIndex})
 
     return results
-
-if __name__ == "__main__":
-    print get_user_items(get_userID("briancroxall"), public = True)

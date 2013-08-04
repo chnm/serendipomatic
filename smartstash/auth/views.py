@@ -23,7 +23,7 @@ def zotero_oauth(request):
                                            request.session['request_token']
                                            )
 
-        terms = zotero.get_user_items(request, userid, token, numItems=20)
+        terms = zotero.get_user_items(request, userid, token, numItems=99)
 
         #tokenize
         search_terms = common_words("".join(terms['abstractSummary'] + terms['creatorSummary'] + terms['title']))
