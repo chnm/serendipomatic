@@ -1,3 +1,4 @@
+{% load static %}
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -6,7 +7,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Serendip-o-matic: Let Your Sources Surprise You</title>
+  <title>Serendip-o-matic: Let Your Sources Surprise You{% block page-subtitle %}{% endblock %}</title>
   <meta name="description" content="">
   <meta name="author" content="">
   <!-- Mobile Specific Metas
@@ -14,10 +15,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <!-- CSS
   ================================================== -->
-  <link href="/static/css/styles.css" rel="stylesheet" media="screen" />
-  <link href="/static/css/base.css" rel="stylesheet" media="screen" />
-  <link href="/static/css/skeleton.css" rel="stylesheet" media="screen" />
-  <link href="/static/css/layout.css" rel="stylesheet" media="screen" />
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet" media="screen" />
+  <link href="{% static 'css/base.css' %}" rel="stylesheet" media="screen" />
+  <link href="{% static 'css/skeleton.css' %}" rel="stylesheet" media="screen" />
+  <link href="{% static 'css/layout.css' %}" rel="stylesheet" media="screen" />
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300italic' rel='stylesheet' type='text/css'>
 
@@ -25,16 +26,10 @@
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
- <!-- Web fonts -->
- <script type="text/javascript" src="//use.typekit.net/uej1ygs.js"></script>
- <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
   <!-- Favicons
   ================================================== -->
-  <link rel="shortcut icon" href="/static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/static/images/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/static/images/apple-touch-icon-114x114.png">
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+  {% block extra-head %}{% endblock %} {# extend for pages that need extra css/js #}
 </head>
 <body>
 <a name="top"></a>
@@ -44,54 +39,45 @@
 <!-- Delete everything in this .container and get started on your own site! -->
 
 <div class="container">
-  	<div class="sixteen columns" "top">
-			<menu class="bar">
+<div class="sixteen columns">
+<menu class="bar">
 			<ul>
             <li id="skip"><a class="skip" href="#content" tabindex="1">Skip to Content</a></li>
-			<li><a href="/" tabindex="2">home</a></li>
-			<li><a href="#" tabindex="3">about</a></li>
-			<li><a href="#" tabindex="4">connect</a></li>
+			<li><a href="{% url 'site-index' %}" tabindex="2">home</a></li>
+			<li><a href="{% url 'about' %}" tabindex="3">about</a></li>
+			<li><a href="{% url 'connect' %}" tabindex="4">connect</a></li>
 			</ul>
 		</menu>
-			<header>
-			<img class="scale-with-grid" src="/static/img/serendip-o-matic.png" />
-			</header>
+
+<header class="secondary">
+<a href="{% url 'site-index' %}"><img src="{% static 'img/serendipo_small.png' %}" alt="Serendip-o-matic" /></a>
+<h1 class="header" style="margin-top: 70px">Serendip<span>-o-</span>matic</h1>
+<h2 class="tagline">Let your sources surprise you.</h2>
+</header>
 
 <a name="content"></a>
 <div>
-
-<div class="main">	
-	<hr/>
-	<div class="nine columns">
-		<h3 class="start">Ouch. 500 error.</h3>
-		
-<a href="/>
-<img src="/static/img/500hippo.png" alt="500 hippo is sad" />
-</a>		
-<p>Bad things happened, but it's not your fault. Go <a href="/">home</a> and start again. If you want to help us understand how we can fix it, you can add an issue via GitHub at <a href="https://github.com/chnm/serendipomatic/issues?state=open">serendipomatic/issues</a>.</p>
-
+{% block content %}{% endblock %}
 </div>
 
-
-	</div><!-- container -->
-
-<footer>
+<footer style="margin-left:-30px;">
 <div id="footermenu">
-    <a href="/">Home</a>|<a href="/about/">About</a>|<a href="/connect/">Connect</a></div>
-    <img class="footimg" src="/static/img/burst.png" alt="Burst Image" />
+    <a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="{% url 'connect' %}">Connect</a></div>
+    <img class="footimg" src="{% static 'img/burst.png' %}" alt="Burst Image" />
     <div id="footer-info" >
       <p><strong>Serendip-o-matic</strong> is a project of
     <a href="http://www.oneweekonetool.org" target="_blank" >One Week | One Tool</a>
-     from the <a href="http://chnm.gmu.edu" target="_blank">Roy Rosenzweig Center for History and New Media</a>,
+     from the <a href="http://chnm.gmu.edu" target="_blank">Center for History and New Media</a>,
      <a href="http://www.gmu.edu" target="_blank">George Mason University</a>.<br />
      Funding provided by the <a href="http://www.neh.gov" target="_blank">National Endowment for the Humanities</a>.
      &copy; 2013, Roy Rosenzweig Center for History and New Media.<br />
     For more information,
-     contact <a href="mailto:serendipomatic@gmail.com">serendipomatic@gmail.com</a>.</p>
+     contact <a href="mailto:serendipomatic@gmail.com"><strong>serendipomatic@gmail.com</strong></a>.</p>
 
-     <p>version 0.1.1</p>
+     <p>version {{ SW_VERSION }}</p>
      </div>
 </footer>
+
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -103,9 +89,5 @@
   ga('send', 'pageview');
 
 </script>
-
-
-</div>
-
 </body>
 </html>

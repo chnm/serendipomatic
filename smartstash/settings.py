@@ -12,6 +12,7 @@ EMAIL_SUBJECT_PREFIX = '[Serendipomatic] '
 
 HEROKU = bool(os.environ.get('HEROKU', ''))
 
+
 # heroku-specific configuration
 if HEROKU:
 
@@ -169,3 +170,16 @@ if not HEROKU:
         print >> sys.stderr, 'No local settings. Trying to start, but if ' + \
             'stuff blows up, try copying localsettings.py.dist to ' + \
             'localsettings.py and setting appropriately for your environment.'
+
+
+# settings specific to travis-ci
+TRAVIS = bool(os.environ.get('TRAVIS', ''))
+if TRAVIS:
+    SECRET_KEY = 'not really very secret is it'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'stash.db'),
+        }
+    }
+
