@@ -528,6 +528,10 @@ button.magic {
     padding: 0;
 	}
 
+#magic-button {	
+	margin: 0 auto 70px 50px;
+}
+	
 form {
      margin-bottom: 20px;
 }
