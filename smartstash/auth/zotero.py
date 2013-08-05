@@ -36,8 +36,11 @@ class ZoteroOAuth(GoogleOAuth):
     REQUEST_TOKEN_URL = REQUEST_TOKEN_URL
     ACCESS_TOKEN_URL = ACCESS_TOKEN_URL
     AUTH_BACKEND = ZoteroBackend
-    SETTINGS_KEY_NAME = "e61504b6e21a1df7d146"
-    SETTINGS_SECRET_NAME = "294d72ffd8dce053aadb"
+
+    # these need to be set in settings/localsettings
+    # for social-auth to load the backend
+    SETTINGS_KEY_NAME = 'ZOTERO_CONSUMER_KEY'
+    SETTINGS_SECRET_NAME = 'ZOTERO_CONSUMER_SECRET'
 
     def user_data(self, access_token, *args, **kwargs):
         """Return user data from Google API"""
