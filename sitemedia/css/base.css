@@ -56,6 +56,18 @@ table {
      height: 20px;
 }
 
+.zot h5 {
+	margin-bottom:15px;
+}
+
+.zot button {
+	margin: 0 auto 20px auto;
+}
+
+.zot input[type=text] {
+	margin: 0;
+}
+
 menu.bar {
      font-family: 'Source Sans Pro',sans-serif;
      font-weight: bold;
