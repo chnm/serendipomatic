@@ -102,16 +102,16 @@ menu.bar a:hover, menu.bar a:focus {
 
 .main {
      margin: 0px auto;
-     padding-right: 0px;
+     padding: 3% 5%;
 }
 
 .main h2 {
-     color: #BF2431;
+     color: #000000;
      font-family: "ff-ernestine-web-pro-1","ff-ernestine-web-pro-2","Source Sans Pro",sans-serif;
 }
 
 .main h3 {
-     color: #BF2431;
+     color: #000000;
 }
 
 .main h3.start {
