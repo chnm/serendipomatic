@@ -18,9 +18,14 @@ def resize(request, size):
         raise Http404
 
     # test to make sure valid first?
-    r = requests.get(img_url)
-    if r.status_code != requests.codes.ok:
-        raise Http404
+    try:
+        r = requests.get(img_url)
+        if r.status_code != requests.codes.ok:
+            raise Http404
+
+    except requests.ConnectionError:
+        # if there's any kind of connection error, just redirect to the original
+        return HttpResponseRedirect(img_url)
 
     newsize = (int(size), int(size))
 
