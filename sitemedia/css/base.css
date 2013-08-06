@@ -500,7 +500,8 @@ button.magic {
 		background: #ddd linear-gradient(top, rgba(255,255,255,.3) 0%,rgba(0,0,0,.3) 100%); /* W3C */
 	  border: 1px solid #888;
 	  border-top: 1px solid #aaa;
-	  border-left: 1px solid #aaa; }
+	  border-left: 1px solid #aaa; 
+	  text-shadow: none;}
 
 	.button:active,
 	button:active,
