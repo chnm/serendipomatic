@@ -50,6 +50,7 @@ table {
      margin-left: 25px;
      padding: 25px 27px 15px 25px;
      width: 230px;
+     margin-bottom: 15px;
 }
 
 .zotuser textarea {
@@ -474,7 +475,7 @@ button.magic {
 		background: #349183 linear-gradient(top, rgba(255,255,255,.2) 0%,rgba(0,0,0,.2) 100%); /* W3C */
 		color: #EEE;
 		text-shadow: 0 1px rgba(1, 1, 1, .85);
-		
+
 }
 
 .button:hover.magic {
@@ -528,10 +529,10 @@ button.magic {
     padding: 0;
 	}
 
-#magic-button {	
-	margin: 0 auto 70px 50px;
+#magic-button {
+	margin: 0 auto 70px 0;
 }
-	
+
 form {
      margin-bottom: 20px;
 }
