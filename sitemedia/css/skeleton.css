@@ -161,7 +161,8 @@ footer	 { width: 1000px; margin: 0 auto; }
        img.icons { float: left; padding-right: 15px; }
        .intro { padding-top: 5px; }
        header img { margin-bottom: 0px; }
-
+      .pipe {display:none; }
+      .zot {margin-top: -40px; }
        /* Offsets */
        .container .offset-by-one,
        .container .offset-by-two,
@@ -179,6 +180,8 @@ footer	 { width: 1000px; margin: 0 auto; }
        .container .offset-by-fourteen,
        .container .offset-by-fifteen { padding-left: 0; }
         header.secondary img { margin-top: 0px; }
+
+      
 
    }
 
@@ -213,7 +216,9 @@ footer	 { width: 1000px; margin: 0 auto; }
        .container .one-third.column,
        .container .two-thirds.column { width: 420px; }
         header.secondary img { margin-top: 0px;}
-               header img { margin-bottom: 0px; }
+        header img { margin-bottom: 0px; }
+      .pipe {display:none; }
+      .zot {margin-top: -40px; }
 
    }
 
