@@ -115,6 +115,10 @@ menu.bar a:hover, menu.bar a:focus {
      color: #BF2431;
 }
 
+.main h3.connect {
+	color: #000000;
+}
+
 .main h3.start {
      color: #3B8483;
      display: block;
