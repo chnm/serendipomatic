@@ -27,11 +27,18 @@
   <![endif]-->
 
  <!-- Web fonts -->
- <script type="text/javascript" src="//use.typekit.net/uej1ygs.js"></script>
+<!-- <script type="text/javascript" src="//use.typekit.net/uej1ygs.js"></script>-->
  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
- <script type="text/javascript" src="{% static 'js/jquery-1.10.2.js' %}"></script>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{% static 'js/jquery-1.10.2.js' %}">\x3C/script>')</script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<style type="text/css">
+.ui-dialog-titlebar {
+  display: none;
+}
+</style>
   <!-- Favicons
   ================================================== -->
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">

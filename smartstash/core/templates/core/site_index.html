@@ -3,11 +3,12 @@
 
 
 {% block content %}
-
 <div class="main">
-	<hr/>
-
 	<div class="nine columns">
+
+<div id="hippo" style="display: none;">
+  <img src="{% static 'img/feedthebeast.gif' %}" alt="Image of Hippo: Feeding the Beast" />
+</div>
 		<h3 class="start">Let’s Get Started.</h3>
 
 		<h3>Grab some text.</h3>
@@ -16,7 +17,7 @@
         Try <a href="http://en.wikipedia.org/wiki/Wikipedia:Today's_featured_article"
         target="_blank">Wikipedia's daily featured article</a> or try it out with the sample text below.</h5>
 
-	<form name="hippo" method="post" onsubmit="loading();" onclick="eraseText();" action="{% url 'site-index' %}">{% csrf_token %}
+	<form name="hippo" method="post" onclick="eraseText();" action="{% url 'site-index' %}">{% csrf_token %}
 
       {{ input_form.text }}
 
@@ -51,8 +52,6 @@
 	<button id="magic-button" class="magic">Make some magic!</button>
 </div>
 </form>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="{% static 'js/jquery-1.10.2.js' %}">\x3C/script>')</script>
 
 <script>
 function eraseText() {
@@ -69,6 +68,20 @@ function loading() {
         top: -200}, 1500);
 }
 </script>
+
+ <script>
+$( "#hippo" ).dialog({
+      autoOpen: false,
+      height: 190,  // Image is 157h x 209w
+      width: 240, //209
+      modal: false
+});
+ 
+$( ".magic" ).click(function() {
+	$( "#hippo" ).dialog( "open" );
+});
+</script>
+
 	</div><!-- container -->
 
 <!-- End Document
