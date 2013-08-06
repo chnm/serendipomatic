@@ -104,6 +104,8 @@ menu.bar a:hover, menu.bar a:focus {
 .main {
      margin: 0px auto;
      padding: 3% 5%;
+     font-size: 1.125em;
+     line-height: 1.5em;
 }
 
 .main h2 {
