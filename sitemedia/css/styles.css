@@ -97,9 +97,10 @@ html, body {
 
 .gohome {
      margin-top: 20px;
+     margin-bottom: 20px;
 }
 
-.gohome a:link {
+.gohome a:link, .saveresults a:link {
     color: 3B8483 !important;
 font-weight: bold;
 }
