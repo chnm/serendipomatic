@@ -13,6 +13,7 @@
 
 .isotope {
      transition-property: height, width;
+     font-size: 0.875em;
 }
 
 .isotope .isotope-item {
