@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -25,6 +25,8 @@ urlpatterns = patterns(
         name='connect'),
     url(r'^about/', TemplateView.as_view(template_name='about.html'),
         name='about'),
+
+    url(r'^favicon.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
 
     # examples
     # url(r'^input/', include('smartstash.input.urls',
