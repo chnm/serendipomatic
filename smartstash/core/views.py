@@ -57,7 +57,7 @@ def site_index(request):
                 return HttpResponseRedirect(zotero.oauth_authorize_url(request))
 
             elif text:
-                lang = guess_language.guessLanguage(text[:100])
+                lang = guess_language.guessLanguage(text)
                 logger.debug('language detected as %s' % lang)
                 common_terms = common_words(text, 15, lang)
                 dbpedia_terms = get_search_terms(text, lang)
