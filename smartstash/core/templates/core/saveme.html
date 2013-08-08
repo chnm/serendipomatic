@@ -1,12 +1,12 @@
-{% extends 'view_base.html' %}
+{% extends 'page_base.html' %}
 {% load static %}
 
 {% block title %}Save Your MagicStash Items{% endblock %}
 
 {% block content %}
 
-<h3>Instructions: This list is generated from your last result set. To save it, 
-copy and paste it into a text editor or select Save from the File menu in your 
+<h3>Instructions: This list is generated from your last result set. To save it,
+copy and paste it into a text editor or select Save from the File menu in your
 browser.</h3>
 <p><strong>Terms Used:</strong> {{ query_terms.keywords|join:', ' }}<br />
 <strong>Sources Used:</strong>

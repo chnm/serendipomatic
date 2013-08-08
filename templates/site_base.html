@@ -1,3 +1,9 @@
+{% comment %}
+This should be used as the base template for all pages on the site.
+
+It should include all html, css, javascript common to all pages, and
+provide blocks for any sections that vary per page.
+{% endcomment %}
 {% load static %}
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -49,11 +55,7 @@
 			</ul>
 		</menu>
 
-<header class="secondary">
-<a href="{% url 'site-index' %}"><img src="{% static 'img/serendipo_small.png' %}" alt="Serendip-o-matic" /></a>
-<h1 class="header" style="margin-top: 70px">Serendip<span>-o-</span>matic</h1>
-<h2 class="tagline">Let your sources surprise you.</h2>
-</header>
+{% block header %}{% endblock %}
 
 <a name="content"></a>
 <div class="main">
