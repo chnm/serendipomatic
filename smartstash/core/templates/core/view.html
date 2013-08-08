@@ -98,7 +98,7 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these resul
 
 -->
 {% endfor %}
-
+</div>
 
 <p style="text-align: center; margin: 15px 0 5px 0;"><a href="#top"><button tabindex="1000">Return to Top</button></a></p>
 
@@ -147,8 +147,9 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these resul
 
     });
   </script>
-{% endblock %}
-<script>
+
+  <script>
+
 // For sorting
 $(document).ready(function() {
     $('#sort-by a').click(function(){
@@ -159,3 +160,6 @@ $(document).ready(function() {
     });
 });
 </script>
+
+{% endblock %}
+
