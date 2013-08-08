@@ -1,0 +1,14 @@
+{# This template is for secondary pages on the site, and uses the smaller header. #}
+{% extends 'site_base.html' %}
+{% load static %}
+
+{% block header %}
+<header class="secondary">
+<a href="{% url 'site-index' %}"><img src="{% static 'img/serendipo_small.png' %}" alt="Serendip-o-matic" /></a>
+<h1 class="header" style="margin-top: 70px">Serendip<span>-o-</span>matic</h1>
+<h2 class="tagline">Let your sources surprise you.</h2>
+</header>
+{% endblock %}
+
+
+{% block footer-attrs %}style="margin-left:-30px;"{%endblock %}
