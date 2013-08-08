@@ -45,7 +45,7 @@ provide blocks for any sections that vary per page.
 <!-- Delete everything in this .container and get started on your own site! -->
 
 <div class="container">
-<div class="sixteen columns">
+<div class="sixteen columns" {% block main-col-attrs %}{% endblock %}>
 <menu class="bar">
 			<ul>
             <li id="skip"><a class="skip" href="#content" tabindex="1">Skip to Content</a></li>
@@ -62,7 +62,7 @@ provide blocks for any sections that vary per page.
 {% block content %}{% endblock %}
 </div>
 
-<footer style="margin-left:-30px;">
+<footer {% block footer-attrs %}{%endblock %}>
 <div id="footermenu">
     <a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="{% url 'connect' %}">Connect</a></div>
     <img class="footimg" src="{% static 'img/burst.png' %}" alt="Burst Image" />
