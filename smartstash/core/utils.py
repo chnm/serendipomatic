@@ -2,6 +2,7 @@ import nltk
 import random
 import re
 import requests
+import os
 import string
 import simplejson
 
@@ -10,6 +11,8 @@ from django.conf import settings
 # patch nltk path for heroku
 if settings.HEROKU:
     nltk.data.path.append('./smartstash/nltk_data/')
+
+
 
 # map language codes provided by guess-language
 # to available sets of stopwords in nltk
@@ -30,19 +33,33 @@ stopword_lang = {
     'sv': 'swedish'
 }
 
+def load_stopwords(lang='en'):
+    '''Load stopwords by language.  Loads the nltk stopwords corpus
+    for the requested language,  and additionally checks for a local
+    file with extra stopwords and adds them to the list of stopwords.
+    '''
+    # if language is not specified or not in our list, fall back to english
+    stopwords = nltk.corpus.stopwords.words(stopword_lang.get(lang, 'english'))
+
+    # if there are extra stopwords for this language, load them
+    # and add to the stock nltk stopwords
+    extra_stopwords = os.path.join(settings.EXTRA_STOPWORDS, '%s.txt' % lang)
+    if os.path.exists(extra_stopwords):
+        with open(extra_stopwords) as f:
+            extra = [line.strip() for line in f.readlines()]
+        stopwords += extra
+
+    return stopwords
+
 
 def tokenize(text, lang='en'):
-    # if language is not specified or not in our list, fall back to english
-    stopwords = nltk.corpus.stopwords.words(stopword_lang.get(lang))
-    if lang == 'fr':
-    	stopwords.append('les')
-    	stopwords.append('a')
-    	
+    stopwords = load_stopwords(lang)
     tokens = nltk.word_tokenize(text)
     words = [w.lower() for w in tokens
              if w.isalnum() and w.lower() not in stopwords]
     # NOTE: isalnum will restrict to alpha and numeric content (i.e., words & dates);
     # will probably drop date ranges as well as contractions or quoted terms
+    # FIXME: do we actually want numbers here? or any numbers besides years?
     return words
 
 

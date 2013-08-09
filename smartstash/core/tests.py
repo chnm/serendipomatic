@@ -9,6 +9,8 @@ from django.test import TestCase
 
 from smartstash.core.forms import InputForm
 from smartstash.core.models import DisplayItem
+from smartstash.core.utils import load_stopwords
+
 
 class FormTest(TestCase):
 
@@ -53,4 +55,16 @@ class DisplayItemTest(TestCase):
         # just some basic sanity checks
         self.assert_(cit.startswith('ctx_ver=Z39.88-2004'))
         self.assert_('rft.title=%s' % item.title in cit)
+
+
+class LoadStopwordsTest(TestCase):
+
+    def test_extra_stopwords(self):
+        sw = load_stopwords('fr')
+        self.assert_('les' in sw)
+        self.assert_('a' in sw)
+            # if lang == 'fr':
+    #   stopwords.append('les')
+    #   stopwords.append('a')
+
 

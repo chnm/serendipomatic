@@ -164,6 +164,10 @@ INSTALLED_APPS = (
 )
 
 
+# directory where files with extra stopwords by language can be added
+EXTRA_STOPWORDS = os.path.join(BASE_DIR, '..', 'stopwords')
+
+
 if not HEROKU:
     try:
         from localsettings import *
