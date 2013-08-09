@@ -105,3 +105,93 @@ html, body {
     color: 3B8483 !important;
 font-weight: bold;
 }
+
+a.results-menu {
+	margin-bottom: 15px;
+    border-width: 1px;
+    border-style:solid;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background-image: -webkit-gradient(
+        linear, 
+        0% 0%, 
+        0% 100%, 
+        color-stop(0, rgba(255, 255, 255, .05)), 
+        color-stop(0.5, rgba(255, 255, 255, .25)), 
+        color-stop(0.5001, rgba(255, 255, 255, 0)), 
+        color-stop(1, rgba(255, 255, 255, 0))
+    );
+    
+    background-image: -webkit-linear-gradient(
+        top, 
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.25) 50%,
+        rgba(255,255,255,0) 50.01%,
+        rgba(255,255,255,0)
+    );
+    
+    background-image: -moz-linear-gradient(
+        top,
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.25) 50%,
+        rgba(255,255,255,0) 50.01%,
+        rgba(255,255,255,0)
+    );
+    background-image: -o-linear-gradient(
+        top,
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.25) 50%,
+        rgba(255,255,255,0) 50.01%,
+        rgba(255,255,255,0)
+    );
+    
+    background-image: -ms-linear-gradient(
+        top,
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.25) 50%,
+        rgba(255,255,255,0) 50.01%,
+        rgba(255,255,255,0)
+    );
+    
+    background-image: linear-gradient(
+        top,
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.25) 50%,
+        rgba(255,255,255,0) 50.01%,
+        rgba(255,255,255,0)
+    );
+    
+    text-shadow:-1px -1px 1px rgba(0,0,0,0.2);
+    text-align:center;
+    color: #fff;
+    font-weight:bold;
+    background-color: #800;
+    border-color: #800;
+    border-radius: 3px;
+    padding:3px 6px;
+    text-decoration:none;
+	display: block;
+	width: 150px;
+	margin: 5px auto 5px auto;
+}
+
+a.results-menu:link,
+a.results-menu:visited {
+    color:#fff;
+}
+
+a.results-menu:hover {
+    background-color: #900;
+    border-color: #900;
+    color: #fff;
+    cursor:pointer;
+    text-decoration:underline;
+}
+
+a.results-menu:active {
+    background-color: #a00;
+    border-color: #a00;
+    color: #fff;
+    text-decoration:underline;
+}

@@ -34,11 +34,9 @@
 
 
 <div class="querysearch four columns">
-<div class="gohome"><a href="{% url 'site-index' %}">Go home and feed the machine new text!</a></div>
-
-<p class="saveresults">
-Like what you see? <a href="{% url 'saveme' %}" target="_blank">Save these results</a> (opens in a new window)
-</p>
+<a class="results-menu" href="{% url 'site-index' %}">Try Again</a> 
+<a class="results-menu" href="{% url 'saveme' %}" target="_blank">Download Results</a> 
+<a class="results-menu" href="javascript:var d=document,s=d.createElement('script');s.src='https://www.zotero.org/bookmarklet/loader.js';(d.body?d.body:d.documentElement).appendChild(s);void(0);">Save to Zotero</a>
 {# <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a> #}
 {# <a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a> #}
 </div>
