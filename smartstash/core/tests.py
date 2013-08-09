@@ -6,9 +6,51 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+
 from smartstash.core.forms import InputForm
+from smartstash.core.models import DisplayItem
 
 class FormTest(TestCase):
+
     def test_whitespace_validation(self):
         form = InputForm({'text': "   "})
         self.assertFalse(form.is_valid())
+
+
+class DisplayItemTest(TestCase):
+
+    def test_coins_citation_info(self):
+        # minimal record
+        item = DisplayItem(title='Hippo', url='http://some.url/to/a/hippo/pic')
+
+        info = item.coins_citation_info
+        self.assert_('rfr_id' in info, 'referrer id should be set in COinS info')
+        self.assert_('rft_val_fmt' in info, 'format is specified in COinS info')
+        self.assertEqual(item.title, info['rft.title'])
+        self.assertEqual(item.url, info['rft.identifier'])
+
+        for key in ['rft.date', 'rft.place', 'rft.source', 'rft.format']:
+            self.assert_(key not in info,
+                         'unavailable data should not be set in COinS info')
+
+        # add all fields to simulate a complete record
+        item.date = '1887'
+        item.format = 'Image'
+        item.source = 'Smithsonian'
+        item.location = 'USA'
+
+        info = item.coins_citation_info
+        self.assertEqual(item.date, info['rft.date'])
+        self.assertEqual(item.format, info['rft.format'])
+        self.assertEqual(item.source, info['rft.source'])
+        self.assertEqual(item.location, info['rft.place'])
+
+    def test_coins_citation(self):
+        # minimal record
+        item = DisplayItem(title='Hippo', url='http://some.url/to/a/hippo/pic')
+
+        cit = item.coins_citation
+        # just some basic sanity checks
+        self.assert_(cit.startswith('ctx_ver=Z39.88-2004'))
+        self.assert_('rft.title=%s' % item.title in cit)
+
