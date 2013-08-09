@@ -33,7 +33,11 @@ stopword_lang = {
 
 def tokenize(text, lang='en'):
     # if language is not specified or not in our list, fall back to english
-    stopwords = nltk.corpus.stopwords.words(stopword_lang.get(lang, 'english'))
+    stopwords = nltk.corpus.stopwords.words(stopword_lang.get(lang))
+    if lang == 'fr':
+    	stopwords.append('les')
+    	stopwords.append('a')
+    	
     tokens = nltk.word_tokenize(text)
     words = [w.lower() for w in tokens
              if w.isalnum() and w.lower() not in stopwords]
