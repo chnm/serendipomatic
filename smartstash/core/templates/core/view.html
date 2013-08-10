@@ -34,9 +34,12 @@
 
 
 <div class="querysearch four columns">
-<a class="results-menu" href="{% url 'site-index' %}">Try Again</a> 
-<a class="results-menu" href="{% url 'saveme' %}" target="_blank">Download Results</a> 
-<a class="results-menu" href="javascript:var d=document,s=d.createElement('script');s.src='https://www.zotero.org/bookmarklet/loader.js';(d.body?d.body:d.documentElement).appendChild(s);void(0);">Save to Zotero</a>
+<p class="results-menu"><a class="results-menu" href="{% url 'site-index' %}">Try Again</a></p>
+<p class="results-menu"><a class="results-menu" href="{% url 'saveme' %}" target="_blank">Save as Text</a> <img class="results-menu" src="{% static 'img/question_mark.png' %}" alt="Help" title="Generates a text list of result links which you can print, copy to an editor, or save in your browser. Opens in a new window." /></p>
+<p class="results-menu">
+	<a class="results-menu" href="javascript:var d=document,s=d.createElement('script');s.src='https://www.zotero.org/bookmarklet/loader.js';(d.body?d.body:d.documentElement).appendChild(s);void(0);">Save to Zotero</a> 
+	<img class="results-menu" src="{% static 'img/question_mark.png' %}" alt="Help" title="Saves to your Zotero library with Zotero Standalone. If you do not have Zotero Standalone open, you may also save results to your Zotero library by clicking the Folder icon with the tooltip 'Save to Zotero COinS' in your browser's address bar." />
+</p>
 {# <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a> #}
 {# <a href="{% url 'saveme' %}" target="_blank"><button class="magic" tabindex="6">Rearrange Results</button></a> #}
 </div>
@@ -111,6 +114,10 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="{% static 'js/jquery-1.10.2.js' %}">\x3C/script>')</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
 <!--  <script src="http://isotope.metafizzy.co/jquery.isotope.min.js"></script> -->
 <script src="{% static 'js/isotope-1.5.25.js' %}"></script>
 <script src="{% static 'js/scripts_view.js' %}"></script>
@@ -163,5 +170,19 @@ $(document).ready(function() {
 });
 </script>
 
+<script>
+	$(".results-menu").tooltip({
+		position: {
+			my: "center bottom-20",
+			at: "center top"
+		}
+	}
+	);
+</script>
+<style>
+  .ui-tooltip {
+    font-size: smaller;
+  }
+</style>
 {% endblock %}
 

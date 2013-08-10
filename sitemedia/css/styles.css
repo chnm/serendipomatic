@@ -106,6 +106,10 @@ html, body {
 font-weight: bold;
 }
 
+p.results-menu { 
+	margin: 3px 0;
+}
+
 a.results-menu {
 	margin-bottom: 15px;
     border-width: 1px;
@@ -165,7 +169,7 @@ a.results-menu {
     text-shadow:-1px -1px 1px rgba(0,0,0,0.2);
     text-align:center;
     color: #fff;
-    font-weight:bold;
+    /*font-weight:bold;*/
     background-color: #800;
     border-color: #800;
     border-radius: 3px;
@@ -173,7 +177,8 @@ a.results-menu {
     text-decoration:none;
 	display: block;
 	width: 150px;
-	margin: 5px auto 5px auto;
+	margin: 5px 5px 5px 0;
+	float: left;
 }
 
 a.results-menu:link,
@@ -194,4 +199,9 @@ a.results-menu:active {
     border-color: #a00;
     color: #fff;
     text-decoration:underline;
+}
+
+img.results-menu { 
+	margin: 10px 0 10px 0;
+	float: left;
 }
