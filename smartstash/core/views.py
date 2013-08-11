@@ -172,6 +172,7 @@ def view_items(request):
     logger.info('Number of items by source: DPLA=%d, Europeana=%d, Flickr=%d, Trove=%d' % \
                  (len(dpla_items), len(euro_items), len(flkr_items), len(trove_items)))
     items = dpla_items + euro_items + flkr_items + trove_items
+    request.session['items'] = items
 
     # if none of the API calls worked, message & return to home page
     if not items:
@@ -192,14 +193,15 @@ def view_items(request):
 
 
 def saveme(request):
+    items = request.session.get('items', None)
+    # no items to save; error & redirect to index
+    if items is None:
+        messages.error(request, '''Whoops! Somehow we didn't find any discoveries to save.''')
+        return HttpResponseRedirect(reverse('site-index'))
 
     search_terms = request.session['search_terms']  # TODO: error handling if not set
-    dpla_items = DPLA.find_items(**search_terms)
-    euro_items = Europeana.find_items(**search_terms)
-    flkr_items = Flickr.find_items(**search_terms)
-    trove_items = Trove.find_items(**search_terms)
-    sources = [DPLA, Europeana, Flickr, Trove]
-    items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
+    # (should be set if items are set)
+    sources = [DPLA, Europeana, Flickr, Trove] # TODO: shared list
     return render(request, 'core/saveme.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
 
