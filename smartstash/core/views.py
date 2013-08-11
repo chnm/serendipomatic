@@ -192,15 +192,14 @@ def view_items(request):
 
 
 def saveme(request):
-    # TODO: save results needs to be built into result page so
-    # we can guarantee items match, are listed in the same order, etc
 
     search_terms = request.session['search_terms']  # TODO: error handling if not set
     dpla_items = DPLA.find_items(**search_terms)
     euro_items = Europeana.find_items(**search_terms)
     flkr_items = Flickr.find_items(**search_terms)
     trove_items = Trove.find_items(**search_terms)
-    sources = [DPLA, Europeana, Trove]
-    items = [x for t in zip(dpla_items, euro_items, flkr_items, trove_items) for x in t]
+    sources = [DPLA, Europeana, Flickr, Trove]
+    items = [x for t in zip(dpla_items, euro_items, flkr_items) for x in t]
     return render(request, 'core/saveme.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
+
