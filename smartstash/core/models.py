@@ -54,8 +54,8 @@ class DisplayItem(object):
     @property
     def coins_citation(self):
         # COinS citation for this item to be embedded in the title attribute of a span
-        return 'ctx_ver=Z39.88-2004&' + \
-               '&'.join(['%s=%s' % (k, urllib.quote(v))
+        return u'ctx_ver=Z39.88-2004&' + \
+               u'&'.join(['%s=%s' % (k, urllib.quote(v.encode('utf-8')))
                              for k, v in self.coins_citation_info.iteritems()])
 
 
