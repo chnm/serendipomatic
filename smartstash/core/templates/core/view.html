@@ -9,15 +9,6 @@
 {% endblock %}
 
 {% block content %}
-<!--
-<ul id="sort-by">
-  <li><a href="#iso_title">Item Type</a></li>
-  <li><a href="#iso_date">Date</a></li>
-  <li><a href="#iso_region">Region</a></li>
-</ul>
-
-<button class="magic" tabindex="5"></button> to add buttons back
--->
 
 <p>
 <div class="queryhead">
@@ -38,7 +29,7 @@
 <p class="results-menu"><a class="results-menu" href="{% url 'site-index' %}">Try Again</a></p>
 <p class="results-menu"><a class="results-menu" href="{% url 'saveme' %}" target="_blank">Save as Text</a> <img class="results-menu" src="{% static 'img/question_mark.png' %}" alt="Help" title="Generates a text list of result links which you can print, copy to an editor, or save in your browser. Opens in a new window." /></p>
 <p class="results-menu">
-	<a class="results-menu" href="javascript:var d=document,s=d.createElement('script');s.src='https://www.zotero.org/bookmarklet/loader.js';(d.body?d.body:d.documentElement).appendChild(s);void(0);">Save to Zotero</a> 
+	<a class="results-menu" href="javascript:var d=document,s=d.createElement('script');s.src='https://www.zotero.org/bookmarklet/loader.js';(d.body?d.body:d.documentElement).appendChild(s);void(0);">Save to Zotero</a>
 	<img class="results-menu" src="{% static 'img/question_mark.png' %}" alt="Help" title="Saves to your Zotero library with Zotero Standalone. If you do not have Zotero Standalone open, you may also save results to your Zotero library by clicking the Folder icon with the tooltip 'Save to Zotero COinS' in your browser's address bar." />
 </p>
 -->
