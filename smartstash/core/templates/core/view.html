@@ -54,7 +54,7 @@ Like what you see? <a href="{% url 'saveme' %}" target="_blank" class="altsave" 
 
 <div class="imageframe">
   {% if 'flickr.com' in item.thumbnail %}
-        <img src="{{ item.thumbnail }}" alt="{{ item.title }}" >
+        <img src="{{ item.thumbnail }}" alt=" " >
   {% else %}
         <img src="{% url 'image:resize' size=300 %}?url={{ item.thumbnail }}" alt="{{ item.title }}" >
   {% endif %}
