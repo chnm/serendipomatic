@@ -33,8 +33,19 @@ table {
 }
 
 .error {
-     color: red;
+	 color: #BF2431;
      font-weight: bold;
+
+}
+
+.messages {
+	 margin: 15px auto;
+}
+
+.messages.img{
+	float:left;
+	padding:0;
+	margin-top:-5px;
 }
 
 .aggregator {
