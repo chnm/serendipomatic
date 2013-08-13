@@ -79,13 +79,14 @@ html, body {
 }
 
 .querytitle {
+     margin-top: 5px;
      font-weight: bold;
 }
 
 .querystyle {
      color: #3B8483;
-     font-size: 1.8em;
-     line-height: 1.3em;
+     font-size: 1.6em;
+     line-height: 1.25em;
 }
 
 .queryhead {
@@ -97,8 +98,8 @@ html, body {
 }
 
 .gohome {
-     margin-top: 20px;
-     margin-bottom: 20px;
+     margin-top: 5px;
+     margin-bottom: 10px;
 }
 
 .gohome a:link, .saveresults a:link {

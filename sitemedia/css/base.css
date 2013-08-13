@@ -103,11 +103,15 @@ menu.bar a:hover, menu.bar a:focus {
 
 .main {
      margin: 0px auto;
-     padding: 3% 5%;
+     padding: 1% 5% 3% 5%;
      font-size: 1.125em;
      line-height: 1.5em;
 }
 
+.main hr {
+	margin: 0;
+	padding: 0;
+}
 .main h2 {
      color: #000000;
      font-family: "ff-ernestine-web-pro-1","ff-ernestine-web-pro-2","Source Sans Pro",sans-serif;

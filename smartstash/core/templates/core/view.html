@@ -9,15 +9,14 @@
 {% endblock %}
 
 {% block content %}
-<hr>
-<p>
+<hr />
 <div class="queryhead">
 
 <div class="ten columns">
-  <p>
+
     <div class="querytitle">Serendip-o-matic ran with these words from your text:</div>
     <div class="querystyle"> {{ query_terms.keywords|join:', ' }}</div>
-  </p>
+
 
   <p><strong>Sources used:</strong>
   {% for source in sources %}<a href="{{ source.url }}" target="_blank">{{ source.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
@@ -33,10 +32,10 @@
 	<img class="results-menu" src="{% static 'img/question_mark.png' %}" alt="Help" title="Saves to your Zotero library with Zotero Standalone. If you do not have Zotero Standalone open, you may also save results to your Zotero library by clicking the Folder icon with the tooltip 'Save to Zotero COinS' in your browser's address bar." />
 </p>
 -->
-<div class="gohome"><a href="{% url 'site-index' %}">Go home and feed the machine new text!</a></div>
-
-<p>
-Like what you see? <a href="{% url 'discoveries:list' %}" target="_blank" class="altsave" title="If you have the Zotero plugin running in your browser, you can also save to your Zotero library. Just click the folder icon in your browser's address bar (it should say 'Save to Zotero (COinS)' if you mouse over it).">Save these results</a> (will open on another page)
+<div class="gohome">
+<a href="{% url 'site-index' %}">Go home and feed the machine new text!</a>
+</div>
+<p>Like what you see? <a href="{% url 'discoveries:list' %}" target="_blank" class="altsave" title="If you have the Zotero plugin running in your browser, you can also save to your Zotero library. Just click the folder icon in your browser's address bar (it should say 'Save to Zotero (COinS)' if you mouse over it).">Save these results</a> (will open on another page)
 </p>
 
 {# <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a> #}
