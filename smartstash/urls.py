@@ -12,8 +12,8 @@ from smartstash.auth import views as authviews
 urlpatterns = patterns(
     '',
     url(r'^$', views.site_index, name='site-index'),
-    url(r'^stash/$', views.view_items, name='view-stash'),
-    url(r'^saveme/$', views.saveme, name='saveme'),
+    url(r'^discoveries/', include('smartstash.core.urls',
+        namespace='discoveries')),
     url(r'^images/', include('smartstash.images.urls',
         namespace='image')),
 
@@ -27,6 +27,8 @@ urlpatterns = patterns(
         name='about'),
 
     url(r'^favicon.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
+    # redirect from old/original results page url to new url
+    url(r'^stash/$', RedirectView.as_view(url='/discoveries/')),
 
     # examples
     # url(r'^input/', include('smartstash.input.urls',

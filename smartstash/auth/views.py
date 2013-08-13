@@ -33,7 +33,7 @@ def zotero_oauth(request):
             search_terms[key] = [html_escapes.get(c, c) for c in val]
 
         request.session['search_terms'] = search_terms
-        return HttpResponseRedirect(reverse('view-stash'))
+        return HttpResponseRedirect(reverse('discoveries:view'))
 
     except:
         return HttpResponseRedirect(reverse('site-index'))

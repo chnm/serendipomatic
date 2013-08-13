@@ -27,7 +27,7 @@
 <div class="querysearch four columns">
 <!--
 <p class="results-menu"><a class="results-menu" href="{% url 'site-index' %}">Try Again</a></p>
-<p class="results-menu"><a class="results-menu" href="{% url 'saveme' %}" target="_blank">Save as Text</a> <img class="results-menu" src="{% static 'img/question_mark.png' %}" alt="Help" title="Generates a text list of result links which you can print, copy to an editor, or save in your browser. Opens in a new window." /></p>
+<p class="results-menu"><a class="results-menu" href="{% url 'discoveries:list' %}" target="_blank">Save as Text</a> <img class="results-menu" src="{% static 'img/question_mark.png' %}" alt="Help" title="Generates a text list of result links which you can print, copy to an editor, or save in your browser. Opens in a new window." /></p>
 <p class="results-menu">
 	<a class="results-menu" href="javascript:var d=document,s=d.createElement('script');s.src='https://www.zotero.org/bookmarklet/loader.js';(d.body?d.body:d.documentElement).appendChild(s);void(0);">Save to Zotero</a>
 	<img class="results-menu" src="{% static 'img/question_mark.png' %}" alt="Help" title="Saves to your Zotero library with Zotero Standalone. If you do not have Zotero Standalone open, you may also save results to your Zotero library by clicking the Folder icon with the tooltip 'Save to Zotero COinS' in your browser's address bar." />
@@ -36,7 +36,7 @@
 <div class="gohome"><a href="{% url 'site-index' %}">Go home and feed the machine new text!</a></div>
 
 <p>
-Like what you see? <a href="{% url 'saveme' %}" target="_blank" class="altsave" title="If you have the Zotero plugin running in your browser, you can also save to your Zotero library. Just click the folder icon in your browser's address bar (it should say 'Save to Zotero (COinS)' if you mouse over it).">Save these results</a> (will open on another page)
+Like what you see? <a href="{% url 'discoveries:list' %}" target="_blank" class="altsave" title="If you have the Zotero plugin running in your browser, you can also save to your Zotero library. Just click the folder icon in your browser's address bar (it should say 'Save to Zotero (COinS)' if you mouse over it).">Save these results</a> (will open on another page)
 </p>
 
 {# <a href="{% url 'site-index' %}"><button class="magic" tabindex="5">Refresh Results</button></a> #}

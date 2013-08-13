@@ -93,7 +93,7 @@ def site_index(request):
 
             # redirect
             # NOTE: should probably be http code 303, see other
-            return HttpResponseRedirect(reverse('view-stash'))
+            return HttpResponseRedirect(reverse('discoveries:view'))
 
         # if not valid: pass through and redisplay errors
 
@@ -202,7 +202,7 @@ def view_items(request):
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
 
 
-def saveme(request):
+def save_list(request):
     items = request.session.get('items', None)
     # no items to save; error & redirect to index
     if items is None:
@@ -212,6 +212,6 @@ def saveme(request):
     search_terms = request.session['search_terms']  # TODO: error handling if not set
     # (should be set if items are set)
     sources = [DPLA, Europeana, Flickr, Trove] # TODO: shared list
-    return render(request, 'core/saveme.html',
+    return render(request, 'core/save_list.html',
                   {'items': items, 'query_terms': search_terms, 'sources': sources})
 
