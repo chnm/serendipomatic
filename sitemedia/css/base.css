@@ -215,6 +215,11 @@ footer strong {
      color: #FFFFFF;
 }
 
+.footermenu {
+     text-align: right;
+	 margin-bottom: 15px;
+}
+
 #footermenu {
      color: #FFFFFF;
      margin: 10px 20px;

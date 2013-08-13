@@ -64,7 +64,8 @@ provide blocks for any sections that vary per page.
 
 <footer {% block footer-attrs %}{%endblock %}>
 <div id="footermenu">
-    <a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="{% url 'connect' %}">Connect</a></div>
+    <div class="footermenu"><a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="{% url 'connect' %}">Connect</a></div>
+	
     <img class="footimg" src="{% static 'img/burst.png' %}" alt="Burst Image" />
     <div id="footer-info" >
       <p><strong>Serendip-o-matic</strong> is a project of
