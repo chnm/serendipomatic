@@ -158,11 +158,20 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'social_auth',
     'smartstash.core',
     'smartstash.auth',
     'smartstash.images',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.contrib.github.GithubBackend',
+    'smartstash.auth.zotero.ZoteroBackend',
+)
+
+LOGIN_URL          = '/auth/login/'
+LOGIN_REDIRECT_URL = '/auth/logged-in/'
+LOGIN_ERROR_URL    = '/auth/login-error/'
 
 # directory where files with extra stopwords by language can be added
 EXTRA_STOPWORDS = os.path.join(BASE_DIR, '..', 'stopwords')

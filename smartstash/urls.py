@@ -17,8 +17,10 @@ urlpatterns = patterns(
     url(r'^images/', include('smartstash.images.urls',
         namespace='image')),
 
-    url(r'^localauth/zotero/$', authviews.zotero_oauth, name='zotero'),
-#    url(r'^localauth/', include('smartstash.auth.urls', namespace='localauth')),
+
+    url(r'^auth/', include('smartstash.auth.urls', namespace='auth')),
+    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
+    url(r'', include('social_auth.urls')),
 
     # static site content pages
     url(r'^connect/', TemplateView.as_view(template_name='connect.html'),
@@ -29,6 +31,8 @@ urlpatterns = patterns(
     url(r'^favicon.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
     # redirect from old/original results page url to new url
     url(r'^stash/$', RedirectView.as_view(url='/discoveries/')),
+
+
 
     # examples
     # url(r'^input/', include('smartstash.input.urls',

@@ -1,4 +1,5 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
 from smartstash.auth.models import ZoteroUser
 import smartstash.core.zotero as zotero
@@ -37,3 +38,14 @@ def zotero_oauth(request):
 
     except:
         return HttpResponseRedirect(reverse('site-index'))
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('site-index'))
+
+def login_error(request):
+    print 'request  ='
+    print request
+
+    return HttpResponse('there was a problem logging you in', content_type='text/plain')
