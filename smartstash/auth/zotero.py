@@ -1,8 +1,11 @@
 from social_auth.backends import ConsumerBasedOAuth, OAuthBackend
 
 from django.conf import settings
-import urlparse
-import oauth2
+
+from oauth2 import Request as OAuthRequest, Token as OAuthToken, \
+                   SignatureMethod_HMAC_SHA1
+# import urlparse
+# import oauth2
 
 class ZoteroBackend(OAuthBackend):
     """Zotero OAuth authentication backend"""
@@ -16,18 +19,18 @@ class ZoteroBackend(OAuthBackend):
         """Return user details from Zotero account"""
         print '#### get user details'
         print response
-        return {}
+        return {'userID': 'rlskoeser'}
 
-        try:
-            first_name, last_name = response['name'].split(' ', 1)
-        except:
-            first_name = response['name']
-            last_name = ''
-        return {'username': response['screen_name'],
-                'email': '',  # not supplied
-                'fullname': response['name'],
-                'first_name': first_name,
-                'last_name': last_name}
+    #     try:
+    #         first_name, last_name = response['name'].split(' ', 1)
+    #     except:
+    #         first_name = response['name']
+    #         last_name = ''
+    #     return {'username': response['screen_name'],
+    #             'email': '',  # not supplied
+    #             'fullname': response['name'],
+    #             'first_name': first_name,
+    #             'last_name': last_name}
 
 
     @classmethod
@@ -59,8 +62,11 @@ class ZoteroAuth(ConsumerBasedOAuth):
 
     def user_data(self, access_token, *args, **kwargs):
         """Return user data provided"""
+        print '### user data'
         print 'access_token', access_token
-        # return {'userID': 'rlskoeser'}  # total cheat
+        response = self.oauth_request(access_token, self.ACCESS_TOKEN_URL)
+        print 'auth url + token response = ', response
+        return {'userID': 'rlskoeser'}  # total cheat
 
 
         # response, content = client.request(accessTokenURL, "POST")
@@ -78,6 +84,28 @@ class ZoteroAuth(ConsumerBasedOAuth):
         #     return simplejson.loads(json)
         # except ValueError:
         #     return None
+
+    def FOOoauth_request(self, token, url, extra_params=None):
+        print '### in oauth_request'
+        params = {
+            'oauth_callback': self.redirect_uri,
+        }
+        # borrowed from tumblr backend
+
+        if extra_params:
+            params.update(extra_params)
+
+        if 'oauth_verifier' in self.data:
+            print '#### oauth_verifier in data'
+            params['oauth_verifier'] = self.data['oauth_verifier']
+
+        request = OAuthRequest.from_consumer_and_token(self.consumer,
+                                                       token=token,
+                                                       http_url=url,
+                                                       parameters=params)
+        request.sign_request(SignatureMethod_HMAC_SHA1(), self.consumer, token)
+        return request
+
 
     def auth_complete(self, *args, **kwargs):
         """Completes login process, must return user instance"""

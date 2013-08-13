@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
+from social_auth.models import UserSocialAuth
 import logging
 import time
 import guess_language
@@ -34,6 +35,11 @@ def site_index(request):
 
     # TODO, possibly -- might be worth supporting HEAD requests
     # since this is the site in
+
+    print dir(request.user)
+    print request.user.username
+    instance = UserSocialAuth.objects.get(user=request.user, provider='zotero')
+    print 'token =', instance.tokens
 
     if request.method == 'GET':
         # on get request, initialize an empty form for display
