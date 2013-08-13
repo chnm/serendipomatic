@@ -112,10 +112,21 @@ def sanitizeString(s):
 def view_items(request):
     search_terms = request.session.get('search_terms', None)
 
+    error_messages = {
+        'no_terms': '''Whoops! Somehow we didn't come up with any search
+            terms for you. Put some different text in the box and we'll
+            give it another go.''',
+        'no_results': '''Our sources couldn't find anything for the
+            search terms created from your text. Put some different text
+            in the box and we'll give it another go.'''
+    }
+
+
     # if no search terms, return to site index
     if search_terms is None or not search_terms['keywords']:
+
         if search_terms is not None and 'keywords' in search_terms:
-            messages.error(request, '''Whoops! Somehow we didn't come up with any search terms for you''')
+            messages.error(request, error_messages['no_terms'])
 
         # TODO: add a django session message here,
         # especially if they posted data and we didn't get any keywords
@@ -176,10 +187,9 @@ def view_items(request):
 
     # if none of the API calls worked, message & return to home page
     if not items:
-        msg = '''We couldn't find anything for you. Please try again.'''
         # if error is true, at least one of the api calls failed
         # otherwise, presumably we callled all apis and didn't get any results (?)
-        messages.error(request, msg)
+        messages.error(request, error_messages['no_terms'])
         return HttpResponseRedirect(reverse('site-index'))
 
     # shuffle images so we get a more even mix, esp. if one source
