@@ -28,6 +28,17 @@ provide blocks for any sections that vary per page.
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300italic' rel='stylesheet' type='text/css'>
 
+<!-- Jquery and JQuery UI from CDN with local fallback -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{% static 'js/jquery-1.10.2.js' %}">\x3C/script>')</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script>window.jQuery.ui || document.write('<script src="{% static 'jquery-ui-1.10.3/js/jquery-ui-1.10.3.min.js' %}">\x3C/script>')</script>
+
+<!-- JQuery UI theme css loads from local resources -->
+<!--<link rel="stylesheet" href="{% static 'jquery-ui-1.10.3/css/smoothness/jquery-ui-1.10.3.min.css' %}" />-->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
   <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
