@@ -1,43 +1,43 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.core.urlresolvers import reverse
-from smartstash.auth.models import ZoteroUser
-import smartstash.core.zotero as zotero
+#import smartstash.core.zotero as zotero
 from smartstash.core.utils import common_words
 
-html_escapes = {
-    "&": "&amp;",
-    '"': "&quot;",
-    "'": "&apos;",
-    ">": "&gt;",
-    "<": "&lt;",
-    }
+# html_escapes = {
+#     "&": "&amp;",
+#     '"': "&quot;",
+#     "'": "&apos;",
+#     ">": "&gt;",
+#     "<": "&lt;",
+#     }
 
 # Create your views here.
 
-def zotero_oauth(request):
-    request.session['oauth_verifier'] = request.GET['oauth_verifier']
+# def zotero_oauth(request):
+#     request.session['oauth_verifier'] = request.GET['oauth_verifier']
 
-    try:
-        token, userid = zotero.access_info(request,
-                                           request.GET['oauth_verifier'],
-                                           request.session['request_token']
-                                           )
+#     try:
+#         token, userid = zotero.access_info(request,
+#                                            request.GET['oauth_verifier'],
+#                                            request.session['request_token']
+#                                            )
 
-        terms = zotero.get_user_items(request, userid, token, numItems=99)
+#         terms = zotero.get_user_items(request, userid, token, numItems=99)
 
-        #tokenize
-        search_terms = common_words("".join(terms['abstractSummary'] + terms['creatorSummary'] + terms['title']))
+#         #tokenize
+#         search_terms = common_words("".join(terms['abstractSummary'] + terms['creatorSummary'] + terms['title']))
 
-        #sanitize
-        for key, val in search_terms.iteritems():
-            search_terms[key] = [html_escapes.get(c, c) for c in val]
+#         #sanitize
+#         for key, val in search_terms.iteritems():
+#             search_terms[key] = [html_escapes.get(c, c) for c in val]
 
-        request.session['search_terms'] = search_terms
-        return HttpResponseRedirect(reverse('discoveries:view'))
+#         request.session['search_terms'] = search_terms
+#         return HttpResponseRedirect(reverse('discoveries:view'))
 
-    except:
-        return HttpResponseRedirect(reverse('site-index'))
+#     except:
+#         return HttpResponseRedirect(reverse('site-index'))
 
 
 def logout_view(request):
@@ -45,7 +45,9 @@ def logout_view(request):
     return HttpResponseRedirect(reverse('site-index'))
 
 def login_error(request):
-    print 'request  ='
-    print request
+    messages.error(request, '''There was a problem logging you in.''')
+    return HttpResponseRedirect(reverse('site-index'))
 
-    return HttpResponse('there was a problem logging you in', content_type='text/plain')
+def logged_in(request):
+    messages.success(request, '''You are now logged in as %s.''' % request.user.username)
+    return HttpResponseRedirect(reverse('site-index'))
