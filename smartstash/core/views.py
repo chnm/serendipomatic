@@ -122,7 +122,10 @@ def site_index(request):
                             if field in item:
                                 data.append(item[field])
                         for creator in item.get('creators', []):
-                            data.append('%(firstName)s %(lastName)s' % creator)
+                            if 'name' in creator:
+                                data.append(creator['name'])
+                            elif 'firstName' in creator and 'lastName' in creator:
+                                data.append('%(firstName)s %(lastName)s' % creator)
                         textdata.append(' '.join(data))
 
 
