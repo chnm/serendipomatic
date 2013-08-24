@@ -1,4 +1,4 @@
 from django.contrib import admin
-from smartstash.auth.models import ZoteroUser
+from smartstash.localauth.models import ZoteroUser
 
 admin.site.register(ZoteroUser)

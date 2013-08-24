@@ -147,7 +147,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, '..', 'templates')
 )
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -160,13 +160,13 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'social_auth',
     'smartstash.core',
-    'smartstash.auth',
+    'smartstash.localauth',
     'smartstash.images',
-)
+]
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.github.GithubBackend',
-    'smartstash.auth.zotero.ZoteroBackend',
+    'smartstash.localauth.zotero.ZoteroBackend',
 )
 
 LOGIN_URL          = '/auth/login/'

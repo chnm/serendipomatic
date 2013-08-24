@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from smartstash.auth import views
+from smartstash.localauth import views
 
 
 urlpatterns = patterns(

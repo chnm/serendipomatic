@@ -6,7 +6,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 from smartstash.core import views
-from smartstash.auth import views as authviews
 
 
 urlpatterns = patterns(
@@ -18,7 +17,7 @@ urlpatterns = patterns(
         namespace='image')),
 
 
-    url(r'^auth/', include('smartstash.auth.urls', namespace='auth')),
+    url(r'^auth/', include('smartstash.localauth.urls', namespace='auth')),
     (r'^accounts/login/$', 'django.contrib.auth.views.login'),
     url(r'', include('social_auth.urls')),
 
