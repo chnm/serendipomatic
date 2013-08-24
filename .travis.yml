@@ -11,7 +11,7 @@ install:
 # command to run tests, e.g. python setup.py test
 # TODO: consider switching to django-nose when it supports Django 1.5,
 # and only run local tests
-script: python manage.py test
+script: python manage.py test core images localauth
 
 # NOTE: could blacklist branches from testing if we want
 # branches:
