@@ -185,12 +185,12 @@ def view_items(request):
         # especially if they posted data and we didn't get any keywords
         return HttpResponseRedirect(reverse('site-index'))
 
-    # clear the session
-    # TODO: should probably be more specific what we need to clear (zotero auth info?)
-    # since other items may be added to the session at some point (e.g. messages)
-    for key, value in request.session.items():
-        if key != 'search_terms':
-            del request.session[key]
+    # # clear the session
+    # # TODO: should probably be more specific what we need to clear (zotero auth info?)
+    # # since other items may be added to the session at some point (e.g. messages)
+    # for key, value in request.session.items():
+    #     if key != 'search_terms':
+    #         del request.session[key]
 
     # sanitize the search terms for API queries
 
