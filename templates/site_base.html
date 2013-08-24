@@ -53,6 +53,12 @@ provide blocks for any sections that vary per page.
 			<li><a href="{% url 'about' %}" tabindex="3">about</a></li>
 			<li><a href="{% url 'connect' %}" tabindex="4">connect</a></li>
 			</ul>
+
+  {# placeholder: need a site-wide indicator if user is logged in, with logout link #}
+      {% if user.is_authenticated %}
+      <p>Welcome, {{ user.username }}! <br/>
+      <a href="{% url 'auth:logout' %}" style="color:black">Logout</a></p>
+       {% endif %}
 		</menu>
 
 {% block header %}{% endblock %}
