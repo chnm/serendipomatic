@@ -1,135 +1,90 @@
+from urlparse import parse_qsl
+
+from oauth2 import Token
+
 from social_auth.backends import ConsumerBasedOAuth, OAuthBackend
 
-from django.conf import settings
-
-from oauth2 import Request as OAuthRequest, Token as OAuthToken, \
-                   SignatureMethod_HMAC_SHA1
-# import urlparse
-# import oauth2
 
 class ZoteroBackend(OAuthBackend):
     """Zotero OAuth authentication backend"""
     name = 'zotero'
-    # EXTRA_DATA = [('userID', 'id')]
-    ID_KEY = 'userID'
-
-    # extra data, user data still to do
+    EXTRA_DATA = [
+        ('id', 'id'),
+        ('username', 'username'),
+    ]
 
     def get_user_details(self, response):
-        """Return user details from Zotero account"""
-        print '#### get user details'
-        print response
-        return {'userID': 'rlskoeser'}
-
-    #     try:
-    #         first_name, last_name = response['name'].split(' ', 1)
-    #     except:
-    #         first_name = response['name']
-    #         last_name = ''
-    #     return {'username': response['screen_name'],
-    #             'email': '',  # not supplied
-    #             'fullname': response['name'],
-    #             'first_name': first_name,
-    #             'last_name': last_name}
-
+        """Return user details"""
+        return {'username': response['username'], 'email': '',
+                'uid': response['id']}
 
     @classmethod
     def tokens(cls, instance):
         """Return the tokens needed to authenticate the access to any API the
-        service might provide. Twitter uses a pair of OAuthToken consisting of
-        an oauth_token and oauth_token_secret.
+        service might provide. Zotero (much like Twitter) uses a pair of
+        OAuthToken consisting of an oauth_token and oauth_token_secret.
 
         instance must be a UserSocialAuth instance.
         """
-        print '****zoterobackend tokens'
-        token = super(TwitterBackend, cls).tokens(instance)
+        token = super(ZoteroBackend, cls).tokens(instance)
         if token and 'access_token' in token:
             token = dict(tok.split('=')
-                            for tok in token['access_token'].split('&'))
+                         for tok in token['access_token'].split('&'))
         return token
 
 
-class ZoteroAuth(ConsumerBasedOAuth):
-    """Zotero OAuth authentication mechanism"""
-    AUTHORIZATION_URL = "https://www.zotero.org/oauth/authorize"
-    REQUEST_TOKEN_URL = "https://www.zotero.org/oauth/request"
-    ACCESS_TOKEN_URL = "https://www.zotero.org/oauth/access"
 
+class ZoteroAuth(ConsumerBasedOAuth):
+    """Zotero OAuth authentication mechanism
+
+    **ZOTERO_PERMISSIONS** can be used to configure requested permissions,
+    as listed at http://www.zotero.org/support/dev/server_api/v2/oauth,
+    and can include any of library_access, notes_access, write_access,
+    group_read, group_write.  If no permissions are specified, Zotero
+    will assume a default of library_access only.
+
+    """
     AUTH_BACKEND = ZoteroBackend
+    AUTHORIZATION_URL = 'https://www.zotero.org/oauth/authorize'
+    REQUEST_TOKEN_URL = 'https://www.zotero.org/oauth/request'
+    ACCESS_TOKEN_URL = 'https://www.zotero.org/oauth/access'
     SETTINGS_KEY_NAME = 'ZOTERO_CONSUMER_KEY'
     SETTINGS_SECRET_NAME = 'ZOTERO_CONSUMER_SECRET'
-
+    SCOPE_VAR_NAME = 'ZOTERO_PERMISSIONS'
+    # e.g.,
+    # ZOTERO_PERMISSIONS = ['library_access', 'notes_access', group_read']
+    # ZOTERO_PERMISSIONS = ['library_access', 'notes_access', 'write_access', 'group_write']
 
     def user_data(self, access_token, *args, **kwargs):
-        """Return user data provided"""
-        print '### user data'
-        print 'access_token', access_token
-        response = self.oauth_request(access_token, self.ACCESS_TOKEN_URL)
-        print 'auth url + token response = ', response
-        return {'userID': 'rlskoeser'}  # total cheat
-
-
-        # response, content = client.request(accessTokenURL, "POST")
-
-        # alt zotero impl
-        # response, content = client.request(accessTokenURL, "POST")
-        # accessToken = dict(urlparse.parse_qsl(content))
-
-        # if 'oauth_problem' in accessToken: raise HTTPError
-
-        # return accessToken['oauth_token'], accessToken['userID']
-
-        # json = self.fetch_response(request)
-        # try:
-        #     return simplejson.loads(json)
-        # except ValueError:
-        #     return None
-
-    def FOOoauth_request(self, token, url, extra_params=None):
-        print '### in oauth_request'
-        params = {
-            'oauth_callback': self.redirect_uri,
+        """Loads user data from service"""
+        return {
+            'id': access_token.user_id,
+            'username': access_token.username
         }
-        # borrowed from tumblr backend
 
-        if extra_params:
-            params.update(extra_params)
-
-        if 'oauth_verifier' in self.data:
-            print '#### oauth_verifier in data'
-            params['oauth_verifier'] = self.data['oauth_verifier']
-
-        request = OAuthRequest.from_consumer_and_token(self.consumer,
-                                                       token=token,
-                                                       http_url=url,
-                                                       parameters=params)
-        request.sign_request(SignatureMethod_HMAC_SHA1(), self.consumer, token)
-        return request
+    def access_token(self, token):
+        """Return request for access token value"""
+        request = self.oauth_request(token, self.ACCESS_TOKEN_URL)
+        response = self.fetch_response(request)
+        data = dict(parse_qsl(response))
+        token = Token.from_string(response)
+        token.user_id = data['userID']
+        token.username = data['username']
+        return token
 
 
-    def auth_complete(self, *args, **kwargs):
-        """Completes login process, must return user instance"""
-
-        result = super(ZoteroAuth, self).auth_complete(*args, **kwargs)
-        print 'auth complete result = ', result
-        return result
-
-    #     print '#### auth complete'
-    #     print 'args = ', args  # is empty
-    #     print 'kwargs = ', kwargs
-        # kwargs request=wsgirequest with all info
-        #        user=None
-
-        # is there a denied option?
-        # if 'denied' in self.data:
-            # pass
-            # raise AuthCanceled(self)
-        # else:
-        # return super(ZoteroAuth, self).auth_complete(*args, **kwargs)
+    def auth_extra_arguments(self):
+        params = super(ZoteroAuth, self).auth_extra_arguments() or {}
+        for scope in self.get_scope():
+            if scope == 'group_read':
+                params['all_groups'] = 'read'
+            elif scope == 'group_write':
+                params['all_groups'] = 'write'
+            else:
+                # all other perms are on/off; request on if specified
+                params[scope] = 1
 
 
-
-# Backend definition
 BACKENDS = {
-    'zotero': ZoteroAuth,
+    'zotero': ZoteroAuth
 }
