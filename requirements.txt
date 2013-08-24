@@ -6,7 +6,8 @@ nltk
 oauth2
 requests
 beautifulsoup4
-libZotero
+#libZotero
+pyzotero
 simplejson
 python-dateutil
 flickrapi
