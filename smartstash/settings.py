@@ -176,6 +176,8 @@ LOGIN_ERROR_URL    = '/auth/login-error/'
 # directory where files with extra stopwords by language can be added
 EXTRA_STOPWORDS = os.path.join(BASE_DIR, '..', 'stopwords')
 
+# when requesting zotero oauth key, also request access to notes and groups
+ZOTERO_PERMISSIONS = ['library_access', 'notes_access', 'group_read']
 
 if not HEROKU:
     try:
