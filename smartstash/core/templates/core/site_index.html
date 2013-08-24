@@ -20,7 +20,7 @@
 
       {{ input_form.text }}
 
-  <button id="magic-button" class="magic">Make some magic!</button>
+  <button id="magic-button" class="magic" type="submit" value="text_input">Make some magic!</button>
 
 </div>
 <div class="pipe one columns"></div>
@@ -40,16 +40,22 @@
 		<h3>
             <img class="zotero" src="{% static 'img/zotero.png' %}" alt="Zotero" style="margin:0;padding:0;" />, anyone?
         </h3>
-    <!-- Needs label from Django -->
-	<h5>Got a Zotero account?<br />
-    Enter your username.</h5>
-   {{ input_form.zotero_user }}
+    {% if user.is_authenticated %}
+          {{ zotero_form }}
+       <button id="magic-button" class="magic" type="submit" name="submit" value="zotero_input">Go!</button>
+    {% else %}
+    <h5>Got a Zotero account?<br />
+      <p><a href="{% url 'socialauth_begin' 'zotero' %}">Login to Zotero</a>
+    {% endif %}
+
+{% comment %}
     <button class="magic">Go!</button>
     <h5>Need <a href="https://docs.google.com/document/d/1okQAQfqTdDeCA8FNIDv5GGQcu0y7c8r5s4FdxjJ1J2s/edit?usp=sharing" target="_blank">help or more info about Zotero integration</a>?</h5>
 
     <p><a href="{% url 'socialauth_begin' 'zotero' %}">zotero login</a> | <a href="{% url 'auth:logout' %}">logout</a>
-      is user logged in? {{ user.is_authenticated }} </p>
-
+      is user logged in? {{ user.is_authenticated }} {{ user.username }} </p>
+      <p><a href="{% url 'socialauth_begin' 'github' %}">github login </a></p>
+{% endcomment %}
 
 	 </div>
 <img src="{% static 'img/feedthebeast.gif' %}" id="loader" alt="Loading" style="display:none;" />

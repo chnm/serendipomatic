@@ -3,14 +3,16 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
+from django.utils.html import escape
 from social_auth.models import UserSocialAuth
 import logging
+from pyzotero import zotero
 import time
 import guess_language
 import random
 
-from smartstash.core import zotero
-from smartstash.core.forms import InputForm
+# from smartstash.core import zotero
+from smartstash.core.forms import InputForm, ZoteroInputForm
 from smartstash.core.utils import common_words, get_search_terms
 from smartstash.core.api import DPLA, Europeana, Flickr, Trove
 
@@ -34,35 +36,38 @@ def site_index(request):
     # preliminary site index page
 
     # TODO, possibly -- might be worth supporting HEAD requests
-    # since this is the site in
-
-    print dir(request.user)
-    print request.user.username
-    instance = UserSocialAuth.objects.get(user=request.user, provider='zotero')
-    print 'token =', instance.tokens
+    # since this is the site index
 
     if request.method == 'GET':
         # on get request, initialize an empty form for display
         form = InputForm()
 
+        if request.user.is_authenticated():
+            zotero_form = ZoteroInputForm(user=request.user)
+        else:
+            zotero_form = None
+
     elif request.method == 'POST':
         # on post, init form based on posted data
         # if form is invalid, redisplay input form with error messages
 
-        form = InputForm(request.POST)
+        submit_type = request.POST.get('submit')
+
+        if submit_type == 'text_input':
+            form = InputForm(request.POST)
+        elif submit_type == 'zotero_input':
+            form = ZoteroInputForm(data=request.POST, user=request.user)
+
         if form.is_valid():
 
-            # actual logic here - infer search terms, query apis, display stuff
+            # TODO: break out into sub function (?)
+            if submit_type == 'text_input':
 
-            text = form.cleaned_data['text']
-            zotero_user = form.cleaned_data['zotero_user']
+                # actual logic here - infer search terms, query apis, display stuff
 
-            search_terms = {}
-            if zotero_user:
-                request.session['username'] = zotero_user
-                return HttpResponseRedirect(zotero.oauth_authorize_url(request))
+                text = form.cleaned_data['text']
+                search_terms = {}
 
-            elif text:
                 lang = guess_language.guessLanguage(text)
                 logger.debug('language detected as %s' % lang)
                 common_terms = common_words(text, 15, lang)
@@ -86,25 +91,64 @@ def site_index(request):
                 # people and places were reconciled against DBpedia. Dates contains
                 # only four digit values and could be passed to
 
+            # TODO: probably should also be separate function
+            elif submit_type == 'zotero_input':
+                selection = form.cleaned_data['selection']
 
-            # if for is valid,
-            # for either text input or zotero where we got terms
+                # retrieve zotero user info to get zotero access
+                zotero_user = UserSocialAuth.objects.get(user=request.user, provider='zotero')
+                zot = zotero.Zotero(zotero_user.uid, 'user', zotero_user.tokens['oauth_token'])
+                if selection == 'recent':
+                    items = zot.items(limit=100)
+                else:
+                    seltype, val = selection.split(':')
+                    if seltype == 'collection':
+                        items = zot.collection_items(val)
+                    elif seltype == 'group':
+                        zotgrp = zotero.Zotero(val, 'group', zotero_user.tokens['oauth_token'])
+                        items = zotgrp.items(limit=100)
+                    elif seltype == 'tag':
+                       items = zot.tag_items(val)
 
-            # print search_terms['keywords']
-            # store search terms in the session so we can redirect
-            request.session['search_terms'] = search_terms
+                textdata = []
+                # TODO: logic for generating text/search terms from zotero items should be
+                # in a separate method or class
+                for item in items:
+                    if item['itemType'] == 'note':
+                        textdata.append(item['note'])  # might be html ?
+                    else:
+                        data = []
+                        for field in ['title', 'abstractNote']:
+                            if field in item:
+                                data.append(item[field])
+                        for creator in item['creators']:
+                            data.append('%(firstName)s %(lastName)s' % creator)
+                        textdata.append(' '.join(data))
 
-            # insert logic for processing zotero username here
-            # zotero_user = form.cleaned_data['zotero_user']
 
-            # redirect
-            # NOTE: should probably be http code 303, see other
-            return HttpResponseRedirect(reverse('discoveries:view'))
+                text = ' '.join(textdata)
+                search_terms = common_words(text)
+
+                # sanitize
+                for key, val in search_terms.iteritems():
+                    # val is a list of terms
+                    search_terms[key] = [escape(v) for v in val]
+
+        # if form is valid,
+        # for either text input or zotero where we got terms
+
+        # store search terms in the session so we can redirect
+        request.session['search_terms'] = search_terms
+
+        # redirect
+        # NOTE: should probably be http code 303, see other
+        return HttpResponseRedirect(reverse('discoveries:view'))
 
         # if not valid: pass through and redisplay errors
 
     return render(request, 'core/site_index.html',
-                  {'input_form': form})
+                  {'input_form': form, 'zotero_form': zotero_form})
+
 
 
 # TODO: view copied from display.views, code probably needs to be refactored
