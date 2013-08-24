@@ -4,6 +4,7 @@ git+https://github.com/reklaklislaw/bibs.git#egg=bibs
 #git+https://github.com/chnm/bibs@feature/europeana-urls#egg=bibs
 nltk
 oauth2
+django-social-auth
 requests
 beautifulsoup4
 #libZotero
