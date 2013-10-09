@@ -160,7 +160,9 @@ footer	 { width: 1000px; margin: 0 auto; }
 
        img.icons { float: left; padding-right: 15px; }
        .intro { padding-top: 5px; }
-       header img { margin-bottom: 0px; }
+       header img { margin-bottom: 0px; padding: 25px 0px 0px 20px; width: 100%; }
+       menu.bar ul li {padding: 7px; }
+       .main h3.start { margin-top: 20px; line-height: 40px; }
       .pipe {display:none; }
       .zot {margin-top: -40px; margin-left: 0px; }
        /* Offsets */
@@ -216,9 +218,12 @@ footer	 { width: 1000px; margin: 0 auto; }
        .container .one-third.column,
        .container .two-thirds.column { width: 420px; }
         header.secondary img { margin-top: 0px;}
-        header img { margin-bottom: 0px; }
+        header img { margin-bottom: 0px; padding: 25px 0px 0px 20px; width: 100%; }
+        menu.bar ul li {padding: 7px; }
       .pipe {display:none; }
       .zot {margin-top: -40px; margin-left: 0px;}
+      .main h3.start { margin-top: 20px; line-height: 40px; }
+}
 
    }
 
