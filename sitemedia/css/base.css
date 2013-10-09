@@ -140,7 +140,7 @@ menu.bar a:hover, menu.bar a:focus {
      color: #3B8483;
      display: block;
      font-size: 40px;
-	 margin-top: -10px; /*8px;*/
+	 margin-top: 8px; /*-10px;*/ 
 }
 
 .main .pipe {
