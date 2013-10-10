@@ -119,6 +119,10 @@ menu.bar a:hover, menu.bar a:focus {
      line-height: 1.5em;
 }
 
+.main ul li {
+	line-height: 1.5em;
+}
+
 .main hr {
 	margin: 0;
 	padding: 0;
@@ -225,7 +229,7 @@ footer strong {
      margin: 10px 20px;
 }
 
-#footermenu a {
+.footermenu a {
      padding: 25px 5px;
 }
 
