@@ -27,12 +27,11 @@
 
 	<div class="error">{{ input_form.non_field_errors }}</div>
 	
-	<form name="hippo" method="post" onclick="eraseText();" action="{% url 'site-index' %}">{% csrf_token %}
+	<form name="hippo" method="post" action="{% url 'site-index' %}">{% csrf_token %}
 
       {{ input_form.text }}
 	  
   <button id="magic-button" class="magic">Make some magic!</button>
-    
 </div>
 <div class="pipe one columns"></div>
 
@@ -77,13 +76,13 @@
 </form>
 
 <script>
-function eraseText() {
-  window.jQuery.get('static/default.txt', function(data){
-    if (document.getElementById("texto").value == data){
-      document.getElementById("texto").value = "";
-    }
-  })
-}
+//function eraseText() {
+//  window.jQuery.get('static/default.txt', function(data){
+//    if (document.getElementById("texto").value == data){
+//      document.getElementById("texto").value = "";
+//    }
+//  })
+//}
 
 function loading() {
     $("#loader").show();
@@ -104,6 +103,20 @@ $( ".magic" ).click(function() {
 	$( "#hippo" ).dialog( "open" );
 });
 </script>
+
+<script>
+$(document).ready(function(){
+$('#texto')
+    .each(function() {
+        $(this).data('default', this.value);
+    })
+    .focusin(function() {
+        if ( this.value == $(this).data('default') ) {
+            this.value = '';    
+        }
+    });
+});
+</script>   
 
 	</div><!-- container -->
 
