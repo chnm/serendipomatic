@@ -162,23 +162,22 @@ def build_source_package(path=None, user=None):
 def deploy():
     '''Deploy the web app to a remote server.
 
-    Example usage:
+    Usage:
       fab deploy -H servername
 
     '''
-
-    configure()
     # prepare deploy
+    configure()
     prep_source()
     package_source()
-    # setup on the server
+    # upload and set up on the server
     upload_source()
     extract_source()
     setup_virtualenv()
     configure_site()
     update_links()
     compare_localsettings()
-    # database
+    # database: backup in case we need to restore, sync any django model changes
     backup_db()
     syncdb()
     # restart apache
