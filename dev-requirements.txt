@@ -1,0 +1,5 @@
+# developer-specific requirements
+# (not required for running the site, but needed for tests, docs, etc)
+sphinx
+django-nose
+fabric
