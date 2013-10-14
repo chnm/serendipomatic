@@ -110,11 +110,16 @@ def configure_site():
             fab.sudo('chmod -R a+r `env DJANGO_SETTINGS_MODULE=\'%(project)s.settings\' python -c \'from django.conf import settings; print settings.STATIC_ROOT\'`' % env,
                  user=env.remote_acct)
 
-
 def update_links():
     'Update current/previous symlinks on the remote server.'
     with fab.cd(env.remote_path):
         if files.exists('current' % env):
+            current_target = fab.sudo('readlink current', user=env.remote_acct)
+            # if current link points to the version currently being deployed
+            # (i.e., on a re-deploy of same version), do nothing
+            if current_target == env.build_dir:
+                return
+
             fab.sudo('rm -f previous; mv current previous', user=env.remote_acct)
         fab.sudo('ln -sf %(build_dir)s current' % env, user=env.remote_acct)
 
@@ -133,8 +138,8 @@ def syncdb():
 def backup_db():
     # sudo on the server; how to get username/password from settings?
     # this actually works:
-    # mysqldump -u smartstash --password= smartstash | gzip > /tmp/smartstash.sql.gz
-    'mysqldump -u username -p databaseToSave | gzip -9 /path/to/stored/mysqlfiles/restorationpoint.sql.gz '
+    # mysqldump -u smartstash --password=###3 smartstash | gzip > /tmp/smartstash.sql.gz
+    'mysqldump -u username -p### databaseToSave | gzip -9 /path/to/stored/mysqlfiles/restorationpoint.sql.gz '
     pass
 
 def restore_db():
@@ -226,29 +231,37 @@ def compare_localsettings(path=None, user=None):
                     fab.puts(colors.green('No differences between current and previous localsettings.py'))
 
 
-@task
-def rm_old_builds(keep=3):
-    '''Remove old build directories on the deploy server.
-
-    Optionally specify the number of versions to keep with the 'keep' parameter.
-    '''
-    configure()
+def identify_build_dirs():
+    # generate a list of deployed build directories
     with cd(env.remote_path):
         with hide('stdout'):  # suppress ls/readlink output
             # get directory listing sorted by modification time (single-column for splitting)
             dir_listing = fab.sudo('ls -t1', user=env.remote_acct)
+
+    # split dir listing on newlines and strip whitespace
+    dir_items = [n.strip() for n in dir_listing.split('\n')]
+    # regex based on how we generate the build directory:
+    #   project name, numeric version, optional pre/dev suffix, optional revision #
+    build_dir_regex = r'^%(project)s-[0-9.]+(-[A-Za-z0-9_-]+)?(-r[0-9]+)?$' % env
+    return [item for item in dir_items if re.match(build_dir_regex, item)]
+
+
+@task
+def rm_old_builds():
+    '''Remove old build directories on the deploy server.  Keeps the
+    three most recent deploy directories, and does not remove current
+    or previous linked deploys.
+    '''
+    configure()
+    with cd(env.remote_path):
+        with hide('stdout'):  # suppress readlink output
             # get current and previous links so we don't remove either of them
             current = fab.sudo('readlink current', user=env.remote_acct) if files.exists('current') else None
             previous = fab.sudo('readlink previous', user=env.remote_acct) if files.exists('previous') else None
 
-        # split dir listing on newlines and strip whitespace
-        dir_items = [n.strip() for n in dir_listing.split('\n')]
-        # regex based on how we generate the build directory:
-        #   project name, numeric version, optional pre/dev suffix, optional revision #
-        build_dir_regex = r'^%(project)s-[0-9.]+(-[A-Za-z0-9_-]+)?(-r[0-9]+)?$' % env
-        build_dirs = [item for item in dir_items if re.match(build_dir_regex, item)]
+        build_dirs = identify_build_dirs()
         # by default, preserve the 3 most recent build dirs from deletion
-        rm_dirs = build_dirs[keep:]
+        rm_dirs = build_dirs[3:]
         # if current or previous for some reason is not in the 3 most recent,
         # make sure we don't delete it
         for link in [current, previous]:
@@ -257,6 +270,6 @@ def rm_old_builds(keep=3):
 
         if rm_dirs:
             for dir in rm_dirs:
-                    fab.sudo('rm -rf %s' % dir, user=env.remote_acct)
+                fab.sudo('rm -rf %s' % dir, user=env.remote_acct)
         else:
             fab.puts('No old build directories to remove')
