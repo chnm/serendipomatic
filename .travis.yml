@@ -23,7 +23,8 @@ script: python manage.py test
 # heroku auto deploy
 deploy:
   provider: heroku
-  buildpack: python
+  strategy: git
+  # buildpack: python
   api_key:
     secure: NHTqjBAt2ZykjcJpdOXg4yWHK+spS0iw8nJasbILmcGUv7as+zcwi5Px/s3QgJ9drzURBk//0w3BMYmeZWkn3Y485mGlQEa0eOZfCU99b5aGTqRM6++pd6XJJ8fHNekFxs5pIu4fS3ZjuK5lFk7RqPjABzkjOCGUA0+WZU9i4KU=
   repo: chnm/serendipomatic
