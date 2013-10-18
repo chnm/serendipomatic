@@ -48,6 +48,15 @@ class DisplayItem(object):
         if self.format is not None:
             info['rft.format'] = self.format
 
+        # some fields could be lists or integers;
+        # convert to strings so coins citation can be generated easily
+        for k, v in info.iteritems():
+            # if a list, join into a single string
+            if (isinstance(v, list)):
+                info[k] = '; '.join(v)
+            if (isinstance(v, int)):
+                info[k] = str(v)
+
         return info
 
 
