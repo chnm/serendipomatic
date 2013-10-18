@@ -56,6 +56,20 @@ class DisplayItemTest(TestCase):
         self.assert_(cit.startswith('ctx_ver=Z39.88-2004'))
         self.assert_('rft.title=%s' % item.title in cit)
 
+        # variant content - lists
+        item = DisplayItem(title=['Hippo'], url='http://some.url/to/a/hippo/pic')
+        # should not throw an exception
+        cit = item.coins_citation
+        self.assert_('rft.title=%s' % item.title[0] in cit)
+
+        # variant content - integer
+        item = DisplayItem(title='Hippo', url='http://some.url/to/a/hippo/pic',
+                           date=1936)
+        # should not throw an exception
+        cit = item.coins_citation
+        self.assert_('rft.date=%s' % item.date in cit)
+
+
 
 class LoadStopwordsTest(TestCase):
 
