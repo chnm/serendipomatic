@@ -76,7 +76,7 @@ provide blocks for any sections that vary per page.
 <footer {% block footer-attrs %}{%endblock %}>
 <div id="footermenu">
     <div class="footermenu"><a href="{% url 'site-index' %}">Home</a>|<a href="{% url 'about' %}">About</a>|<a href="{% url 'connect' %}">Connect</a></div>
-	
+
     <img class="footimg" src="{% static 'img/burst.png' %}" alt="Burst Image" />
     <div id="footer-info" >
       <p><strong>Serendip-o-matic</strong> is a project of
@@ -90,8 +90,11 @@ provide blocks for any sections that vary per page.
 
      <p>version {{ SW_VERSION }}</p>
      </div>
+</div> {# end id=footermenu #}
 </footer>
 
+</div> {# end container #}
+</div> {# end sixteen columns #}
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

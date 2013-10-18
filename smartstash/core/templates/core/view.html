@@ -5,7 +5,11 @@
 
 {% block extra-head %}
 <!-- add extra css/js here -->
-
+<style>
+  .ui-tooltip {
+    font-size: smaller;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -103,7 +107,9 @@
 {% endfor %}
 </div>
 
-<p style="text-align: center; margin: 15px 0 5px 0;"><a href="#top"><button tabindex="1000">Return to Top</button></a></p>
+<p style="text-align: center; margin: 15px 0 5px 0;">
+  <a href="#top"><button tabindex="1000">Return to Top</button></a></p>
+  {# FIXME: button is not actually valid inside a; adjust so styles we can use a class="button" #}
 
 
 {% comment %}
@@ -181,10 +187,5 @@ $(document).ready(function() {
 	}
 	);
 </script>
-<style>
-  .ui-tooltip {
-    font-size: smaller;
-  }
-</style>
 {% endblock %}
 
