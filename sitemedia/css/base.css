@@ -497,7 +497,7 @@ img.zotero {
      text-shadow: 0px 1px rgba(255, 255, 255, 0.75);
 }
 
-button.magic {
+button.magic, input[type="submit"].magic, input[type="reset"].magic, input[type="button"].magic {
 	margin-top: 20px;
 	background: #349183; /* Old browsers */
 		background: #349183 -moz-linear-gradient(top, rgba(255,255,255,.2) 0%, rgba(0,0,0,.2) 100%); /* FF3.6+ */
@@ -511,7 +511,7 @@ button.magic {
 
 }
 
-.button:hover.magic {
+.button:hover.magic, input[type="submit"]:hover.magic, input[type="reset"]:hover.magic, input[type="button"]:hover.magic {
 	color: #349183;
 }
 	.button:hover,
