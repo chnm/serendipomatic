@@ -3,3 +3,6 @@
 sphinx
 django-nose
 fabric
+
+# heroku
+django-toolbelt
