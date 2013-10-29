@@ -30,6 +30,9 @@ Setup required to use this fabric deploy:
 
 * Create backup/restore db scripts as documented below.
 
+* Make sure the log file configured in django settings is readable and
+  writable by both apache and serendip (e.g. via a web group)
+
 '''
 
 ##
@@ -43,6 +46,7 @@ env.rev_tag = ''
 env.git_rev = ''
 env.remote_path = '/var/www/serendipomatic/'
 env.remote_acct = 'serendip'
+env.webgroup = 'webwrite'
 
 def configure():
     'Configuration settings used internally for the build.'
@@ -132,6 +136,11 @@ def configure_site():
                      user=env.remote_acct)
             # make static files world-readable
             fab.sudo('chmod -R a+r `env DJANGO_SETTINGS_MODULE=\'%(project)s.settings\' python -c \'from django.conf import settings; print settings.STATIC_ROOT\'`' % env,
+                 user=env.remote_acct)
+
+    # make sure permissions are ok for apache
+    with cd(env.remote_path):
+        fab.sudo('chgrp -R %(webgroup)s %(build_dir)s' % env,
                  user=env.remote_acct)
 
 def update_links():
