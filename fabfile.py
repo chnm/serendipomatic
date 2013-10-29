@@ -136,15 +136,18 @@ def syncdb():
             #          user=env.remote_acct)
 
 def backup_db():
-    # sudo on the server; how to get username/password from settings?
-    # this actually works:
-    # mysqldump -u smartstash --password=###3 smartstash | gzip > /tmp/smartstash.sql.gz
-    'mysqldump -u username -p### databaseToSave | gzip -9 /path/to/stored/mysqlfiles/restorationpoint.sql.gz '
-    pass
+    # create a script like this in /home/serendip/bin/backup_db with credentials,
+    # should only be readable by serendip user (chmod 700)
+    # (also create db_backup folder)
+    # mysqldump -u smartstash --password=#### smartstash | gzip > /home/serendip/db_backup/smartstash.sql.gz
+    fab.sudo('/home/serendip/bin/backup_db', user=env.remote_acct)
+
 
 def restore_db():
-    #gunzip < /path/to/stored/mysqlfiles/restprationpoint.sql.gz | mysql -u username -p databaseToRestore.
-    pass
+    # create a script like this in /home/serendip/bin/restore_db with credentials,
+    # should only be readable by serendip user (chmod 700)
+    # gunzip < /home/serendip/db_backup/smartstash.sql.gz | mysql -u smartstash --password=#### smartstash
+    fab.sudo('/home/serendip/bin/restore_db', user=env.remote_acct)
 
 def restart_apache():
     fab.sudo('service httpd restart')
