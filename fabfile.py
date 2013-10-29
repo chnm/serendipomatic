@@ -8,6 +8,30 @@ from fabric.contrib import files
 
 import smartstash
 
+'''
+Setup required to use this fabric deploy:
+
+* This path is assumed to be top level directory for deploy
+  (this will contain deployed code which be linked as current/previous):
+  /var/www/serendipomatic/
+
+* Also assumes a user 'serendip' that owns the deployed code; users running
+  the fab deploy should have sudo access to the serendip account.
+
+* Create localsettings.py in the top-level deploy dir; this file should by
+  the serendip user.
+
+* Create a local-reqs.txt file in top-level deploy dir, should contain
+  (or whatever python module is required for the database in use):
+  MySQL-python
+
+* Configure apache to use the current deploy symlink
+  /var/www/serendipomatic/current for all paths
+
+* Create backup/restore db scripts as documented below.
+
+'''
+
 ##
 # deploy tasks
 ##
