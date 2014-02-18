@@ -1,4 +1,3 @@
-
 [![Build Status](https://travis-ci.org/chnm/serendipomatic.png)](https://travis-ci.org/chnm/serendipomatic)
 
 About
@@ -16,6 +15,8 @@ inspiration, search results aren't meant to be exhaustive, but rather suggestive
 pointing you to materials you might not have discovered. At the very least, the magical
 input-output process helps you step back and look at your work from a new perspective.
 Give it a whirl. Your sources may surprise you.
+
+Thanks to everyone who voted for us in the Digital Humanities Awards 2013. We won 'Best use of DH for fun'!
 
 Installation notes for developers
 ---------------------------------
