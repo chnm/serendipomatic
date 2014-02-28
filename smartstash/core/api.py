@@ -54,6 +54,9 @@ class DPLA(object):
             if not doc.get('object', None):
                 continue
 
+            # url on DPLA site
+            item_url = '%sitem/%s' % (url, doc.get('id'))
+
             i = DisplayItem(
                 title=src_res.get('title', None),
                 format=src_res.get('type', None),
@@ -65,8 +68,8 @@ class DPLA(object):
                 # according to dpla docs, should be url preview for item
                 # docs reference a field for object mimetype, not seeing in results
 
-                # url on provider's website with context
-                url=doc.get('isShownAt', None)
+                # url on DPLA site
+                url=item_url
             )
             if 'date' in src_res:
                 i.date = src_res['date'].get('displayDate', None)
