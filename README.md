@@ -16,7 +16,11 @@ pointing you to materials you might not have discovered. At the very least, the 
 input-output process helps you step back and look at your work from a new perspective.
 Give it a whirl. Your sources may surprise you.
 
+News
+----
 Thanks to everyone who voted for us in the Digital Humanities Awards 2013. We won 'Best use of DH for fun'!
+
+Serendi-o-matic was described as a 'cool discovery app for primary resources' and won 'Best New Mobile App' in the The Charleston Advisor's Fourteenth Annual Readers’ Choice Awards.
 
 Installation notes for developers
 ---------------------------------
