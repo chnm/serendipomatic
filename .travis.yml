@@ -7,7 +7,7 @@ python:
 # install a local squid proxy to allow testing schemas
 install:
   - 'easy_install -U distribute'
-  - "pip install -r requirements.txt --allow-external PIL --allow-unverified PIL --use-mirrors"
+  - "pip install -r requirements.txt --allow-external PIL --allow-unverified PIL"
   - "python -m nltk.downloader stopwords"
 # command to run tests, e.g. python setup.py test
 # TODO: consider switching to django-nose when it supports Django 1.5,
