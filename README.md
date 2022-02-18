@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.org/chnm/serendipomatic.png)](https://travis-ci.org/chnm/serendipomatic)
 
+Archived
+----
+RRCHNM archived this repository in February 2022. Last actual code activity was May 2015. If you need more information or to unarchive this repository, please contact us at webmaster at chnm.gmu.edu
+
 About
 -----
 [Serendip-o-matic](http://serendipomatic.org/) connects your sources to digital materials
